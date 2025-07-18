@@ -1,6 +1,6 @@
 # Dotfiles for Arch Linux with Hyprland
 
-This repository contains my personalized dot-files for an [Arch Linux](https://arch.com) setup using the
+This repository contains my personalized dot-files for an [Arch Linux](https://wiki.archlinux.org) setup using the
 [Hyprland](https://hyprland.org) window manager, [LazyVim](https://www.lazyvim.org) for Neovim, [Kitty](https://sw.kovidgoyal.net/kitty/) as the terminal, [Rofi](https://github.com/davatorium/rofi) as the application launcher, and [Hyprpaper](https://github.com/hyprwm/hyprpaper) for wallpaper management.
 
 ## Overview
