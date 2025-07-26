@@ -1,5 +1,4 @@
 -- Show ignored files (dotfiles)
-
 local excluded = {
   "node_modules/",
   "dist/",
