@@ -5,7 +5,9 @@ This repository contains my personalized dot-files for an [Arch Linux](https://w
 
 ## Overview
 
-This configuration aims to provide a lightweight, fast, and visually appealing desktop environment based on Wayland. The chosen tools and customizations prioritize productivity and simplicity while maintaining a modern and cohesive look.
+This configuration aims to provide a lightweight, fast, and visually appealing desktop environment based on Hyprland. The chosen tools and customizations prioritize productivity and simplicity while maintaining a modern and cohesive look.
+
+Additional resources: [Useful Resources](USEFUL_RESOURCES.md).
 
 ### Included Tools
 
@@ -24,7 +26,8 @@ This configuration aims to provide a lightweight, fast, and visually appealing d
 ├── kitty/ # Kitty configuration
 ├── rofi/ # Rofi configuration
 ├── hyprpaper/ # Hyprpaper configuration
-└── README.md # Description file
+├── README.md  # This file
+└── USEFUL_RESOURCES.md        # Additional resources
 ```
 
 ## Installation
