@@ -7,6 +7,7 @@ This repository contains my personalized dot-files for an [Arch Linux](https://w
 
 This configuration aims to provide a lightweight, fast, and visually appealing desktop environment based on Hyprland. The chosen tools and customizations prioritize productivity and simplicity while maintaining a modern and cohesive look.
 
+For Arch Linux installation, see the: [Arch Linux Installation Guide]("./ARCH_LINUX_INSTALLATION.md")
 Additional resources: [Useful Resources](USEFUL_RESOURCES.md).
 
 ### Included Tools
