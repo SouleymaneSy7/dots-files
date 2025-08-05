@@ -4,8 +4,6 @@
 
 This guide provides a step-by-step process to completely remove Linux from a dual-boot configuration with Windows 10, using only tools available within Windows. It covers removing the GRUB bootloader from a Master Boot Record (MBR) system and formatting residual Linux partitions, either via the Windows 10 Troubleshoot environment or a Windows 10 live USB. **If your system uses UEFI instead of MBR**, refer to Microsoft's guide on UEFI boot repair for appropriate steps, as **UEFI systems require different bootloader management**.
 
----
-
 ## Prerequisites
 
 - **Administrator Access**: You need administrative privileges in Windows 10 or a **Windows 10 live USB** created with the Windows Media Creation Tool.
@@ -13,8 +11,6 @@ This guide provides a step-by-step process to completely remove Linux from a dua
 - **MBR Confirmation**: Verify your system uses **MBR (Legacy BIOS)**, not UEFI. Check in **Disk Management** (`diskmgmt.msc`): Right-click the disk, select **Properties** > **Volumes**, and confirm it is labeled **Master Boot Record (MBR)** or **Legacy**.
 
 **Caution**: Incorrectly deleting partitions or modifying the bootloader can render your system unbootable. Proceed carefully and double-check each step.
-
----
 
 ## Remove GRUB Bootloader
 
@@ -127,8 +123,6 @@ GRUB typically overwrites the MBR on Legacy BIOS systems. You can restore the Wi
 5. **Exit and Restart**:
    - Type `exit`, remove the USB, and select **Continue** to boot into Windows.
 
----
-
 ## Format Residual Linux Partitions
 
 After removing GRUB, format the Linux partitions to reclaim disk space.
@@ -159,8 +153,6 @@ After removing GRUB, format the Linux partitions to reclaim disk space.
    - In **Disk Management**, ensure Linux partitions are removed and the space is formatted or merged.
    - Restart the computer to confirm system stability.
 
----
-
 ## Troubleshooting
 
 - **GRUB Persists After Commands**:
@@ -173,8 +165,6 @@ After removing GRUB, format the Linux partitions to reclaim disk space.
     ```cmd
     chkdsk C: /f
     ```
-
----
 
 ## Useful Resources
 
