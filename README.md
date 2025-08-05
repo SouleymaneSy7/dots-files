@@ -11,6 +11,8 @@ For Arch Linux installation, see the: [Arch Linux Installation Guide](ARCH_LINUX
 
 Additional resources: [Useful Resources](USEFUL_RESOURCES.md).
 
+For Uninstalling Linux, see the: [Linux Uninstall On Dual Boot Guide](UNINSTALL_LINUX_ON_DUAL_BOOT.md)
+
 ### Included Tools
 
 - **Hyprland**: A highly configurable and performant Wayland window manager.
@@ -28,7 +30,9 @@ Additional resources: [Useful Resources](USEFUL_RESOURCES.md).
 ├── kitty/ # Kitty configuration
 ├── rofi/ # Rofi configuration
 ├── hyprpaper/ # Hyprpaper configuration
+├── ARCH_LINUX_INSTALLATION.md # Arch Linux Installation Guide
 ├── README.md  # This file
+├── UNINSTALL_LINUX_ON_DUAL_BOOT.md # Delete Linux on dual-boot
 └── USEFUL_RESOURCES.md        # Additional resources
 ```
 
@@ -36,7 +40,7 @@ Additional resources: [Useful Resources](USEFUL_RESOURCES.md).
 
 1. **Prerequisites**:
    - Arch Linux installed.
-   - Required packages: `hyprland`, `neovim`, `kitty`, `rofi`, `hyprpaper`.
+   - Required packages: `hyprland`, `neovim`, `kitty`, `waybar`, `rofi`, `hyprpaper`, `hypridle`, `hyprlock`.
    - Install necessary dependencies for each tool (refer to their official documentation).
 
 2. **Clone the Repository**:
@@ -46,15 +50,7 @@ Additional resources: [Useful Resources](USEFUL_RESOURCES.md).
    ```
 
 3. **Apply Configurations**:
-   - Copy the configuration files to their respective directories (e.g., `~/.config/hypr/`, `~/.config/nvim/`, etc.):
-
-     ```bash
-     cp -r ~/.dotfiles/hypr ~/.config/
-     cp -r ~/.dotfiles/nvim ~/.config/
-     cp -r ~/.dotfiles/kitty ~/.config/
-     cp -r ~/.dotfiles/rofi ~/.config/
-     cp -r ~/.dotfiles/hyprpaper ~/.config/
-     ```
+   - Copy the configuration files to their respective directories (e.g., `~/.config/hypr/`, `~/.config/nvim/`, etc.).
 
 4. **Restart Hyprland**:
    - Ensure Hyprland is running, then reload the configuration with `hyprctl reload`.
