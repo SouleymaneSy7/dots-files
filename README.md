@@ -29,7 +29,7 @@ This configuration delivers a lightweight, performant, and visually cohesive des
 ```
 .dotfiles/
 ├── hyprland/              # Hyprland and related configurations
-│   ├── hyprland/              # Core Hyprland window manager configuration
+│   ├── hyprland/          # Core Hyprland window manager configuration
 │   ├── hyprpaper/         # Hyprpaper wallpaper configuration
 │   ├── hyprlock/          # Hyprlock screen locker configuration
 │   ├── hypridle/          # Hypridle idle management configuration
