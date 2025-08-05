@@ -155,7 +155,7 @@ After removing GRUB, format the Linux partitions to reclaim disk space.
 ## Troubleshooting
 
 - **GRUB Persists After Commands**:
-  - Re-run `bootrec /fixmbr` and `bootsect /nt60 C: /mbr`.
+  - Re-run `bootrec /fixmbr` and `bootsect/nt60 sys`.
   - Ensure the correct partition is marked active using `diskpart`.
 - **Persistent Errors**:
   - Boot from a Windows 10 live USB and repeat the commands.
@@ -168,6 +168,6 @@ After removing GRUB, format the Linux partitions to reclaim disk space.
 ## Useful Resources
 
 - **Microsoft Support**: [Use bootrec.exe to Repair Startup Issues](https://support.microsoft.com/en-us/help/927392/use-bootrec-exe-in-the-windows-re-to-repair-startup-issues)
-- **Microsoft Support**: [Fix Windows 10 Boot Manager](https://learn.microsoft.com/en-us/answers/questions/3953603/how-do-i-get-my-windows-10-boot-manager-fixed)
+- **Microsoft Support**: [How do I get my Windows 10 Boot manager fixed?](https://learn.microsoft.com/en-us/answers/questions/3953603/how-do-i-get-my-windows-10-boot-manager-fixed)
 - **Microsoft Support**: [Create Installation Media for Windows 10](https://support.microsoft.com/en-us/windows/create-installation-media-for-windows-99a58364-8c02-206f-aa6f-40c3b507420d#id0ejd=windows_10)
 - **YouTube Tutorials**: Search for **"remove GRUB MBR Windows 10"** for visual guides.
