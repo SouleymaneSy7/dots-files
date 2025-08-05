@@ -21,7 +21,6 @@ GRUB typically overwrites the MBR on Legacy BIOS systems. You can restore the Wi
 1. **Access the Troubleshoot Environment**:
    - Boot into Windows 10. If the GRUB menu appears, select Windows using the arrow keys.
    - Navigate to **Settings** > **Update & Security** > **Recovery** > **Advanced Startup** > Click **Restart now**.
-   - Alternatively, restart and press the boot menu key (e.g., `F8`, `F11`, or `Esc`, depending on your system) to access **Advanced Startup**.
    - Go to **Troubleshoot** > **Advanced Options** > **Command Prompt**.
 
 2. **Restore the Windows Bootloader**:
