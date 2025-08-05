@@ -29,7 +29,7 @@ This configuration delivers a lightweight, performant, and visually cohesive des
 ```
 .dotfiles/
 ├── hyprland/              # Hyprland and related configurations
-│   ├── hypr/              # Core Hyprland window manager configuration
+│   ├── hyprland/              # Core Hyprland window manager configuration
 │   ├── hyprpaper/         # Hyprpaper wallpaper configuration
 │   ├── hyprlock/          # Hyprlock screen locker configuration
 │   ├── hypridle/          # Hypridle idle management configuration
@@ -38,8 +38,8 @@ This configuration delivers a lightweight, performant, and visually cohesive des
 ├── rofi/                  # Rofi launcher configuration
 ├── waybar/                # Waybar status bar configuration
 ├── ARCH_LINUX_INSTALLATION.md        # Arch Linux installation guide
-├── SWAP_FILE_CREATION.md             # Swap file creation guide
 ├── README.md                         # This file
+├── SWAP_FILE_CREATION.md             # Swap file creation guide
 ├── UNINSTALL_LINUX_ON_DUAL_BOOT.md   # Guide for removing Linux from dual-boot
 └── USEFUL_RESOURCES.md               # Additional resources
 ```
