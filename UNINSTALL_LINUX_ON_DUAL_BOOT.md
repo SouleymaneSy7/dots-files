@@ -71,7 +71,7 @@ GRUB typically overwrites the MBR on Legacy BIOS systems. You can restore the Wi
         - If "Access Denied" persists, use:
 
           ```cmd
-          bootsect /nt60 C: /mbr
+          bootsect /nt60 sys
           ```
 
           This updates the boot code on the `C:` partition and MBR for Windows 10.
