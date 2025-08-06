@@ -1,8 +1,25 @@
 # Guide to Creating Swap Files on Linux
 
+## Table of Contents
+
+1. [Understanding Swap File Size](#understanding-swap-file-size)
+2. [Prerequisites](#prerequisites)
+3. [Steps to Create a Swap File](#steps-to-create-a-swap-file)
+   - [Check Existing Swap Usage](#1-check-existing-swap-usage)
+   - [Create a Swap File](#2-create-a-swap-file)
+   - [Set Permissions](#3-set-permissions)
+   - [Format as Swap](#4-format-as-swap)
+   - [Enable the Swap File](#5-enable-the-swap-file)
+   - [Make Swap Permanent](#6-make-swap-permanent)
+   - [Adjust Swappiness (Optional)](#7-adjust-swappiness-completely-optional)
+4. [Removing a Swap File](#removing-a-swap-file)
+5. [Useful Resources](#useful-resources)
+
+---
+
 Swap files are a critical component of Linux systems, providing virtual memory to supplement physical RAM when memory demands exceed available resources. By allocating disk space as swap, the operating system can temporarily store inactive memory pages, ensuring processes run smoothly during high memory usage. This guide provides a step-by-step process for creating, configuring, and managing swap files on a Linux system to optimize performance and stability. It also includes guidance on choosing an appropriate swap file size based on your system's needs.
 
-### Understanding Swap File Size
+## Understanding Swap File Size
 
 The size of a swap file depends on your system's RAM, workload, and usage patterns. Here are general guidelines:
 
@@ -24,146 +41,156 @@ Always monitor swap usage with tools like `free -h` or `top` to adjust the size 
 
 ## Steps to Create a Swap File
 
-1. **Check Existing Swap Usage**  
-   Verify if swap is already in use to avoid conflicts or redundancy:
+### 1. Check Existing Swap Usage
 
-   ```bash
-   swapon --show  # Lists active swap areas and their details
-   free -h        # Displays memory and swap usage in a human-readable format
-   ```
+Verify if swap is already in use to avoid conflicts or redundancy:
 
-2. **Create a Swap File**  
-   Allocate a file for swap (e.g., 8GB) using one of the following methods:
-   - **Using `fallocate` (Recommended):**
+```bash
+swapon --show  # Lists active swap areas and their details
+free -h        # Displays memory and swap usage in a human-readable format
+```
 
-     ```bash
-     sudo fallocate -l 8G /swapfile  # Allocates an 8GB file instantly without filling it with data
-     ```
+### 2. Create a Swap File
 
-   - **Using `dd` (Alternative if `fallocate` is unavailable):**
+Allocate a file for swap (e.g., 8GB) using one of the following methods:
 
-     ```bash
-     sudo dd if=/dev/zero of=/swapfile bs=1M count=8192  # Creates an 8GB file by copying 8192 blocks of 1MB from /dev/zero
-     ```
+- **Using `fallocate` (Recommended):**
 
-   - **Using `mkswap` (Alternative):**  
-     Create and format an 8GB swap file in one step:
+  ```bash
+  sudo fallocate -l 8G /swapfile  # Allocates an 8GB file instantly without filling it with data
+  ```
 
-     ```bash
-     sudo mkswap -U clear --size 8G --file /swapfile  # Creates an 8GB file and formats it as swap space in a single command, with -U clear to avoid assigning a UUID
-     ```
+- **Using `dd` (Alternative if `fallocate` is unavailable):**
 
-     Unlike `fallocate` or `dd`, which only allocate the file, this `mkswap` command both creates the file and formats it as swap space, combining the allocation and formatting steps. This can be more convenient but may not be supported on all systems (check `man mkswap` for compatibility).
+  ```bash
+  sudo dd if=/dev/zero of=/swapfile bs=1M count=8192  # Creates an 8GB file by copying 8192 blocks of 1MB from /dev/zero
+  ```
 
-3. **Set Permissions**  
-   Restrict access to the swap file to prevent unauthorized access:
+- **Using `mkswap` (Alternative):**  
+  Create and format an 8GB swap file in one step:
 
-   ```bash
-   sudo chmod 600 /swapfile  # Sets read/write permissions for the root user only
-   ```
+  ```bash
+  sudo mkswap -U clear --size 8G --file /swapfile  # Creates an 8GB file and formats it as swap space in a single command, with -U clear to avoid assigning a UUID
+  ```
 
-4. **Format as Swap**  
-   If not already done in the `mkswap` method above, set up the file as a swap area:
+  Unlike `fallocate` or `dd`, which only allocate the file, this `mkswap` command both creates the file and formats it as swap space, combining the allocation and formatting steps. This can be more convenient but may not be supported on all systems (check `man mkswap` for compatibility).
 
-   ```bash
-   sudo mkswap /swapfile  # Formats the file as swap space, preparing it for use
-   ```
+### 3. Set Permissions
 
-   **Example:** Running `sudo mkswap /swapfile` on an 8GB file might output:
+Restrict access to the swap file to prevent unauthorized access:
 
-   ```text
-   Setting up swapspace version 1, size = 8 GiB (8589934592 bytes)
-   no label, UUID=123e4567-e89b-12d3-a456-426614174000
-   ```
+```bash
+sudo chmod 600 /swapfile  # Sets read/write permissions for the root user only
+```
 
-   This confirms the file is formatted as swap space with a unique `UUID`.
+### 4. Format as Swap
 
-5. **Enable the Swap File**  
-   Activate the swap file to make it available for use:
+If not already done in the `mkswap` method above, set up the file as a swap area:
 
-   ```bash
-   sudo swapon /swapfile  # Enables the swap file for immediate use
-   ```
+```bash
+sudo mkswap /swapfile  # Formats the file as swap space, preparing it for use
+```
 
-   Verify it's active:
+**Example:** Running `sudo mkswap /swapfile` on an 8GB file might output:
 
-   ```bash
-   swapon --show  # Confirms the swap file is active and lists its details
-   ```
+```text
+Setting up swapspace version 1, size = 8 GiB (8589934592 bytes)
+no label, UUID=123e4567-e89b-12d3-a456-426614174000
+```
 
-6. **Make Swap Permanent**  
-   To ensure the swap file is activated on boot, add it to `/etc/fstab`. This file is critical for system boot configuration, so errors can prevent your system from starting. To mitigate risks, always back up `/etc/fstab` before editing:
+This confirms the file is formatted as swap space with a unique `UUID`.
 
-   ```bash
-   sudo cp /etc/fstab /etc/fstab.backup  # Creates a backup of `fstab` to restore if errors occur
-   ```
+### 5. Enable the Swap File
 
-   Open the `fstab` file for editing:
+Activate the swap file to make it available for use:
 
-   ```bash
-   sudo nano /etc/fstab  # Open the `fstab` file in the nano editor for modification
-   ```
+```bash
+sudo swapon /swapfile  # Enables the swap file for immediate use
+```
 
-   Append the following line:
+Verify it's active:
 
-   ```text
-   /swapfile none swap sw 0 0  # Configures the swap file to activate automatically on system startup
-   ```
+```bash
+swapon --show  # Confirms the swap file is active and lists its details
+```
 
-   Save and exit (in nano, press `Ctrl+O`, `Enter`, then `Ctrl+X`).
+### 6. Make Swap Permanent
 
-   Alternatively, you can append the entry using a single command:
+To ensure the swap file is activated on boot, add it to `/etc/fstab`. This file is critical for system boot configuration, so errors can prevent your system from starting. To mitigate risks, always back up `/etc/fstab` before editing:
 
-   ```bash
-   echo '/swapfile none swap defaults 0 0' | sudo tee -a /etc/fstab  # Appends the swap file entry to `fstab` without opening an editor.
-   ```
+```bash
+sudo cp /etc/fstab /etc/fstab.backup  # Creates a backup of `fstab` to restore if errors occur
+```
 
-   After editing, verify the `fstab` configuration to ensure there are no errors:
+Open the `fstab` file for editing:
 
-   ```bash
-   sudo mount -a  # Tests the `fstab` configuration; no output indicates no errors
-   ```
+```bash
+sudo nano /etc/fstab  # Open the `fstab` file in the nano editor for modification
+```
 
-   If `mount -a` produces no errors, the configuration is safe, and you can delete the backup:
+Append the following line:
 
-   ```bash
-   sudo rm /etc/fstab.backup  # Removes the backup if the `fstab` configuration is verified
-   ```
+```text
+/swapfile none swap sw 0 0
+```
 
-   If errors occur, restore the backup before rebooting:
+Configures the swap file to activate automatically on system startup.
 
-   ```bash
-   sudo mv /etc/fstab.backup /etc/fstab  # Restores the original `fstab` to prevent boot issues
-   ```
+Save and exit (in nano, press `Ctrl+O`, `Enter`, then `Ctrl+X`).
 
-   This process ensures your system remains bootable even if an error occurs during fstab modification.
+Alternatively, you can append the entry using a single command:
 
-7. **Adjust Swappiness (Completely Optional)**  
-   Adjusting swappiness is optional and only recommended if you want to fine-tune how aggressively the system uses swap. Swappiness controls the kernel's tendency to move processes from physical RAM to swap space (0 = least likely, 100 = most likely). The default value is typically 60, which is suitable for most systems.
+```bash
+echo '/swapfile none swap defaults 0 0' | sudo tee -a /etc/fstab  # Appends the swap file entry to `fstab` without opening an editor.
+```
 
-   Check the current swappiness value:
+After editing, verify the `fstab` configuration to ensure there are no errors:
 
-   ```bash
-   cat /proc/sys/vm/swappiness  # Displays the current swappiness value
-   ```
+```bash
+sudo mount -a  # Tests the `fstab` configuration; no output indicates no errors
+```
 
-   If you choose to adjust it (e.g., to 10 for less swap usage):
+If `mount -a` produces no errors, the configuration is safe, and you can delete the backup:
 
-   ```bash
-   sudo sysctl vm.swappiness=10  # Sets swappiness to 10, reducing the tendency to use swap
-   ```
+```bash
+sudo rm /etc/fstab.backup  # Removes the backup if the `fstab` configuration is verified
+```
 
-   To make the change permanent, edit `/etc/sysctl.conf`:
+If errors occur, restore the backup before rebooting:
 
-   ```bash
-   sudo nano /etc/sysctl.conf  # Opens the sysctl configuration file for editing
-   ```
+```bash
+sudo mv /etc/fstab.backup /etc/fstab  # Restores the original `fstab` to prevent boot issues
+```
 
-   Add:
+This process ensures your system remains bootable even if an error occurs during fstab modification.
 
-   ```text
-   vm.swappiness=10  # Makes the swappiness setting persistent across reboots
-   ```
+### 7. Adjust Swappiness (Completely Optional)
+
+Adjusting `swappiness` is optional and only recommended if you want to fine-tune how aggressively the system uses swap. `Swappiness` controls the kernel's tendency to move processes from physical RAM to swap space (0 = least likely, 100 = most likely). The default value is typically 60, which is suitable for most systems.
+
+Check the current `swappiness` value:
+
+```bash
+cat /proc/sys/vm/swappiness  # Displays the current swappiness value
+```
+
+If you choose to adjust it (e.g., to 10 for less swap usage):
+
+```bash
+sudo sysctl vm.swappiness=10  # Sets swappiness to 10, reducing the tendency to use swap
+```
+
+To make the change permanent, edit `/etc/sysctl.conf`:
+
+```bash
+sudo nano /etc/sysctl.conf  # Opens the sysctl configuration file for editing
+```
+
+Add:
+
+```text
+vm.swappiness=10  # Makes the swappiness setting persistent across reboots
+```
 
 ## Removing a Swap File
 
