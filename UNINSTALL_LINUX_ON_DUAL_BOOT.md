@@ -1,5 +1,18 @@
 # Uninstall Linux from a Dual-Boot System with Windows 10
 
+## Table of Contents
+
+1. [Removing GRUB Bootloader and Formatting Linux Partitions on MBR Systems](#removing-grub-bootloader-and-formatting-linux-partitions-on-mbr-systems)
+2. [Prerequisites](#prerequisites)
+3. [Remove GRUB Bootloader](#remove-grub-bootloader)
+   - [Option 1: Using Windows 10 Troubleshoot Environment](#option-1-using-windows-10-troubleshoot-environment)
+   - [Option 2: Using a Windows 10 Live USB](#option-2-using-a-windows-10-live-usb)
+4. [Format Residual Linux Partitions](#format-residual-linux-partitions)
+5. [Troubleshooting](#troubleshooting)
+6. [Useful Resources](#useful-resources)
+
+---
+
 ## Removing GRUB Bootloader and Formatting Linux Partitions on MBR Systems
 
 This guide provides a step-by-step process to completely remove Linux from a dual-boot configuration with Windows 10, using only tools available within Windows. It covers removing the GRUB bootloader from a Master Boot Record (MBR) system and formatting residual Linux partitions, either via the Windows 10 Troubleshoot environment or a Windows 10 live USB. **If your system uses UEFI instead of MBR**, refer to Microsoft's guide on UEFI boot repair for appropriate steps, as **UEFI systems require different bootloader management**.
@@ -8,9 +21,10 @@ This guide provides a step-by-step process to completely remove Linux from a dua
 
 - **Administrator Access**: You need administrative privileges in Windows 10 or a **Windows 10 live USB** created with the Windows Media Creation Tool.
 - **Backup**: Save all important Linux files to an external drive (e.g., HDD or SSD) or cloud storage before proceeding.
-- **MBR Confirmation**: Verify your system uses **MBR (Legacy BIOS)**, not UEFI. Check in **Disk Management** (`diskmgmt.msc`): Right-click the disk, select **Properties** > **Volumes**, and confirm it is labeled **Master Boot Record (MBR)** or **Legacy**.
+- **MBR Confirmation**: **CRITICAL** - Verify your system uses **MBR (Legacy BIOS)**, not UEFI. Check in **Disk Management** (`diskmgmt.msc`): Right-click the disk, select **Properties** > **Volumes**, and confirm it shows **"Partition style: Master Boot Record (MBR)"**. If it shows **GPT**, you have a UEFI system and need different procedures.
+- **Windows 10 Version Compatibility**: Some commands in this guide may behave differently on Windows 10 versions 2004 and later. Alternative commands are provided where necessary.
 
-**Caution**: Incorrectly deleting partitions or modifying the bootloader can render your system unbootable. Proceed carefully and double-check each step.
+**Caution**: Incorrectly deleting partitions or modifying the bootloader can render your system unbootable. Proceed carefully and double-check each step. Consider creating a Windows recovery disk before starting.
 
 ## Remove GRUB Bootloader
 
@@ -43,7 +57,7 @@ GRUB typically overwrites the MBR on Legacy BIOS systems. You can restore the Wi
    - **Handle "Access Denied" Errors**:
      If `bootrec /fixboot` returns "Access Denied" (less common on MBR systems but possible due to partition issues or BCD corruption), follow these steps:
      1. **Verify the Active Partition**:
-        - Run:
+        - Run _(Note: Text in parentheses are explanatory comments)_:
 
           ```cmd
           diskpart
@@ -76,10 +90,16 @@ GRUB typically overwrites the MBR on Legacy BIOS systems. You can restore the Wi
 
           This updates the boot code on the `C:` partition and MBR for Windows 10.
 
+          **Note**: On newer Windows 10 versions, if `bootsect` is not available, you can try:
+
+          ```cmd
+          bcdboot C:\Windows /s C: /f BIOS
+          ```
+
      3. **Verify and Retry**:
         - Run `bootrec /fixboot` again to ensure it completes successfully.
 
-   - Continue with:
+   - Continue with (run in this specific order for better success rate):
 
      ```cmd
      bootrec /scanos
@@ -87,6 +107,12 @@ GRUB typically overwrites the MBR on Legacy BIOS systems. You can restore the Wi
      ```
 
      These commands scan for Windows installations and rebuild the Boot Configuration Data (BCD). If prompted to add a Windows installation to the boot list during `bootrec /rebuildbcd`, type `Y` and press Enter.
+
+     **Compatibility Note**: If these commands fail on newer Windows 10 versions, you can alternatively try:
+
+     ```cmd
+     bcdboot C:\Windows
+     ```
 
 3. **Exit and Restart**:
    - Type `exit` and press Enter.
@@ -108,7 +134,18 @@ GRUB typically overwrites the MBR on Legacy BIOS systems. You can restore the Wi
    - Navigate to **Troubleshoot** > **Advanced Options** > **Command Prompt**.
 
 4. **Restore the Windows Bootloader**:
-   - Run the same commands as in **Option 1**:
+   - **Important**: Verify you're working with an MBR system before proceeding:
+
+     ```cmd
+     diskpart
+     list disk
+     select disk 0
+     detail disk
+     ```
+
+     Look for "Partition style: Master Boot Record (MBR)" in the output. If you see "GPT", stop here and consult UEFI-specific guides.
+
+   - Exit diskpart and run the same commands as in **Option 1**:
 
      ```cmd
      bootrec /fixmbr
@@ -131,10 +168,14 @@ After removing GRUB, format the Linux partitions to reclaim disk space.
    - Press `Win + R`, type `diskmgmt.msc`, and press Enter.
 
 2. **Identify Linux Partitions**:
-   - Linux partitions (e.g., ext4 for `/`, `/home`, or swap) appear as "Unknown" or without a drive letter.
+   - **Critical Safety Check**: Before deleting any partitions, double-check you're identifying the correct ones:
+     - Linux partitions (e.g., ext4 for `/`, `/home`, or swap) appear as "Unknown" or without a drive letter
+     - They typically have names like "Linux filesystem" or show no file system type
    - **Warning**: Do not delete:
-     - The **C:** drive (Windows system partition, marked "Active" or "Boot").
-     - Any **Recovery** or **OEM** partitions.
+     - The **C:** drive (Windows system partition, marked "Active" or "Boot")
+     - Any **Recovery** or **OEM** partitions (usually small, 100MB-1GB)
+     - **System Reserved** partitions (usually 100-500MB)
+     - Any partition with a drive letter that you recognize
 
 3. **Delete Linux Partitions**:
    - Right-click each Linux partition and select **Delete Volume**.
@@ -155,15 +196,25 @@ After removing GRUB, format the Linux partitions to reclaim disk space.
 ## Troubleshooting
 
 - **GRUB Persists After Commands**:
-  - Re-run `bootrec /fixmbr` and `bootsect/nt60 sys`.
-  - Ensure the correct partition is marked active using `diskpart`.
+  - Re-run `bootrec /fixmbr` and `bootsect /nt60 sys` (note the space after `bootsect`)
+  - Ensure the correct partition is marked active using `diskpart`
+  - Try the alternative command: `bcdboot C:\Windows /s C: /f BIOS`
 - **Persistent Errors**:
-  - Boot from a Windows 10 live USB and repeat the commands.
+  - Boot from a Windows 10 live USB and repeat the commands
   - Check disk health with:
 
     ```cmd
     chkdsk C: /f
     ```
+
+- **"bootrec commands not recognized"**:
+  - On newer Windows 10/11 versions, use:
+
+    ```cmd
+    bcdboot C:\Windows
+    ```
+
+    instead of the traditional `bootrec` commands
 
 ## Useful Resources
 
