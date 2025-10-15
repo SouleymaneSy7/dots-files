@@ -1,0 +1,230 @@
+/**
+ * Waybar Configuration
+ * Theme: Catppuccin Macchiato
+ * Author: Souleymane Sy
+ */
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "Rec Mono Linear", "Fira Code", monospace;
+  font-weight: 600;
+  font-size: 13px;
+  min-height: 0;
+}
+
+/* ============================================
+   Catppuccin Macchiato Color Variables
+   ============================================ */
+
+@define-color base     #24273a;
+@define-color mantle   #1e2030;
+@define-color crust    #181926;
+
+@define-color text     #cad3f5;
+@define-color subtext0 #a5adcb;
+@define-color subtext1 #b8c0e0;
+
+@define-color surface0 #363a4f;
+@define-color surface1 #494d64;
+@define-color surface2 #5b6078;
+
+@define-color overlay0 #6e738d;
+@define-color overlay1 #8087a2;
+@define-color overlay2 #939ab7;
+
+@define-color blue     #8aadf4;
+@define-color lavender #b7bdf8;
+@define-color sapphire #7dc4e4;
+@define-color sky      #91d7e3;
+@define-color teal     #8bd5ca;
+@define-color green    #a6da95;
+@define-color yellow   #eed49f;
+@define-color peach    #f5a97f;
+@define-color maroon   #ee99a0;
+@define-color red      #ed8796;
+@define-color mauve    #c6a0f6;
+@define-color pink     #f5bde6;
+@define-color flamingo #f0c6c6;
+@define-color rosewater #f4dbd6;
+
+/* ============================================
+   Window
+   ============================================ */
+window#waybar {
+  background: transparent;
+  color: @text;
+}
+
+/* ============================================
+   Tooltips
+   ============================================ */
+tooltip {
+  background: @base;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+tooltip label {
+  color: @text;
+}
+
+/* ============================================
+   Workspaces
+   ============================================ */
+#workspaces {
+  background: @mantle;
+  border-radius: 6px;
+  margin: 5px 0px 5px 10px;
+  padding: 3px;
+}
+
+#workspaces button {
+  padding: 6px 10px;
+  color: @overlay0;
+  margin: 3px 4px;
+
+  border-radius: 6px;
+}
+
+#workspaces button:hover {
+  background: transparent;
+  color: @overlay0;
+  border: none;
+}
+
+#workspaces button.active {
+  color: @mauve;
+  background: @surface0;
+  font-weight: bold;
+}
+
+#workspaces button.focused {
+  color: @base;
+  background: @mauve;
+  font-weight: bold;
+  border: none;
+  border-radius: 0;
+}
+
+#workspaces button.urgent {
+  color: @base;
+  background: @red;
+  font-weight: bold;
+}
+
+/* ============================================
+   Common Module Styles
+   ============================================ */
+#window,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#tray,
+#backlight {
+  background: @mantle;
+  padding: 6px 14px;
+  margin: 5px 0px;
+}
+
+/* ============================================
+   Window Title
+   ============================================ */
+#window {
+  color: @lavender;
+  border-radius: 6px;
+  margin-left: 60px;
+  margin-right: 60px;
+  font-weight: normal;
+}
+
+/* ============================================
+   Clock
+   ============================================ */
+#clock {
+  color: @mauve;
+  border-radius: 6px;
+  margin-left: 5px;
+  font-weight: bold;
+  background: @mantle;
+}
+
+/* ============================================
+   System Tray
+   ============================================ */
+#tray {
+  border-radius: 6px;
+  margin-right: 10px;
+  padding: 6px 12px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @red;
+}
+
+/* ============================================
+   Memory
+   ============================================ */
+#memory {
+  color: @green;
+  border-radius: 6px 0px 0px 6px;
+}
+
+#memory.critical {
+  color: @red;
+}
+
+#memory.high {
+  color: @yellow;
+}
+
+#memory.medium {
+  color: @green;
+}
+
+/* ============================================
+   CPU
+   ============================================ */
+#cpu {
+  color: @blue;
+  border-radius: 0px 6px 6px 0px;
+  margin-right: 10px;
+}
+
+/* ============================================
+   Network
+   ============================================ */
+#network {
+  color: @sapphire;
+  border-radius: 6px 0px 0px 6px;
+}
+
+#network.disconnected {
+  color: @red;
+}
+
+/* ============================================
+   Audio (PulseAudio)
+   ============================================ */
+#pulseaudio {
+  color: @peach;
+  border-radius: 0px;
+  margin-right: 10px;
+  border-radius: 0px 6px 6px 0px;
+}
+
+#pulseaudio.muted {
+  color: @overlay0;
+}

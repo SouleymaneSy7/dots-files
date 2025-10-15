@@ -1,0 +1,84 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mode": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "height": 0,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["tray", "memory", "cpu", "network", "pulseaudio"],
+
+  "hyprland/window": {
+    "format": "󰣇 {}",
+  },
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "on-click": "activate",
+    "format": "{icon}",
+  },
+
+  "tray": {
+    "icon-size": 13,
+    "spacing": 10,
+  },
+
+  "clock": {
+    "format": "  {:%I:%M %p}",
+    "format-alt": "  {:%H:%M}",
+    "interval": 60,
+    "tooltip": false,
+  },
+
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "tooltip": false,
+    "format-muted": "  Muted",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", "", ""],
+    },
+  },
+
+  "memory": {
+    "states": {
+      "c": 90, // critical
+      "h": 60, // high
+      "m": 30, // medium
+    },
+    "interval": 10,
+    "format": "󰾆 {used}GB",
+    "format-m": "󰾅 {used}GB",
+    "format-h": "󰓅 {used}GB",
+    "format-c": " {used}GB",
+    "format-alt": "󰾆 {percentage}%",
+    "max-length": 10,
+    "tooltip": true,
+    "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
+  },
+
+  "cpu": {
+    "interval": 10,
+    "format": "󰍛 {usage}%",
+  },
+
+  "network": {
+    "tooltip": true,
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀 ",
+    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+    "format-linked": "󰈀 {ifname} (No IP)",
+    "format-disconnected": "󰖪 ",
+    "tooltip-format-disconnected": "Disconnected",
+    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
+    "interval": 2,
+  },
+}
