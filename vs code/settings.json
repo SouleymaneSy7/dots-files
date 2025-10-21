@@ -1,0 +1,179 @@
+{
+  // --------------------------------------------------------
+  // 1) Editor Appearance
+  // Visual settings: font, size, weight, ligatures, cursor, minimap, whitespace rendering
+  // --------------------------------------------------------
+  "editor.fontFamily": "'Rec Mono Casual'",
+  "editor.fontSize": 18,
+  "editor.fontWeight": "700",
+  "editor.lineHeight": 1.5,
+  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss08', 'ss09', 'ss12', 'zero', 'onum', 'dlig'",
+  // Other option for font ligatures:
+  // "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'zero', 'onum'",
+  "editor.renderWhitespace": "all",
+  "editor.renderControlCharacters": true,
+  "editor.cursorBlinking": "blink",
+  "editor.cursorSmoothCaretAnimation": "off",
+  "editor.minimap.autohide": "mouseover",
+  "editor.inlayHints.fontSize": 18,
+  "editor.inlayHints.fontFamily": "'Rec Mono Linear'",
+  "editor.inlayHints.enabled": "on",
+  "editor.codeLensFontFamily": "'Rec Mono Linear'",
+  "editor.codeLensFontSize": 18,
+  "editor.suggestFontSize": 18,
+  "editor.cursorStyle": "line",
+  "editor.inlineSuggest.fontFamily": "'Rec Mono Linear'",
+
+  // ---------------------------------------------------------------
+  // 2) Editor Behavior
+  // Formatting, indentation, suggestions, linked editing, word wrap
+  // ---------------------------------------------------------------
+  "editor.tabSize": 2,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.wordWrap": "on",
+  "editor.linkedEditing": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "editor.guides.bracketPairs": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.largeFileOptimizations": false,
+  "editor.accessibilitySupport": "off",
+
+  // -------------------------------
+  // 3) Language-specific formatters
+  // -------------------------------
+  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[scss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[sass]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[tailwindcss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[jsx]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[vue]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[vue-html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[markdown]": { "editor.defaultFormatter": "DavidAnson.vscode-markdownlint" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+
+  // -----------------------------
+  // 4) Integrated Terminal
+  // -----------------------------
+  "terminal.integrated.fontFamily": "'Rec Mono Linear'",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontLigatures.featureSettings": "\"calt\" on, \"dlig\" on, \"ss05\" on",
+  "terminal.integrated.fontSize": 17,
+  "terminal.integrated.fontWeight": "700",
+  "terminal.integrated.lineHeight": 1.2,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorStyleInactive": "line",
+  "terminal.integrated.cursorWidth": 2,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.explorerKind": "external",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  // "terminal.integrated.defaultProfile.linux": "zsh",
+
+  // -----------------------------
+  // 5) Workbench / UI
+  // -----------------------------
+  "workbench.colorTheme": "Bearded Theme Arc EolStorm",
+  "workbench.iconTheme": "gruvbox-material-icon-theme",
+  "workbench.productIconTheme": "material-product-icons",
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.tree.indent": 10,
+
+  // -----------------------------
+  // 6) Git & GitLens
+  // -----------------------------
+  "git.openRepositoryInParentFolders": "never",
+  "git.enableSmartCommit": true,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.defaultDateFormat": "March 21th, 2022 20:05",
+  "gitlens.defaultTimeFormat": "20:05",
+  "gitlens.defaultDateShortFormat": "21 march 2022",
+  "gitlens.currentLine.format": "${author, }${agoOrDate}${' via  'pullRequest}${ • message|50?}${tips}$",
+
+  // -----------------------------
+  // 7) Explorer & Files
+  // -----------------------------
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "json.schemas": [],
+
+  // -----------------------------
+  // 8) Extensions & Helpers
+  // -----------------------------
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html",
+    "vue": "html",
+    "typescript": "typescriptreact"
+  },
+  "svg.preview.mode": "svg",
+  "importCost.fontStyle": "italic",
+  "markdown.preview.fontFamily": "'Rec Mono Linear'",
+  "markdown.preview.fontSize": 16,
+  "colorize.colorized_colors": ["BROWSERS_COLORS", "HEXA", "RGB", "HSL"],
+  "colorize.include": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "**/*.styl",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.vue"
+  ],
+  "colorize.languages": [
+    "css",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "scss",
+    "sass",
+    "vue",
+    "html"
+  ],
+
+  // -----------------------------
+  // 9) JS/TS helpers
+  // -----------------------------
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.paths": true,
+  "javascript.suggest.paths": true,
+
+  // -----------------------------
+  // 10) Vim Settings
+  // -----------------------------
+  "vim.enableNeovim": true,
+  "vim.highlightedyank.enable": true,
+  "vim.hlsearch": true,
+
+  // -----------------------------
+  // 11) Debug & Console
+  // -----------------------------
+  "debug.console.fontFamily": "'Rec Mono Linear'",
+  "scm.inputFontFamily": "'Rec Mono Linear'",
+  "chat.editor.fontFamily": "'Rec Mono Linear'"
+}
