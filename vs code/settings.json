@@ -109,6 +109,7 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
+  "files.autoSave": "afterDelay",
   "security.workspace.trust.untrustedFiles": "open",
   "json.schemas": [],
 
