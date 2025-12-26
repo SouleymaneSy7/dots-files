@@ -36,7 +36,9 @@ This configuration delivers a lightweight, performant, and visually cohesive des
 ├── nvim/                             # LazyVim configuration for Neovim
 ├── kitty/                            # Kitty terminal configuration
 ├── rofi/                             # Rofi launcher configuration
+├── vs code/                          # Vs code configuration
 ├── waybar/                           # Waybar status bar configuration
+├── zsh/                              # ZSH terminal configuration
 ├── ARCH_LINUX_INSTALLATION.md        # Arch Linux installation guide
 ├── README.md                         # This file
 ├── SWAP_FILE_CREATION.md             # Swap file creation guide
@@ -49,7 +51,7 @@ This configuration delivers a lightweight, performant, and visually cohesive des
 ### Prerequisites
 
 - A working Arch Linux installation.
-- Required packages: `hyprland`, `neovim`, `kitty`, `waybar`, `rofi`, `hyprpaper`, `hyprlock`, `hypridle`.
+- Required packages: `hyprland`, `neovim`, `kitty`, `waybar`, `rofi`, `hyprpaper`, `hyprlock`, `hypridle`...
 - Install dependencies for each tool (refer to their official documentation, e.g., [Hyprland Wiki](https://wiki.hyprland.org) or [Waybar Examples](https://github.com/Alexays/Waybar/wiki/Examples)).
 
 ### Backup Recommendation
@@ -67,8 +69,8 @@ Before applying new configurations, back up your existing configuration files (e
 2. **Apply Configurations**:
    Copy the configuration files to their respective directories:
 
-3. **Restart Hyprland**:
-   Reload Hyprland to apply the new configuration:
+3. **Restart `Hyprland`**:
+   Reload `Hyprland` to apply the new configuration:
 
    ```bash
    hyprctl reload  # Reloads Hyprland configuration without restarting the session
