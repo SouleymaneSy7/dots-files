@@ -3,6 +3,7 @@
 This document outlines the commands and steps for installing and configuring Arch Linux, including dual-boot setup with Windows on a MBR/Legacy Bios. The guide assumes you are working from a live Arch Linux ISO environment.
 
 ## Table of Contents
+
 1. [Initial Setup](#initial-setup)
    - [Keymap Configuration](#keymap-configuration)
    - [Internet Connection](#internet-connection)
@@ -49,10 +50,11 @@ localectl list-keymaps
 localectl list-keymaps | grep fr
 
 # Set the French keymap
+loadkeys fr
 echo "KEYMAP=fr" >> /etc/vconsole.conf
 ```
 
-**Note**: Replace `fr` with your preferred keymap (e.g., `us` for US English).
+**Note**: Replace `fr` with your preferred keymaps (e.g., `us` for US English).
 
 ### Internet Connection
 
@@ -250,7 +252,6 @@ pacman -Syu
 pacman -S grub ntfs-3g os-prober
 ```
 
-
 ### Configure GRUB
 
 Set up GRUB for booting.
@@ -278,7 +279,7 @@ systemctl enable NetworkManager
 
 ## Exit and Reboot
 
-Exit the chroot environment, unmount partitions, and reboot.
+Exit the chroot environment, unmount partitions, and reboot your computer.
 
 ```bash
 # Exit chroot
@@ -331,16 +332,19 @@ sudo systemctl enable sddm
 Choose and install a desktop environment.
 
 **XFCE**:
+
 ```bash
 pacman -S xfce4 xfce4-goodies
 ```
 
 **GNOME**:
+
 ```bash
 pacman -S gnome
 ```
 
 **KDE Plasma**:
+
 ```bash
 pacman -S plasma kde-applications
 ```
@@ -362,12 +366,14 @@ fc-cache -f
 ```
 
 **Install Noto Fonts and Emojis**:
+
 ```bash
 pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji
 fc-cache -f
 ```
 
 **Install Nerd Fonts**:
+
 ```bash
 pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd ttf-ibmplex-mono-nerd ttf-iosevka-nerd ttf-jetbrains-mono-nerd ttf-meslo-nerd ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono
 fc-cache -f
