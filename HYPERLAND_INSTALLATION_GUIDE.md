@@ -3,55 +3,82 @@
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [System Preparation](#system-preparation)
-3. [Hyprland Installation](#hyprland-installation)
-4. [Initial Configuration](#initial-configuration)
-5. [Installing Essential Tools](#installing-essential-tools)
-6. [Applying Configurations](#applying-configurations)
-7. [Finalization](#finalization)
+2. [Prerequisites](#prerequisites)
+3. [System Preparation](#system-preparation)
+4. [Hyprland Installation](#hyprland-installation)
+5. [Essential Applications](#essential-applications)
+6. [Configuration Setup](#configuration-setup)
+7. [Post-Installation](#post-installation)
+8. [Usage Guide](#usage-guide)
+9. [Customization](#customization)
+10. [Additional Resources](#additional-resources)
 
 ## Introduction
 
-This guide details the installation and configuration of [Hyprland](https://hypr.land/), a dynamic Wayland compositor, on a fresh Arch Linux installation. We will set up a complete environment with the following tools:
+This guide details the installation and configuration of [Hyprland](https://hypr.land/), a dynamic Wayland compositor, on a fresh Arch Linux installation.
 
-- **Browser**: `Brave`
-- **Terminal**: `Ghostty` with `Zsh` and `Oh-My-Zsh`
-- **Application Launcher**: `Rofi`
-- **Status Bar**: `Waybar`
-- **Wallpaper**: `Hyprpaper`
-- **File Manager**: `Thunar`
-- **Text Editor**: `Neovim` with `LazyVim`
-- **Theme**: `Catppuccin Mocha`
+### Environment Overview
 
-All configurations will be fetched directly from the [dots-files](https://github.com/souleymanesy7/dots-files) repository.
+This setup includes:
+
+- **Browser**: Brave
+- **Terminal**: Ghostty with Zsh and Oh-My-Zsh
+- **Application Launcher**: Rofi
+- **Status Bar**: Waybar
+- **Wallpaper Manager**: Hyprpaper
+- **Screen Lock**: Hyprlock
+- **Idle Manager**: Hypridle
+- **File Manager**: Thunar
+- **Text Editor**: Neovim with LazyVim
+- **Notification Daemon**: Dunst
+- **Logout Menu**: wlogout
+
+All configurations are managed through the [dots-files](https://github.com/souleymanesy7/dots-files) repository.
+
+## Prerequisites
+
+- A fresh Arch Linux installation with base system installed
+- Internet connection
+- Basic familiarity with the Linux command line
+- Sudo privileges
 
 ## System Preparation
 
-### System Update
+### Update System
 
-Start by updating your Arch Linux system:
+Update your Arch Linux system to the latest packages:
 
 ```bash
 sudo pacman -Syu
 ```
 
-### Installing Git and Development Tools
+### Install Base Development Tools
 
-Git is essential for cloning repositories and installing the `AUR` helper:
+Install Git and base development tools:
 
 ```bash
-sudo pacman -S git
+sudo pacman -S base-devel git
 ```
 
-### Installing Yay (AUR Helper)
+Configure Git:
 
-`Yay` facilitates package installation from the `AUR`:
+```bash
+git config --global user.name "Your name"
+git config --global user.email "your.email@example.com"
+git config --global init.defaultBranch main
+git config --global core.longpaths true
+```
+
+### Install AUR Helper (Yay)
+
+Yay simplifies installation of packages from the Arch User Repository:
 
 ```bash
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si PKGBUILD
 cd ~
+rm -rf yay
 ```
 
 ### Cloning the dots-files Repository
@@ -62,22 +89,24 @@ Clone the configuration repository:
 git clone https://github.com/souleymanesy7/dots-files.git ~/dots-files
 ```
 
-### Installing Audio System
+### Install System Services
 
-Install `Pipewire` for modern audio management:
+#### Audio System (Pipewire)
 
 ```bash
 sudo pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber
 ```
 
-### Installing Fonts
+#### Fonts
 
-Nerd Fonts are essential for proper icon display:
+Install Nerd Fonts for proper icon display:
 
 ```bash
-sudo pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd ttf-ibmplex-mono-nerd ttf-iosevka-nerd ttf-jetbrains-mono-nerd ttf-meslo-nerd ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono
+sudo pacman -S ttf-cascadia-code-nerd ttf-cascadia-mono-nerd ttf-firacode-nerd \
+  ttf-ibmplex-mono-nerd ttf-iosevka-nerd ttf-jetbrains-mono-nerd ttf-meslo-nerd \
+  ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono
 
-fc-cache -f
+fc-cache -fv
 ```
 
 ## Hyprland Installation
@@ -102,43 +131,69 @@ To manage system permissions:
 sudo pacman -S polkit-kde-agent
 ```
 
-### First Launch (Optional)
+### Additional Hyprland Tools
 
-If you don't have a display manager, you can launch `Hyprland` from the `Terminal` to test:
+Install screen locking and wallpaper management:
+
+### Hyprpaper
+
+```bash
+sudo pacman -S hyprpaper
+```
+
+### Hyprlock and Hypridle
+
+For screen locking and idle management:
+
+```bash
+sudo pacman -S hyprlock hypridle
+```
+
+### System Utilities
+
+Install brightness, volume, notification, and screenshot tools:
+
+```bash
+# Brightness control
+sudo pacman -S brightnessctl
+
+# Volume control
+sudo pacman -S pamixer
+
+# Notifications
+sudo pacman -S dunst
+
+# Screenshots
+sudo pacman -S grim slurp
+```
+
+### First Launch Test (Optional)
+
+Test Hyprland from the terminal:
 
 ```bash
 Hyprland
 ```
 
-`Hyprland` will automatically create its configuration in `~/.config/hypr/`. You can exit with `SUPER + M`.
+Hyprland will create its default configuration in `~/.config/hypr/`. Exit with `SUPER + M`.
 
-## Initial Configuration
+## Essential Applications
 
-### Creating Configuration Directories
-
-Create necessary directories if they don't exist yet:
-
-```bash
-mkdir -p ~/.config/{hypr,waybar,rofi,ghostty,dunst,nvim}
-```
-
-## Installing Essential Tools
-
-### Brave Browser
+### Browser
 
 ```bash
 yay -S brave-bin
 ```
 
-### Ghostty Terminal
+### Terminal Emulator
 
 ```bash
 yay -S ghostty
 ```
 
-### Zsh and Oh-My-Zsh
+### Shell (Zsh)
 
-Installing `Zsh`:
+#### Install Zsh
 
 ```bash
 sudo pacman -S zsh zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
@@ -150,11 +205,13 @@ Change your default shell to `Zsh`:
 chsh -s $(which zsh)
 ```
 
-Installing `Oh-My-Zsh`
+#### Install Oh-My-Zsh
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
+
+#### Install Zsh Plugins
 
 Install recommended plugins:
 
@@ -182,59 +239,35 @@ Install recommended plugins:
   git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
   ```
 
-Plugins configurations:
-
-Enable plugins by adding them to the `.zshrc` file:
-
-- open the `.zshrc` with `nano` or `vim`
-- Find the line which says `plugins=(git)`
-- Replace that line with:
-
-```zshrc
-plugins=(
-  git
-  zsh-autocomplete
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  fast-syntax-highlighting
- )
-```
-
-### Rofi (Wayland Version)
+### Application Launcher
 
 ```bash
 sudo pacman -S rofi-wayland
 ```
 
-### Waybar
+### Status Bar
 
 ```bash
 sudo pacman -S waybar
 ```
 
-### Hyprpaper
+### Logout Menu
 
 ```bash
-sudo pacman -S hyprpaper
+yay -S wlogout
 ```
 
-### Hyprlock and Hypridle
-
-For screen locking and idle management:
-
-```bash
-sudo pacman -S hyprlock hypridle
-```
-
-### Thunar
+### File Manager
 
 ```bash
 sudo pacman -S thunar thunar-volman thunar-archive-plugin gvfs
 ```
 
-### Neovim with LazyVim
+### Text Editor (Neovim)
 
-Installing `Neovim` and all required dependencies:
+#### Install Neovim and Dependencies
+
+Install `Neovim` and all required dependencies:
 
 ```bash
 # Core Neovim and essential tools (required)
@@ -250,93 +283,7 @@ sudo pacman -S lazygit # Git TUI - highly recommended for LazyVim
 
 Additional dependencies like `language servers`, `formatters`, and `linters` can be installed later through `LazyVim's Mason` plugin after setup.
 
-### Additional Utilities
-
-```bash
-# Brightness control
-sudo pacman -S brightnessctl
-
-# Volume control
-sudo pacman -S pamixer
-
-# Notifications
-sudo pacman -S dunst
-
-# Screenshots
-sudo pacman -S grim slurp
-```
-
-## Applying Configurations
-
-### Zsh Configuration
-
-Copy the configuration from the `dots-files` repository:
-
-```bash
-cp ~/dots-files/zsh/.zshrc ~/.zshrc
-```
-
-Reload the `Zsh` configuration:
-
-```bash
-source ~/.zshrc
-```
-
-### Ghostty Configuration
-
-Copy the `Ghostty` configuration:
-
-```bash
-cp ~/dots-files/ghostty/config ~/.config/ghostty/config
-```
-
-### Hyprland Configuration
-
-Copy all `Hyprland` configurations:
-
-```bash
-cp -r ~/dots-files/hyprland/* ~/.config/hypr/
-```
-
-This will include:
-
-- `hyprland.conf`: Main Hyprland configuration
-- `hyprpaper.conf`: Wallpaper configuration
-- `hyprlock.conf`: Screen lock configuration
-- `hypridle.conf`: Idle management configuration
-
-### Waybar Configuration
-
-Copy the `Waybar` configuration:
-
-```bash
-cp -r ~/dots-files/waybar/new/* ~/.config/waybar/
-```
-
-This will include:
-
-- `config`: Waybar modules configuration
-- `style.css`: CSS styles for Waybar
-
-### Rofi Configuration
-
-Copy the `Rofi` configuration:
-
-```bash
-cp -r ~/dots-files/rofi/new/* ~/.config/rofi/
-```
-
-### Dunst Configuration
-
-Copy `Dunst` configuration:
-
-```bash
-cp -r ~/dots-files/dunst/* ~/.config/dunst/
-```
-
-### Neovim Configuration (LazyVim)
-
-Install the LazyVim distro:
+#### Install LazyVim
 
 ```bash
 # Backup existing Neovim files (required)
@@ -355,6 +302,86 @@ rm -rf ~/.config/nvim/.git
 
 ```
 
+## Configuration Setup
+
+### Create Configuration Directories
+
+```bash
+mkdir -p ~/.config/{hypr,waybar,rofi,ghostty,dunst,nvim}
+```
+
+### Apply Dotfiles
+
+#### Hyprland
+
+```bash
+cp -r ~/dots-files/hyprland/* ~/.config/hypr/
+```
+
+This includes:
+- `hyprland.conf` - Main configuration
+- `hyprpaper.conf` - Wallpaper settings
+- `hyprlock.conf` - Lock screen settings
+- `hypridle.conf` - Idle management
+
+#### Waybar
+
+```bash
+cp -r ~/dots-files/waybar/new/* ~/.config/waybar/
+```
+
+Includes `config` and `style.css` files.
+
+#### Rofi
+
+```bash
+cp -r ~/dots-files/rofi/new/* ~/.config/rofi/
+```
+
+#### Ghostty
+
+```bash
+cp -r ~/dots-files/ghostty/* ~/.config/ghostty/
+```
+
+#### Dunst
+
+```bash
+cp -r ~/dots-files/dunst/* ~/.config/dunst/
+```
+
+#### Zsh
+
+```bash
+cp ~/dots-files/zsh/.zshrc ~/.zshrc
+```
+
+Plugins configurations:
+
+Enable plugins by adding them to the `.zshrc` file:
+
+- open the `.zshrc` with `nano` or `vim`
+- Find the line which says `plugins=(git)`
+- Replace that line with:
+
+```zshrc
+plugins=(
+  git
+  zsh-autocomplete
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  fast-syntax-highlighting
+ )
+```
+
+Reload configuration:
+
+```bash
+source ~/.zshrc
+```
+
+#### Neovim
+
 Copy the Neovim configuration:
 
 ```bash
@@ -367,13 +394,10 @@ fi
 cp -r ~/dots-files/nvim ~/.config/nvim
 ```
 
-#### First Launch
-
 Start `Neovim` to automatically install all plugins:
 
 ```bash
 nvim
-
 ```
 
 **What to Expect:**
@@ -383,114 +407,119 @@ nvim
 - Wait until all plugins are installed (you'll see "✓" checkmarks).
 - Once complete, press `q` to close the Lazy window.
 
-#### Post-Installation Health Check
-
-After the initial plugin installation, run a health check:
-
-```bash
-# Inside Neovim, run:
-:LazyHealth
-
-```
-
-This will check if everything is working correctly and show any missing dependencies.
-
-#### Installing Language Servers and Tools
-
-`LazyVim` uses `Mason` to manage `LSPs`, `formatters`, and `linters`. To install tools:
-
-```bash
-# Inside Neovim, run:
-:Mason
-
-```
-
-Navigation in Mason:
-
-- `I` - Install package
-- `X` - Uninstall package
-- `U` - Update package
-- `/` - Search
-- `q` - Quit
-
-#### Customizing LazyVim
-
-To customize LazyVim, edit the files in `~/.config/nvim/lua/`:
-
-- `lua/config/options.lua` - Neovim options
-- `lua/config/keymaps.lua` - Custom keybindings
-- `lua/config/lazy.lua` - Lazy.nvim setup
-- `lua/plugins/` - Add your custom plugins here
-
-Refer to the [LazyVim documentation](https://www.lazyvim.org/configuration) for detailed customization options.
-
-### Wallpapers Configuration
-
-Copy wallpapers from the repository:
+#### Wallpapers
 
 ```bash
 mkdir -p ~/Pictures
 cp -r ~/dots-files/assets/wallpaper/* ~/Pictures/
 ```
 
-If you're using `Hyprpaper`, make sure the paths in `~/.config/hypr/hyprpaper.conf` match the copied wallpapers.
+Ensure wallpaper paths in `~/.config/hypr/hyprpaper.conf` match the copied files.
 
-## Finalization
+## Post-Installation
 
-### Starting Hyprland
+### Launch Hyprland
 
-If you're using a display manager (like `SDDM`), simply reboot:
+#### With Display Manager
+
+If using a display manager like SDDM:
 
 ```bash
 sudo reboot
 ```
 
-Otherwise, launch `Hyprland` from the `TTY`:
+Select Hyprland from the session menu.
+
+#### Without Display Manager
+
+From TTY:
 
 ```bash
 Hyprland
 ```
 
-### Verifying Everything Works
+### Verify Installation
 
-Once in `Hyprland`, verify that everything is working:
+Test each component:
 
-1. **`Terminal`**: Press `SUPER + T` to open Ghostty
-2. **`Waybar`**: Should be visible at the top of the screen
-3. **`Rofi`**: Press `SUPER + SPACE` to open the application launcher
-4. **`Browser`**: Press `SUPER + B` to open Brave
-5. **`File Manager`**: Press `SUPER + E` to open Thunar
+1. **Terminal**: `SUPER + T` → Opens Ghostty
+2. **Waybar**: Should appear at the top of the screen
+3. **Application Launcher**: `SUPER + SPACE` → Opens Rofi
+4. **Browser**: `SUPER + B` → Opens Brave
+5. **File Manager**: `SUPER + E` → Opens Thunar
 
-### Main Keyboard Shortcuts
+### Configure Neovim (First Run)
 
-Here are the essential keyboard shortcuts (according to the dots-files configuration):
+Inside Neovim, check system health:
 
-- `SUPER + T`: Open terminal (Ghostty)
-- `SUPER + SPACE`: Open Rofi (application launcher)
-- `SUPER + B`: Open Brave (browser)
-- `SUPER + E`: Open Thunar (file manager)
-- `SUPER + Q`: Close active window
-- `SUPER + M`: Exit Hyprland
-- `SUPER + F`: Toggle fullscreen
-- `SUPER + V`: Toggle floating mode
-- `SUPER + L`: Lock screen (Hyprlock)
-- `SUPER + 1-10`: Switch workspace
-- `SUPER + SHIFT + 1-10`: Move window to workspace
-- `PRINT`: Selective screenshot
-- `SUPER + PRINT`: Full screenshot
+```vim
+:LazyHealth
+```
+
+Install language servers and tools:
+
+```vim
+:Mason
+```
+
+Mason navigation:
+- `I` - Install package
+- `X` - Uninstall package
+- `U` - Update package
+- `/` - Search
+- `q` - Quit
+
+## Usage Guide
+
+### Keyboard Shortcuts
+
+These keyboard shortcuts are based on the configuration from the dots-files repository.
+
+#### Window Management
+- `SUPER + Q` - Close active window
+- `SUPER + F` - Toggle fullscreen
+- `SUPER + V` - Toggle floating mode
+- `SUPER + M` - Exit Hyprland
+
+#### Applications
+- `SUPER + T` - Open terminal (Ghostty)
+- `SUPER + B` - Open browser (Brave)
+- `SUPER + E` - Open file manager (Thunar)
+- `SUPER + SPACE` - Open application launcher (Rofi)
+
+#### Workspaces
+- `SUPER + 1-10` - Switch to workspace
+- `SUPER + SHIFT + 1-10` - Move window to workspace
+
+#### System
+- `SUPER + L` - Lock screen
+- `SUPER + ESCAPE` - Logout menu
+- `PRINT` - Selective screenshot
+- `SUPER + PRINT` - Full screenshot
+
 
 ## Customization
 
-All your configurations are now in `~/.config/`. You can modify them according to your preferences:
+### Configuration Files
 
-- **`Hyprland`**: Edit `~/.config/hypr/hyprland.conf`
-- **`Waybar`**: Edit `~/.config/waybar/config` and `~/.config/waybar/style.css`
-- **`Rofi`**: Edit `~/.config/rofi/config.rasi`
-- **`Ghostty`**: Edit `~/.config/ghostty/config`
-- **`Zsh`**: Edit `~/.zshrc`
-- **`Neovim`**: Edit files in `~/.config/nvim/lua/`
+All configurations are located in `~/.config/`:
 
-Don't forget to save your personal modifications in the dots-files repository:
+- **Hyprland**: `~/.config/hypr/hyprland.conf`
+- **Waybar**: `~/.config/waybar/config` and `~/.config/waybar/style.css`
+- **Rofi**: `~/.config/rofi/config.rasi`
+- **Ghostty**: `~/.config/ghostty/config`
+- **Zsh**: `~/.zshrc`
+- **Neovim**: `~/.config/nvim/lua/`
+  - `lua/config/options.lua` - Neovim options
+  - `lua/config/keymaps.lua` - Custom keybindings
+  - `lua/config/lazy.lua` - Lazy.nvim setup
+  - `lua/plugins/` - Custom plugins
+
+For LazyVim customization, refer to the [official documentation](https://www.lazyvim.org/configuration).
+
+### Saving Changes
+
+Commit your modifications to the dots-files repository:
 
 ```bash
 cd ~/dots-files
@@ -501,10 +530,16 @@ git push origin main
 
 ## Additional Resources
 
-Also check out the other guides in the dots-files repository:
+### Related Guides
 
 - [Arch Linux Installation Guide](./ARCH_LINUX_INSTALLATION.md)
 - [Swap File Creation](./SWAP_FILE_CREATION.md)
 - [Uninstalling Linux on Dual Boot](./UNINSTALL_LINUX_ON_DUAL_BOOT.md)
 - [Useful Resources](./USEFUL_RESOURCES.md)
 
+### Documentation
+
+- [Hyprland Wiki](https://wiki.hyprland.org/)
+- [Arch Wiki](https://wiki.archlinux.org/)
+- [LazyVim Documentation](https://www.lazyvim.org/)
+- [Waybar Wiki](https://github.com/Alexays/Waybar/wiki)
