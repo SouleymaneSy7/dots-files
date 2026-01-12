@@ -281,8 +281,6 @@ sudo pacman -S lazygit # Git TUI - highly recommended for LazyVim
 
 ```
 
-Additional dependencies like `language servers`, `formatters`, and `linters` can be installed later through `LazyVim's Mason` plugin after setup.
-
 #### Install LazyVim
 
 ```bash
@@ -301,6 +299,8 @@ git clone https://github.com/LazyVim/starter ~/.config/nvim
 rm -rf ~/.config/nvim/.git
 
 ```
+
+Additional dependencies like `language servers`, `formatters`, and `linters` can be installed later through `LazyVim's Mason` plugin after setup.
 
 ## Configuration Setup
 
