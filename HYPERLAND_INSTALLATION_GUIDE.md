@@ -158,7 +158,7 @@ Install brightness, volume, notification, and screenshot tools:
 sudo pacman -S brightnessctl
 
 # Volume control
-sudo pacman -S pamixer
+sudo pacman -S pamixer pavucontrol
 
 # Notifications
 sudo pacman -S dunst
