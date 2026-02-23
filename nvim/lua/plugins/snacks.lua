@@ -1,29 +1,50 @@
+-- ═══════════════════════════════════════════════════════════
+-- PLUGINS - snacks.nvim (Explorer & Notifier Configuration)
+-- ═══════════════════════════════════════════════════════════
+--
 -- Show ignored files (dotfiles)
-local excluded = {
-  "node_modules/",
-  "dist/",
-  ".vite/",
-  ".git/",
+-- Configures snacks.nvim to display hidden and git-ignored files
+-- in the file explorer, while excluding noisy build artifacts and lockfiles.
 
-  "package-lock.json",
-  "pnpm-lock.yaml",
-  "yarn.lock",
+-- ─── Excluded Paths ────────────────────────────────────────
+-- Files and directories listed here will never appear in the explorer,
+-- even when hidden and ignored visibility are both enabled.
+-- This keeps the tree clean by hiding irrelevant generated files.
+local excluded = {
+  ".git/", -- Git internals directory
+  "dist/", -- Build output directory
+  ".vite/", -- Vite cache directory
+  "node_modules/", -- NPM dependency tree (usually very large)
+  "bun.lock", -- Bun lockfile
+  "yarn.lock", -- Yarn lockfile
+  "pnpm-lock.yaml", -- PNPM lockfile
+  "package-lock.json", -- NPM lockfile
 }
 
 return {
   "folke/snacks.nvim",
   opts = {
+    -- ─── Notifier ──────────────────────────────────────────────
+    -- Enables the snacks notification system, which provides styled
+    -- popup notifications as an alternative to nvim-notify.
     notifier = { enabled = true },
 
-    -- show hidden files in snacks.explorer
+    -- ─── Picker / Explorer ─────────────────────────────────────
+    -- Configures the snacks picker sources, specifically the built-in
+    -- file explorer to control which files are visible.
     picker = {
       sources = {
         explorer = {
-          -- show hidden files like .env
+          -- Show dotfiles and other hidden files (e.g. .env, .gitignore)
+          -- that are normally invisible in file explorers.
           hidden = true,
-          -- show files ignored by git like node_modules
+
+          -- Show files that are ignored by git (e.g. node_modules, dist)
+          -- so they can be accessed when needed without leaving Neovim.
           ignored = true,
-          -- exlude some file
+
+          -- Apply the exclusion list defined above to filter out
+          -- files and directories that add noise without value.
           exclude = excluded,
         },
       },
