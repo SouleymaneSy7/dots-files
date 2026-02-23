@@ -1,6 +1,20 @@
+-- ═══════════════════════════════════════════════════════════
+-- PLUGINS - nvim-spider (Smarter Word Motion)
+-- ═══════════════════════════════════════════════════════════
+--
+-- Overrides the default w, e, and b word motion keys with smarter
+-- versions that respect camelCase, snake_case, and subword boundaries,
+-- making navigation through identifiers more precise.
+
 return {
   "chrisgrieser/nvim-spider",
-  opts = {},
+
+  opts = {}, -- Use default plugin options
+
+  -- ─── Keymaps ───────────────────────────────────────────────
+  -- Remaps w, e, and b to spider's motion functions in normal,
+  -- operator-pending, and visual modes. This means spider motions
+  -- also work as text objects (e.g. dw, ce, vb).
   keys = {
     {
       "w",
