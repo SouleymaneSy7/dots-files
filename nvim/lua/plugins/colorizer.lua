@@ -5,6 +5,7 @@
 -- Colors (hex, rgb, hsl, etc.) highlighter for neovim
 -- This plugin visually highlights color codes directly in the buffer,
 -- rendering them with their actual color as a background or foreground swatch.
+
 return {
   {
     "catgoose/nvim-colorizer.lua",
