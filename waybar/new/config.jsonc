@@ -1,84 +1,129 @@
 {
-  "layer": "top",
-  "position": "top",
-  "mode": "dock",
-  "exclusive": true,
-  "passthrough": false,
-  "gtk-layer-shell": true,
-  "height": 0,
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["clock"],
-  "modules-right": ["tray", "memory", "cpu", "network", "pulseaudio"],
+  // ═══════════════════════════════════════════════════════════
+  // WAYBAR - Status Bar Configuration
+  // ═══════════════════════════════════════════════════════════
+  //
+  // Waybar is a highly customizable status bar for Wayland compositors.
+  // This file configures its layout, modules, and per-module display options.
+  // Full documentation: https://github.com/Alexays/Waybar/wiki
 
+  // ─── Bar Layout ────────────────────────────────────────────
+  "layer": "top", // Render the bar above all windows (top layer)
+  "position": "top", // Anchor the bar to the top edge of the monitor
+  "mode": "dock", // Reserve screen space so windows don't overlap the bar
+  "exclusive": true, // Claim exclusive screen space (prevents overlap)
+  "passthrough": false, // Intercept mouse events (don't pass clicks through to windows)
+  "gtk-layer-shell": true, // Use gtk-layer-shell for Wayland layer surface rendering
+  "height": 0, // Auto-size height based on content (0 = dynamic)
+
+  // ─── Module Layout ─────────────────────────────────────────
+  // Defines which modules appear on the left, center, and right of the bar.
+  "modules-left": ["hyprland/workspaces"], // Workspace switcher on the left
+  "modules-center": ["clock"], // Clock centered
+  "modules-right": ["tray", "memory", "cpu", "network", "pulseaudio"], // System info on the right
+
+  // ─── Hyprland Window Title ─────────────────────────────────
+  // Displays the title of the currently focused window.
+  // (Module not listed in modules-* above; kept for reference)
   "hyprland/window": {
-    "format": "󰣇 {}",
+    "format": "󰣇 {}", // Nerd Font icon prefix followed by the window title
   },
 
+  // ─── Hyprland Workspaces ───────────────────────────────────
+  // Shows clickable workspace buttons with icon labels.
   "hyprland/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true,
-    "on-click": "activate",
-    "format": "{icon}",
+    "disable-scroll": true, // Disable mouse scroll to switch workspaces on the bar
+    "all-outputs": true, // Show workspaces from all monitors, not just the current one
+    "on-click": "activate", // Click a workspace button to switch to it
+    "format": "{icon}", // Display only the workspace icon (defined in Hyprland config)
   },
 
+  // ─── System Tray ───────────────────────────────────────────
+  // Shows system tray icons for background apps (network, clipboard, etc.)
   "tray": {
-    "icon-size": 13,
-    "spacing": 10,
+    "icon-size": 13, // Size of tray icons in pixels
+    "spacing": 10, // Horizontal gap between tray icons in pixels
   },
 
+  // ─── Clock ─────────────────────────────────────────────────
+  // Displays the current time with a toggle between 12h and 24h formats.
   "clock": {
-    "format": "  {:%I:%M %p}",
-    "format-alt": "  {:%H:%M}",
-    "interval": 60,
-    "tooltip": false,
+    "format": "  {:%I:%M %p}", // Default: 12-hour format with AM/PM and clock icon
+    "format-alt": "  {:%H:%M}", // Alt (on click): 24-hour format
+    "interval": 60, // Update every 60 seconds (no seconds displayed)
+    "tooltip": false, // Disable hover tooltip
   },
 
+  // ─── PulseAudio / Volume ───────────────────────────────────
+  // Shows the current audio volume and output device icon.
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "tooltip": false,
-    "format-muted": "  Muted",
+    "format": "{icon}  {volume}%", // Icon + volume percentage when audio is active
+    "tooltip": false, // Disable hover tooltip
+    "format-muted": "  Muted", // Shown when the audio output is muted
+
+    // Maps audio device types to Nerd Font icons.
+    // "default" array cycles through icons based on volume level.
     "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", "", ""],
+      "headphone": "", // Wired headphones
+      "hands-free": "", // Hands-free / speakerphone
+      "headset": "", // Headset with microphone
+      "phone": "", // Phone audio output
+      "portable": "", // Portable speaker
+      "car": "", // Car audio
+      "default": ["", "", "", ""], // Volume levels: mute → low → medium → high
     },
   },
 
+  // ─── Memory ────────────────────────────────────────────────
+  // Displays RAM usage with different icons based on usage thresholds.
   "memory": {
+    // Usage thresholds that trigger format-m, format-h, and format-c respectively.
     "states": {
-      "c": 90, // critical
-      "h": 60, // high
-      "m": 30, // medium
+      "c": 90, // Critical: ≥90% RAM used
+      "h": 60, // High:     ≥60% RAM used
+      "m": 30, // Medium:   ≥30% RAM used
     },
-    "interval": 10,
-    "format": "󰾆 {used}GB",
-    "format-m": "󰾅 {used}GB",
-    "format-h": "󰓅 {used}GB",
-    "format-c": " {used}GB",
-    "format-alt": "󰾆 {percentage}%",
-    "max-length": 10,
-    "tooltip": true,
-    "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
+    "interval": 10, // Update every 10 seconds
+
+    "format": "󰾆 {used}GB", // Normal usage display
+    "format-m": "󰾅 {used}GB", // Medium usage (≥30%)
+    "format-h": "󰓅 {used}GB", // High usage (≥60%)
+    "format-c": " {used}GB", // Critical usage (≥90%) — warning icon
+    "format-alt": "󰾆 {percentage}%", // Alt (on click): show percentage instead of GB
+
+    "max-length": 10, // Truncate display text at 10 characters
+    "tooltip": true, // Enable hover tooltip
+
+    // Tooltip shows both percentage and absolute GB usage.
+    "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
   },
 
+  // ─── CPU ───────────────────────────────────────────────────
+  // Displays current CPU usage as a percentage.
   "cpu": {
-    "interval": 10,
-    "format": "󰍛 {usage}%",
+    "interval": 10, // Update every 10 seconds
+    "format": "󰍛 {usage}%", // Nerd Font CPU icon + usage percentage
   },
 
+  // ─── Network ───────────────────────────────────────────────
+  // Shows the active network connection type and SSID.
+  // Click to toggle between SSID and bandwidth display.
   "network": {
     "tooltip": true,
-    "format-wifi": "  {essid}",
-    "format-ethernet": "󰈀 ",
+
+    "format-wifi": "  {essid}", // WiFi: signal icon + network name
+    "format-ethernet": "󰈀 ", // Ethernet: wired icon only
+    "format-linked": "󰈀 {ifname} (No IP)", // Connected but no IP assigned
+    "format-disconnected": "󰖪 ", // No active network connection
+
+    // Detailed tooltip shown on hover for WiFi connections.
     "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
-    "format-linked": "󰈀 {ifname} (No IP)",
-    "format-disconnected": "󰖪 ",
     "tooltip-format-disconnected": "Disconnected",
-    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
-    "interval": 2,
+
+    // Alt format (on click): shows real-time download and upload bandwidth.
+    // Colors: green for download, yellow for upload.
+    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
+
+    "interval": 2, // Update every 2 seconds for responsive bandwidth display
   },
 }
