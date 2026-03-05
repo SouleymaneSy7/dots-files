@@ -1,83 +1,134 @@
-# Ghostty Configuration
+# ═══════════════════════════════════════════════════════════
+# GHOSTTY - Terminal Emulator Configuration
+# ═══════════════════════════════════════════════════════════
+#
 # Theme: Catppuccin Macchiato
 # Author: Souleymane Sy
+#
+# Ghostty is a fast, native terminal emulator.
+# This file configures its font, colors, cursor, and window behavior.
+# Changes take effect after restarting Ghostty.
 
-# Font Configuration
+# ─── Font Configuration ────────────────────────────────────
+# Primary font family used for all terminal text rendering.
 font-family = "Rec Mono Casual"
-font-style = Bold
-font-size = 12
-font-feature = ss01
-font-feature = ss02
-font-feature = ss03
-font-feature = ss04
-font-feature = ss05
-font-feature = ss07
-font-feature = ss08
-font-feature = zero
-font-feature = onum
 
-# Adjust line height (Ghostty uses cell-width/height)
+# Font weight variant. Bold gives glyphs slightly more visual weight.
+font-style = Bold
+
+# Base font size in points.
+font-size = 12
+
+# ─── OpenType Font Features ────────────────────────────────
+# Stylistic sets (ss01-ss08) are font-specific alternate glyph variants.
+# These are specific to Rec Mono and enable alternate character forms
+# for improved readability and coding aesthetics.
+font-feature = ss01  # Alternate glyph set 1
+font-feature = ss02  # Alternate glyph set 2
+font-feature = ss03  # Alternate glyph set 3
+font-feature = ss04  # Alternate glyph set 4
+font-feature = ss05  # Alternate glyph set 5
+font-feature = ss07  # Alternate glyph set 7
+font-feature = ss08  # Alternate glyph set 8
+font-feature = zero  # Slashed zero (0 with a slash to distinguish from O)
+font-feature = onum  # Oldstyle numerals (digits with descenders)
+
+# ─── Cell Height ───────────────────────────────────────────
+# Increases the vertical spacing between lines by 20% of the cell height.
+# Improves readability without changing the font size itself.
 adjust-cell-height = 20%
 
-# Theme Colors - Catppuccin Macchiato
+# ─── Theme Colors - Catppuccin Macchiato ───────────────────
+# Base terminal background color (Macchiato base).
 background = 24273a
+
+# Default text foreground color (Macchiato text).
 foreground = cad3f5
 
-# Selection colors
-selection-background = f4dbd6
-selection-foreground = 24273a
+# ─── Selection Colors ──────────────────────────────────────
+# Background color applied to selected text regions.
+selection-background = f4dbd6  # Macchiato rosewater
 
-# Cursor colors
-cursor-color = f4dbd6
-cursor-text = 24273a
+# Foreground (text) color applied to selected text regions.
+selection-foreground = 24273a  # Macchiato base (inverted for contrast)
 
-# Window border colors (if applicable)
+# ─── Cursor Colors ─────────────────────────────────────────
+# Color of the cursor block/bar/underline itself.
+cursor-color = f4dbd6  # Macchiato rosewater
+
+# Color of the character underneath the cursor when the cursor overlaps it.
+cursor-text = 24273a   # Macchiato base (ensures legibility under cursor)
+
+# ─── Window border colors (if applicable) ──────────────────
 # Ghostty handles window decorations differently
+# (border color is managed by the compositor/window manager, not Ghostty itself)
 
-# Palette colors (0-15)
+# ─── Palette Colors (ANSI 0–15) ────────────────────────────
+# Defines the 16-color terminal palette used by CLI apps and syntax highlighting.
+# Index 0-7 = normal colors, 8-15 = bright variants.
+
 # Black
-palette = 0=#494d64
-palette = 8=#5b6078
+palette = 0=#494d64   # Normal black  (Macchiato surface1)
+palette = 8=#5b6078   # Bright black  (Macchiato surface2)
 
 # Red
-palette = 1=#ed8796
-palette = 9=#ed8796
+palette = 1=#ed8796   # Normal red    (Macchiato red)
+palette = 9=#ed8796   # Bright red    (same shade, no separate bright variant)
 
 # Green
-palette = 2=#a6da95
-palette = 10=#a6da95
+palette = 2=#a6da95   # Normal green  (Macchiato green)
+palette = 10=#a6da95  # Bright green  (same shade)
 
 # Yellow
-palette = 3=#eed49f
-palette = 11=#eed49f
+palette = 3=#eed49f   # Normal yellow (Macchiato yellow)
+palette = 11=#eed49f  # Bright yellow (same shade)
 
 # Blue
-palette = 4=#8aadf4
-palette = 12=#8aadf4
+palette = 4=#8aadf4   # Normal blue   (Macchiato blue)
+palette = 12=#8aadf4  # Bright blue   (same shade)
 
 # Magenta
-palette = 5=#f5bde6
-palette = 13=#f5bde6
+palette = 5=#f5bde6   # Normal magenta (Macchiato pink)
+palette = 13=#f5bde6  # Bright magenta (same shade)
 
 # Cyan
-palette = 6=#8bd5ca
-palette = 14=#8bd5ca
+palette = 6=#8bd5ca   # Normal cyan   (Macchiato teal)
+palette = 14=#8bd5ca  # Bright cyan   (same shade)
 
 # White
-palette = 7=#b8c0e0
-palette = 15=#a5adcb
+palette = 7=#b8c0e0   # Normal white  (Macchiato subtext1)
+palette = 15=#a5adcb  # Bright white  (Macchiato subtext0, slightly dimmer)
 
-# Window settings
+# ─── Window Settings ───────────────────────────────────────
+# Horizontal padding in pixels added inside the terminal window edges.
 window-padding-x = 4
+
+# Vertical padding in pixels added inside the terminal window edges.
 window-padding-y = 4
+
+# Automatically balance padding so content appears visually centered
+# when the window size is not an exact multiple of the cell size.
 window-padding-balance = true
 
-# Additional recommended settings
+# ─── Cursor Style ──────────────────────────────────────────
+# Shape of the terminal cursor.
+# Options: block | bar | underline
 cursor-style = block
+
+# Disable cursor blinking for a static, non-distracting cursor.
 cursor-style-blink = false
+
+# ─── Shell Integration ─────────────────────────────────────
+# Automatically detect the running shell and inject Ghostty's shell
+# integration script for features like prompt marking and working directory tracking.
 shell-integration = detect
+
+# ─── Mouse Behavior ────────────────────────────────────────
+# Hide the mouse cursor while the user is actively typing,
+# reducing visual distraction during keyboard-intensive work.
 mouse-hide-while-typing = true
 
-# Window opacity (optional, uncomment if desired)
+# ─── Window Opacity (optional) ─────────────────────────────
+# Uncomment to enable terminal background transparency.
+# Values range from 0.0 (fully transparent) to 1.0 (fully opaque).
 # background-opacity = 0.95
-
