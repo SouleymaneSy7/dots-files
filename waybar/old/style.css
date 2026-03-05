@@ -1,47 +1,75 @@
+/**
+ * ═══════════════════════════════════════════════════════════
+ * WAYBAR - Status Bar Stylesheet
+ * ═══════════════════════════════════════════════════════════
+ *
+ * A dark Catppuccin-inspired theme with pill-shaped modules,
+ * fully transparent bar background, and rounded workspace buttons.
+ */
+
+/* ─── Base Styles ────────────────────────────────────────────
+ * Global reset applied to all Waybar elements.
+ * Removes default borders and radii for per-module control.
+ */
 * {
   border: none;
   border-radius: 0;
   font-family:
-    JetBrainsMono Nerd Font,
-    monospace;
-  font-weight: bold;
-  font-size: 14px;
-  min-height: 0;
+    JetBrainsMono Nerd Font, /* Primary font with Nerd Font icon support */
+    monospace;               /* Fallback to any monospaced font */
+  font-weight: bold;  /* Bold weight across all module labels */
+  font-size: 14px;    /* Base font size */
+  min-height: 0;      /* Remove GTK minimum height constraint */
 }
 
+/* ─── Waybar Window ──────────────────────────────────────────
+ * The outermost bar container.
+ * Fully transparent background so the wallpaper shows through.
+ */
 window#waybar {
-  background: rgba(21, 18, 27, 0);
-  color: #cdd6f4;
+  background: rgba(21, 18, 27, 0); /* Transparent — alpha = 0 */
+  color: #cdd6f4;                  /* Default text color (Catppuccin text) */
 }
 
+/* ─── Workspace Buttons ──────────────────────────────────────
+ * Individual clickable buttons for each Hyprland workspace.
+ */
 #workspaces button {
-  padding: 5px;
-  color: #555869;
-  margin-right: 5px;
+  padding: 5px;       /* Inner padding for each workspace button */
+  color: #555869;     /* Dimmed color for inactive workspaces (Catppuccin surface2) */
+  margin-right: 5px;  /* Gap between workspace buttons */
 }
 
+/* Currently active workspace (focused on this monitor) */
 #workspaces button.active {
-  color: #a6adc8;
+  color: #a6adc8; /* Brighter subtext color to indicate the active workspace */
 }
 
+/* Focused workspace (keyboard focus, may differ from active) */
 #workspaces button.focused {
   color: #a6adc8;
-  background: #eba0ac;
-  border-radius: 10px;
+  background: #eba0ac;   /* Catppuccin Mocha maroon/pink for focused state */
+  border-radius: 10px;   /* Pill-shaped focused button */
 }
 
+/* Urgent workspace (a window on this workspace is requesting attention) */
 #workspaces button.urgent {
-  color: #11111b;
-  background: #a6e3a1;
+  color: #11111b;        /* Very dark text for contrast on bright background */
+  background: #a6e3a1;   /* Catppuccin Mocha green for urgent state */
   border-radius: 10px;
 }
 
+/* Hovered workspace button */
 #workspaces button:hover {
-  background: #cdd6f4;
-  color: #11111b;
+  background: #cdd6f4;   /* Light fill on hover (Catppuccin text color) */
+  color: #11111b;        /* Dark text for contrast on light background */
   border-radius: 10px;
 }
 
+/* ─── Common Module Styles ───────────────────────────────────
+ * Shared background, padding, and margin applied to all modules.
+ * Individual modules override border-radius and margin as needed.
+ */
 #window,
 #clock,
 #battery,
@@ -52,73 +80,38 @@ window#waybar {
 #workspaces,
 #tray,
 #backlight {
-  background: #1e1e2e;
-  padding: 0px 10px;
-  margin: 3px 0px;
-  margin-top: 5px;
-  /* border: 1px solid #181825; */
+  background: #1e1e2e;  /* Catppuccin Mocha base — dark module background */
+  padding: 0px 10px;    /* Horizontal inner padding */
+  margin: 3px 0px;      /* Vertical margin to float modules off the bar edge */
+  margin-top: 5px;      /* Extra top margin to create a floating appearance */
+  /* border: 1px solid #181825; */ /* Optional subtle border (disabled) */
 }
 
+/* ─── Backlight ──────────────────────────────────────────────
+ * Screen brightness control. Left module in a paired group,
+ * so only the left side is rounded.
+ */
 #backlight {
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 10px 0px 0px 10px; /* Rounded left, flat right (joins next module) */
 }
 
+/* ─── System Tray ────────────────────────────────────────────
+ * Background app icons (network manager, clipboard, etc.)
+ */
 #tray {
-  border-radius: 10px;
-  margin-right: 10px;
+  border-radius: 10px;  /* Fully rounded pill shape */
+  margin-right: 10px;   /* Gap between tray and the next module group */
 }
 
+/* ─── Workspaces Container ───────────────────────────────────
+ * The workspace switcher pill on the left of the bar.
+ */
 #workspaces {
   background: #1e1e2e;
-  border-radius: 10px;
-  margin-left: 10px;
+  border-radius: 10px;  /* Fully rounded pill container */
+  margin-left: 10px;    /* Offset from the left screen edge */
   padding-right: 0px;
-  padding-left: 5px;
+  padding-left: 5px;    /* Small left padding before the first workspace button */
 }
 
-#cpu {
-  border-radius: 0px 10px 10px 0px;
-  margin-right: 10px;
-}
-
-#memory {
-  border-radius: 10px 0px 0px 10px;
-}
-
-#window {
-  border-radius: 10px;
-  margin-left: 60px;
-  margin-right: 60px;
-}
-
-#clock {
-  color: #a6adc8;
-  border-radius: 10px 10px 10px 10px;
-  margin-left: 5px;
-  border-right: 0px;
-}
-
-#network {
-  color: #a6adc8;
-  border-radius: 10px 0px 0px 10px;
-}
-
-#pulseaudio {
-  color: #a6adc8;
-  border-left: 0px;
-  border-right: 0px;
-}
-
-#pulseaudio.microphone {
-  color: #a6adc8;
-  border-radius: 0px 10px 10px 0px;
-  border-left: 0px;
-  border-right: 0px;
-  margin-right: 5px;
-}
-
-#battery {
-  color: #a6adc8;
-  border-radius: 0px 10px 10px 0px;
-  margin-right: 10px;
-}
+/* ─── CPU ────────────────────────
