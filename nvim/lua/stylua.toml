@@ -1,3 +1,14 @@
-indent_type = "Spaces"
-indent_width = 2
-column_width = 120
+# ═══════════════════════════════════════════════════════════
+# STYLUA - Lua Code Formatter Configuration
+# ═══════════════════════════════════════════════════════════
+#
+# StyLua is an opinionated Lua code formatter.
+# This file configures its formatting rules for the project.
+# Full documentation: https://github.com/JohnnyMorganz/StyLua
+
+# ─── Indentation ───────────────────────────────────────────
+indent_type = "Spaces"  # Use spaces for indentation (alternative: "Tabs")
+indent_width = 2        # Number of spaces per indentation level
+
+# ─── Line Length ───────────────────────────────────────────
+column_width = 120      # Maximum line width before StyLua wraps expressions
