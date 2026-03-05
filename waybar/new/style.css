@@ -1,125 +1,140 @@
 /**
- * Waybar Configuration
- * Theme: Catppuccin Macchiato
+ * ═══════════════════════════════════════════════════════════
+ * WAYBAR - Status Bar Stylesheet
+ * ═══════════════════════════════════════════════════════════
+ *
+ * Theme:  Catppuccin Macchiato
  * Author: Souleymane Sy
+ *
+ * This file styles all Waybar modules using the Catppuccin
+ * Macchiato color palette. Modules share a common base style
+ * and are individually themed with accent colors.
  */
 
-/* ============================================
-   Base Styles
-   ============================================ */
-
+/* ─── Base Styles ────────────────────────────────────────────
+ * Global reset and typography applied to all Waybar elements.
+ * Removes default borders and radii to allow per-module control.
+ */
 * {
   border: none;
   border-radius: 0;
-  font-family: "Rec Mono Linear", "Fira Code", monospace;
-  font-weight: 600;
-  font-size: 13px;
-  min-height: 0;
+  font-family: "Rec Mono Linear", "Fira Code", monospace; /* Primary font with monospaced fallbacks */
+  font-weight: 600;   /* Semi-bold weight for all labels */
+  font-size: 13px;    /* Base font size across all modules */
+  min-height: 0;      /* Remove GTK minimum height constraint */
 }
 
-/* ============================================
-   Catppuccin Macchiato Color Variables
-   ============================================ */
+/* ─── Catppuccin Macchiato Color Palette ─────────────────────
+ * Full palette defined as GTK CSS custom color variables.
+ * Referenced via @color-name throughout this stylesheet.
+ */
 
-@define-color base     #24273a;
-@define-color mantle   #1e2030;
-@define-color crust    #181926;
+/* Base backgrounds (darkest to lightest) */
+@define-color base     #24273a;  /* Main window background */
+@define-color mantle   #1e2030;  /* Module backgrounds */
+@define-color crust    #181926;  /* Deepest background surface */
 
-@define-color text     #cad3f5;
-@define-color subtext0 #a5adcb;
-@define-color subtext1 #b8c0e0;
+/* Text colors */
+@define-color text     #cad3f5;  /* Primary text */
+@define-color subtext0 #a5adcb;  /* Dimmed secondary text */
+@define-color subtext1 #b8c0e0;  /* Slightly brighter dimmed text */
 
-@define-color surface0 #363a4f;
-@define-color surface1 #494d64;
-@define-color surface2 #5b6078;
+/* Surface colors (UI layers) */
+@define-color surface0 #363a4f;  /* Active workspace background */
+@define-color surface1 #494d64;  /* Mid surface */
+@define-color surface2 #5b6078;  /* Lightest surface */
 
-@define-color overlay0 #6e738d;
-@define-color overlay1 #8087a2;
-@define-color overlay2 #939ab7;
+/* Overlay colors (borders, inactive elements) */
+@define-color overlay0 #6e738d;  /* Inactive workspace text */
+@define-color overlay1 #8087a2;  /* Medium overlay */
+@define-color overlay2 #939ab7;  /* Brightest overlay */
 
-@define-color blue     #8aadf4;
-@define-color lavender #b7bdf8;
-@define-color sapphire #7dc4e4;
-@define-color sky      #91d7e3;
-@define-color teal     #8bd5ca;
-@define-color green    #a6da95;
-@define-color yellow   #eed49f;
-@define-color peach    #f5a97f;
-@define-color maroon   #ee99a0;
-@define-color red      #ed8796;
-@define-color mauve    #c6a0f6;
-@define-color pink     #f5bde6;
-@define-color flamingo #f0c6c6;
-@define-color rosewater #f4dbd6;
+/* Accent colors */
+@define-color blue     #8aadf4;  /* CPU module accent */
+@define-color lavender #b7bdf8;  /* Window title accent */
+@define-color sapphire #7dc4e4;  /* Network module accent */
+@define-color sky      #91d7e3;  /* Sky blue accent */
+@define-color teal     #8bd5ca;  /* Teal accent */
+@define-color green    #a6da95;  /* Memory module accent */
+@define-color yellow   #eed49f;  /* Memory high-usage warning */
+@define-color peach    #f5a97f;  /* PulseAudio module accent */
+@define-color maroon   #ee99a0;  /* Muted red accent */
+@define-color red      #ed8796;  /* Error / critical / urgent states */
+@define-color mauve    #c6a0f6;  /* Clock and active workspace accent */
+@define-color pink     #f5bde6;  /* Pink accent */
+@define-color flamingo #f0c6c6;  /* Soft flamingo accent */
+@define-color rosewater #f4dbd6; /* Warm rosewater accent */
 
-/* ============================================
-   Window
-   ============================================ */
+/* ─── Waybar Window ──────────────────────────────────────────
+ * The outermost bar container.
+ * Transparent background lets the wallpaper show through.
+ */
 window#waybar {
-  background: transparent;
-  color: @text;
+  background: transparent; /* No bar background; modules have their own backgrounds */
+  color: @text;            /* Default text color for all modules */
 }
 
-/* ============================================
-   Tooltips
-   ============================================ */
+/* ─── Tooltips ───────────────────────────────────────────────
+ * Hover popups displayed by modules like network and memory.
+ */
 tooltip {
-  background: @base;
-  border-radius: 6px;
-  padding: 10px;
+  background: @base;     /* Dark background matching the Macchiato base */
+  border-radius: 6px;    /* Rounded tooltip corners */
+  padding: 10px;         /* Inner padding for tooltip content */
 }
 
 tooltip label {
-  color: @text;
+  color: @text;          /* Primary text color inside tooltips */
 }
 
-/* ============================================
-   Workspaces
-   ============================================ */
+/* ─── Workspaces ─────────────────────────────────────────────
+ * The workspace switcher module on the left of the bar.
+ * Each workspace is a clickable button with state-based styling.
+ */
 #workspaces {
-  background: @mantle;
-  border-radius: 6px;
-  margin: 5px 0px 5px 10px;
-  padding: 3px;
+  background: @mantle;             /* Module background */
+  border-radius: 6px;              /* Rounded pill container */
+  margin: 5px 0px 5px 10px;       /* Top/bottom margin + left offset from screen edge */
+  padding: 3px;                    /* Inner padding around workspace buttons */
 }
 
 #workspaces button {
-  padding: 6px 10px;
-  color: @overlay0;
-  margin: 3px 4px;
-
-  border-radius: 6px;
+  padding: 6px 10px;    /* Inner padding for each workspace button */
+  color: @overlay0;     /* Inactive workspace text color (dimmed) */
+  margin: 3px 4px;      /* Gap between workspace buttons */
+  border-radius: 6px;   /* Rounded individual buttons */
 }
 
 #workspaces button:hover {
-  background: transparent;
-  color: @overlay0;
+  background: transparent; /* No background highlight on hover */
+  color: @overlay0;        /* Keep dimmed color on hover */
   border: none;
 }
 
 #workspaces button.active {
-  color: @mauve;
-  background: @surface0;
+  color: @mauve;           /* Mauve accent for the active workspace label */
+  background: @surface0;   /* Slightly elevated background for active button */
   font-weight: bold;
 }
 
 #workspaces button.focused {
-  color: @base;
-  background: @mauve;
+  color: @base;            /* Dark text on bright background */
+  background: @mauve;      /* Full mauve fill for focused workspace */
   font-weight: bold;
   border: none;
-  border-radius: 0;
+  border-radius: 0;        /* Square corners when focused (pill effect removed) */
 }
 
 #workspaces button.urgent {
-  color: @base;
-  background: @red;
+  color: @base;            /* Dark text for contrast on urgent background */
+  background: @red;        /* Red fill to signal a window requesting attention */
   font-weight: bold;
 }
 
-/* ============================================
-   Common Module Styles
-   ============================================ */
+/* ─── Common Module Styles ───────────────────────────────────
+ * Shared base styles applied to all right-side and center modules.
+ * Each module overrides color, border-radius, and margin individually below.
+ */
 #window,
 #clock,
 #battery,
@@ -129,102 +144,103 @@ tooltip label {
 #memory,
 #tray,
 #backlight {
-  background: @mantle;
-  padding: 6px 14px;
-  margin: 5px 0px;
+  background: @mantle;  /* Unified dark background for all modules */
+  padding: 6px 14px;    /* Comfortable inner padding */
+  margin: 5px 0px;      /* Vertical margin to float modules off the bar edge */
 }
 
-/* ============================================
-   Window Title
-   ============================================ */
+/* ─── Window Title ───────────────────────────────────────────
+ * Displays the title of the focused window in the center.
+ */
 #window {
-  color: @lavender;
-  border-radius: 6px;
-  margin-left: 60px;
-  margin-right: 60px;
-  font-weight: normal;
+  color: @lavender;            /* Lavender accent for the window title text */
+  border-radius: 6px;          /* Fully rounded module */
+  margin-left: 60px;           /* Offset from left modules to center visually */
+  margin-right: 60px;          /* Offset from right modules */
+  font-weight: normal;         /* Normal weight (overrides the global bold) */
 }
 
-/* ============================================
-   Clock
-   ============================================ */
+/* ─── Clock ──────────────────────────────────────────────────
+ * Displays the current time in the center of the bar.
+ */
 #clock {
-  color: @mauve;
-  border-radius: 6px;
-  margin-left: 5px;
+  color: @mauve;          /* Mauve accent matching the active workspace color */
+  border-radius: 6px;     /* Fully rounded module */
+  margin-left: 5px;       /* Small gap from adjacent modules */
   font-weight: bold;
   background: @mantle;
 }
 
-/* ============================================
-   System Tray
-   ============================================ */
+/* ─── System Tray ────────────────────────────────────────────
+ * Background app icons (network manager, clipboard, etc.)
+ */
 #tray {
-  border-radius: 6px;
-  margin-right: 10px;
-  padding: 6px 12px;
+  border-radius: 6px;   /* Fully rounded tray container */
+  margin-right: 10px;   /* Gap between tray and next module */
+  padding: 6px 12px;    /* Slightly narrower horizontal padding than other modules */
 }
 
 #tray > .passive {
-  -gtk-icon-effect: dim;
+  -gtk-icon-effect: dim; /* Dim icons for passive/inactive tray apps */
 }
 
 #tray > .needs-attention {
-  -gtk-icon-effect: highlight;
-  background-color: @red;
+  -gtk-icon-effect: highlight;   /* Highlight icon for apps needing attention */
+  background-color: @red;        /* Red background to draw the user's eye */
 }
 
-/* ============================================
-   Memory
-   ============================================ */
+/* ─── Memory ─────────────────────────────────────────────────
+ * Displays RAM usage. Left module in the memory+CPU pair,
+ * so only the left side has a rounded corner.
+ */
 #memory {
-  color: @green;
-  border-radius: 6px 0px 0px 6px;
+  color: @green;                    /* Green accent for normal usage */
+  border-radius: 6px 0px 0px 6px;  /* Rounded on the left, flat on the right (joins CPU) */
 }
 
 #memory.critical {
-  color: @red;
+  color: @red;    /* Red text when RAM usage exceeds the critical threshold (≥90%) */
 }
 
 #memory.high {
-  color: @yellow;
+  color: @yellow; /* Yellow text when RAM usage exceeds the high threshold (≥60%) */
 }
 
 #memory.medium {
-  color: @green;
+  color: @green;  /* Green text when RAM usage exceeds the medium threshold (≥30%) */
 }
 
-/* ============================================
-   CPU
-   ============================================ */
+/* ─── CPU ────────────────────────────────────────────────────
+ * Displays CPU usage percentage. Right module in the memory+CPU pair,
+ * so only the right side has a rounded corner.
+ */
 #cpu {
-  color: @blue;
-  border-radius: 0px 6px 6px 0px;
-  margin-right: 10px;
+  color: @blue;                     /* Blue accent for CPU usage */
+  border-radius: 0px 6px 6px 0px;  /* Flat on the left (joins memory), rounded on the right */
+  margin-right: 10px;               /* Gap between CPU and the next module group */
 }
 
-/* ============================================
-   Network
-   ============================================ */
+/* ─── Network ────────────────────────────────────────────────
+ * Displays WiFi SSID or Ethernet status. Left module in the network+audio pair.
+ */
 #network {
-  color: @sapphire;
-  border-radius: 6px 0px 0px 6px;
+  color: @sapphire;                 /* Sapphire (blue-teal) accent for network status */
+  border-radius: 6px 0px 0px 6px;  /* Rounded on the left, flat on the right (joins pulseaudio) */
 }
 
 #network.disconnected {
-  color: @red;
+  color: @red; /* Red text when no network connection is available */
 }
 
-/* ============================================
-   Audio (PulseAudio)
-   ============================================ */
+/* ─── PulseAudio / Volume ────────────────────────────────────
+ * Displays current audio volume. Right module in the network+audio pair.
+ */
 #pulseaudio {
-  color: @peach;
-  border-radius: 0px;
-  margin-right: 10px;
-  border-radius: 0px 6px 6px 0px;
+  color: @peach;                    /* Peach accent for the volume display */
+  border-radius: 0px 6px 6px 0px;  /* Flat on the left (joins network), rounded on the right */
+  margin-right: 10px;               /* Gap between pulseaudio and the screen edge */
 }
 
 #pulseaudio.muted {
-  color: @overlay0;
+  color: @overlay0; /* Dimmed grey text when audio output is muted */
 }
