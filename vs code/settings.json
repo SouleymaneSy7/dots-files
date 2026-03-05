@@ -1,54 +1,86 @@
 {
-  // --------------------------------------------------------
+  // ═══════════════════════════════════════════════════════════
+  // VSCODE - User Settings
+  // ═══════════════════════════════════════════════════════════
+  //
+  // Full editor configuration covering appearance, behavior,
+  // language-specific formatters, terminal, Git, and extensions.
+  // Changes take effect immediately or after a window reload.
+
+  // ─────────────────────────────────────────────────────────
   // 1) Editor Appearance
-  // Visual settings: font, size, weight, ligatures, cursor, minimap, whitespace rendering
-  // --------------------------------------------------------
-  "editor.fontFamily": "'Rec Mono Casual'",
-  "editor.fontSize": 18,
-  "editor.fontWeight": "700",
-  "editor.lineHeight": 1.5,
+  // Visual settings: font, size, weight, ligatures, cursor, minimap
+  // ─────────────────────────────────────────────────────────
+
+  "editor.fontFamily": "'Rec Mono Casual'", // Primary coding font
+  "editor.fontSize": 18, // Base font size in pixels
+  "editor.fontWeight": "700", // Bold weight for better legibility
+  "editor.lineHeight": 1.5, // 1.5x line spacing for readability
+
+  // OpenType ligature feature set for Rec Mono Casual.
+  // Each tag enables a stylistic alternate or ligature set.
   "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss08', 'ss09', 'ss12', 'zero', 'onum', 'dlig'",
-  // Other option for font ligatures:
+  // Alternative ligature set (fewer stylistic sets, no discretionary ligatures):
   // "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'zero', 'onum'",
-  "editor.renderWhitespace": "all",
-  "editor.renderControlCharacters": true,
-  "editor.cursorBlinking": "blink",
-  "editor.cursorSmoothCaretAnimation": "off",
-  "editor.minimap.autohide": "mouseover",
+
+  "editor.renderWhitespace": "all", // Show all whitespace characters (tabs, spaces, NBSP)
+  "editor.renderControlCharacters": true, // Show non-printable control characters
+
+  "editor.cursorBlinking": "blink", // Blinking cursor animation style
+  "editor.cursorSmoothCaretAnimation": "off", // Disable smooth cursor movement animation
+  "editor.cursorStyle": "line", // Thin vertical line cursor (vs block or underline)
+
+  "editor.minimap.autohide": "mouseover", // Show minimap only when hovering over it
+
+  // ─── Inlay Hints ──────────────────────────────────────────
+  // Inline annotations showing type info, parameter names, etc.
   "editor.inlayHints.fontSize": 18,
   "editor.inlayHints.fontFamily": "'Rec Mono Linear'",
   "editor.inlayHints.enabled": "on",
+
+  // ─── Code Lens ────────────────────────────────────────────
+  // Inline reference and action counts shown above declarations.
   "editor.codeLensFontFamily": "'Rec Mono Linear'",
   "editor.codeLensFontSize": 18,
-  "editor.suggestFontSize": 18,
-  "editor.cursorStyle": "line",
-  "editor.inlineSuggest.fontFamily": "'Rec Mono Linear'",
 
-  // ---------------------------------------------------------------
+  // ─── Suggestions & Inline Completions ─────────────────────
+  "editor.suggestFontSize": 18, // Font size inside the suggestion popup
+  "editor.inlineSuggest.fontFamily": "'Rec Mono Linear'", // Font for Copilot-style ghost text
+
+  // ─────────────────────────────────────────────────────────
   // 2) Editor Behavior
   // Formatting, indentation, suggestions, linked editing, word wrap
-  // ---------------------------------------------------------------
-  "editor.tabSize": 2,
-  "editor.formatOnPaste": true,
-  "editor.formatOnType": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.wordWrap": "on",
-  "editor.linkedEditing": true,
-  "editor.quickSuggestions": {
-    "other": true,
-    "comments": true,
-    "strings": true
-  },
-  "editor.guides.bracketPairs": true,
-  "editor.stickyScroll.enabled": true,
-  "editor.largeFileOptimizations": false,
-  "editor.accessibilitySupport": "off",
+  // ─────────────────────────────────────────────────────────
 
-  // -------------------------------
-  // 3) Language-specific formatters
-  // -------------------------------
+  "editor.tabSize": 2, // Indent with 2 spaces per tab stop
+  "editor.formatOnPaste": true, // Auto-format code when pasting into the editor
+  "editor.formatOnType": true, // Auto-format as you type (e.g. on semicolon or newline)
+  "editor.formatOnSave": true, // Auto-format the entire file on every save
+  "editor.formatOnSaveMode": "file", // Format the whole file (vs only modified lines)
+
+  // Default formatter used for all languages unless overridden per-language below.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "editor.wordWrap": "on", // Soft-wrap long lines at the viewport edge
+  "editor.linkedEditing": true, // Auto-rename matching HTML/JSX closing tags when editing opening tag
+
+  // Enable quick suggestions in all contexts including comments and strings.
+  "editor.quickSuggestions": {
+    "other": true, // Suggestions in regular code
+    "comments": true, // Suggestions inside comments
+    "strings": true // Suggestions inside string literals
+  },
+
+  "editor.guides.bracketPairs": true, // Highlight matching bracket pairs with colored guides
+  "editor.stickyScroll.enabled": true, // Pin the current scope header at the top while scrolling
+  "editor.largeFileOptimizations": false, // Disable large file optimizations (keep all features active)
+  "editor.accessibilitySupport": "off", // Disable screen reader mode for better performance
+
+  // ─────────────────────────────────────────────────────────
+  // 3) Language-Specific Formatters
+  // Prettier is used for all web languages; markdownlint for Markdown.
+  // ─────────────────────────────────────────────────────────
+
   "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[scss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
@@ -61,76 +93,112 @@
   "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[vue]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[vue-html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[markdown]": { "editor.defaultFormatter": "DavidAnson.vscode-markdownlint" },
+  "[markdown]": { "editor.defaultFormatter": "DavidAnson.vscode-markdownlint" }, // Markdown-specific linter/formatter
   "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
 
-  // -----------------------------
+  // ─────────────────────────────────────────────────────────
   // 4) Integrated Terminal
-  // -----------------------------
-  "terminal.integrated.fontFamily": "'Rec Mono Linear'",
-  "terminal.integrated.fontLigatures.enabled": true,
-  "terminal.integrated.fontLigatures.featureSettings": "\"calt\" on, \"dlig\" on, \"ss05\" on",
-  "terminal.integrated.fontSize": 17,
-  "terminal.integrated.fontWeight": "700",
-  "terminal.integrated.lineHeight": 1.2,
-  "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.cursorStyleInactive": "line",
-  "terminal.integrated.cursorWidth": 2,
-  "terminal.integrated.cursorBlinking": true,
-  "terminal.explorerKind": "external",
-  "terminal.integrated.defaultProfile.windows": "Git Bash",
-  // "terminal.integrated.defaultProfile.linux": "zsh",
+  // Font, ligatures, cursor, and default shell configuration.
+  // ─────────────────────────────────────────────────────────
 
-  // -----------------------------
+  "terminal.integrated.fontFamily": "'Rec Mono Linear'", // Monospaced font for terminal output
+  "terminal.integrated.fontLigatures.enabled": true, // Enable ligatures in the terminal
+  "terminal.integrated.fontLigatures.featureSettings": "\"calt\" on, \"dlig\" on, \"ss05\" on", // Active ligature features
+  "terminal.integrated.fontSize": 17, // Terminal font size (slightly smaller than editor)
+  "terminal.integrated.fontWeight": "700", // Bold terminal font weight
+  "terminal.integrated.lineHeight": 1.2, // Tighter line spacing in terminal vs editor
+
+  "terminal.integrated.cursorStyle": "line", // Active terminal cursor shape
+  "terminal.integrated.cursorStyleInactive": "line", // Cursor shape in unfocused terminal panels
+  "terminal.integrated.cursorWidth": 2, // Width of the line cursor in pixels
+  "terminal.integrated.cursorBlinking": true, // Blink the terminal cursor
+
+  "terminal.explorerKind": "external", // Open terminals in the external app instead of the panel
+  "terminal.integrated.defaultProfile.windows": "Git Bash", // Default shell on Windows
+  // "terminal.integrated.defaultProfile.linux": "zsh",      // Default shell on Linux (uncomment to enable)
+
+  // ─────────────────────────────────────────────────────────
   // 5) Workbench / UI
-  // -----------------------------
-  "workbench.colorTheme": "Bearded Theme Arc EolStorm",
-  "workbench.iconTheme": "gruvbox-material-icon-theme",
-  "workbench.productIconTheme": "material-product-icons",
-  "workbench.tree.renderIndentGuides": "always",
-  "workbench.tree.indent": 10,
+  // Theme, icons, and file tree appearance.
+  // ─────────────────────────────────────────────────────────
 
-  // -----------------------------
+  "workbench.colorTheme": "Bearded Theme Arc EolStorm", // Active color theme
+  "workbench.iconTheme": "gruvbox-material-icon-theme", // File and folder icon set
+  "workbench.productIconTheme": "material-product-icons", // UI icon set (buttons, status bar, etc.)
+  "workbench.tree.renderIndentGuides": "always", // Always show indent guides in the file tree
+  "workbench.tree.indent": 10, // Indentation width in pixels for nested tree items
+
+  // ─────────────────────────────────────────────────────────
   // 6) Git & GitLens
-  // -----------------------------
-  "git.openRepositoryInParentFolders": "never",
-  "git.enableSmartCommit": true,
-  "gitlens.hovers.currentLine.over": "line",
-  "gitlens.defaultDateFormat": "March 21th, 2022 20:05",
-  "gitlens.defaultTimeFormat": "20:05",
-  "gitlens.defaultDateShortFormat": "21 march 2022",
-  "gitlens.currentLine.format": "${author, }${agoOrDate}${' via  'pullRequest}${ • message|50?}${tips}$",
+  // Source control behavior and inline blame formatting.
+  // ─────────────────────────────────────────────────────────
 
-  // -----------------------------
+  "git.openRepositoryInParentFolders": "never", // Don't auto-open parent folder repos
+  "git.enableSmartCommit": true, // Commit all staged changes without a prompt if nothing is staged
+
+  // GitLens inline blame and date format settings.
+  "gitlens.hovers.currentLine.over": "line", // Show hover info when hovering over the whole line
+  "gitlens.defaultDateFormat": "March 21th, 2022 20:05", // Full date format for blame annotations
+  "gitlens.defaultTimeFormat": "20:05", // Time-only format
+  "gitlens.defaultDateShortFormat": "21 march 2022", // Short date format
+  "gitlens.currentLine.format": "${author, }${agoOrDate}${' via  'pullRequest}${ • message|50?}${tips}$", // Inline blame format string
+
+  // ─────────────────────────────────────────────────────────
   // 7) Explorer & Files
-  // -----------------------------
-  "explorer.confirmDragAndDrop": false,
-  "explorer.confirmDelete": true,
+  // File tree behavior, associations, and auto-save.
+  // ─────────────────────────────────────────────────────────
+
+  "explorer.confirmDragAndDrop": false, // Skip confirmation when drag-and-dropping files in the tree
+  "explorer.confirmDelete": true, // Always confirm before permanently deleting files
+
+  // Treat all .css files as Tailwind CSS for IntelliSense support.
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "files.autoSave": "afterDelay",
-  "security.workspace.trust.untrustedFiles": "open",
-  "json.schemas": [],
 
-  // -----------------------------
+  "files.autoSave": "afterDelay", // Auto-save files after a short delay
+  "security.workspace.trust.untrustedFiles": "open", // Open untrusted files without prompting
+  "json.schemas": [], // No custom JSON schema associations
+
+  // ─────────────────────────────────────────────────────────
   // 8) Extensions & Helpers
-  // -----------------------------
-  "tailwindCSS.emmetCompletions": true,
+  // Tailwind, Emmet, SVG, import cost, markdown, and colorize.
+  // ─────────────────────────────────────────────────────────
+
+  // ─── Tailwind CSS ──────────────────────────────────────
+  "tailwindCSS.emmetCompletions": true, // Trigger Tailwind completions inside Emmet abbreviations
+
+  // Custom regex for Tailwind class detection inside clsx() calls.
+  // Enables IntelliSense inside clsx(`...`) template literals.
   "tailwindCSS.experimental.classRegex": [
     ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
+
+  // ─── Emmet ─────────────────────────────────────────────
+  // Map languages to their Emmet expansion targets so abbreviations
+  // expand correctly in JSX, Vue, and TypeScript files.
   "emmet.includeLanguages": {
-    "javascript": "javascriptreact",
-    "vue-html": "html",
+    "javascript": "javascriptreact", // Expand JSX abbreviations in .js files
+    "vue-html": "html", // Expand HTML abbreviations in Vue templates
     "vue": "html",
-    "typescript": "typescriptreact"
+    "typescript": "typescriptreact" // Expand JSX abbreviations in .ts files
   },
-  "svg.preview.mode": "svg",
-  "importCost.fontStyle": "italic",
-  "markdown.preview.fontFamily": "'Rec Mono Linear'",
+
+  // ─── SVG Preview ───────────────────────────────────────
+  "svg.preview.mode": "svg", // Render SVG files as images in the preview panel
+
+  // ─── Import Cost ───────────────────────────────────────
+  "importCost.fontStyle": "italic", // Show import size annotations in italic
+
+  // ─── Markdown Preview ──────────────────────────────────
+  "markdown.preview.fontFamily": "'Rec Mono Linear'", // Font used in the Markdown preview panel
   "markdown.preview.fontSize": 16,
+
+  // ─── Colorize ──────────────────────────────────────────
+  // Highlights color values (hex, RGB, HSL, named) inline in source files.
   "colorize.colorized_colors": ["BROWSERS_COLORS", "HEXA", "RGB", "HSL"],
+
+  // File glob patterns where colorize is active.
   "colorize.include": [
     "**/*.css",
     "**/*.scss",
@@ -143,6 +211,8 @@
     "**/*.tsx",
     "**/*.vue"
   ],
+
+  // Language identifiers where colorize renders inline swatches.
   "colorize.languages": [
     "css",
     "javascript",
@@ -156,25 +226,31 @@
     "html"
   ],
 
-  // -----------------------------
-  // 9) JS/TS helpers
-  // -----------------------------
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.suggest.paths": true,
-  "javascript.suggest.paths": true,
+  // ─────────────────────────────────────────────────────────
+  // 9) JS/TS Helpers
+  // Auto-update imports and path suggestion settings.
+  // ─────────────────────────────────────────────────────────
 
-  // -----------------------------
+  "javascript.updateImportsOnFileMove.enabled": "always", // Auto-update JS imports when files are moved/renamed
+  "typescript.updateImportsOnFileMove.enabled": "always", // Same for TypeScript imports
+  "typescript.suggest.paths": true, // Enable path auto-completion in TS import statements
+  "javascript.suggest.paths": true, // Enable path auto-completion in JS import statements
+
+  // ─────────────────────────────────────────────────────────
   // 10) Vim Settings
-  // -----------------------------
-  "vim.enableNeovim": true,
-  "vim.highlightedyank.enable": true,
-  "vim.hlsearch": true,
+  // VSCode Vim extension configuration.
+  // ─────────────────────────────────────────────────────────
 
-  // -----------------------------
+  "vim.enableNeovim": true, // Delegate certain operations to a Neovim backend
+  "vim.highlightedyank.enable": true, // Briefly highlight text when it is yanked
+  "vim.hlsearch": true, // Highlight all matches of the current search pattern
+
+  // ─────────────────────────────────────────────────────────
   // 11) Debug & Console
-  // -----------------------------
-  "debug.console.fontFamily": "'Rec Mono Linear'",
-  "scm.inputFontFamily": "'Rec Mono Linear'",
-  "chat.editor.fontFamily": "'Rec Mono Linear'"
+  // Font settings for the debug console, SCM input, and chat panel.
+  // ─────────────────────────────────────────────────────────
+
+  "debug.console.fontFamily": "'Rec Mono Linear'", // Font used in the debug console output panel
+  "scm.inputFontFamily": "'Rec Mono Linear'", // Font used in the source control commit message input
+  "chat.editor.fontFamily": "'Rec Mono Linear'" // Font used in the AI chat editor panel
 }
