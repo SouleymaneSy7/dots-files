@@ -1,33 +1,72 @@
+# ═══════════════════════════════════════════════════════════
+# DUNST - Notification Daemon Configuration
+# ═══════════════════════════════════════════════════════════
+#
+# Dunst is a lightweight, customizable notification daemon for Linux.
+# This file configures its appearance, layout, and per-urgency behavior.
+# Changes take effect after restarting dunst: `killall dunst && dunst &`
+
 [global]
+    # ─── Typography ────────────────────────────────────────────
+    # Font used to render notification title and body text.
+    # Rec Mono Linear is a monospaced programming font.
     font = Rec Mono Linear
+
+    # Notification text format using Pango markup.
+    # %s = summary (title), %b = body text.
+    # <b>%s</b> renders the title in bold above the body.
     format = "<b>%s</b>\n%b"
-    
+
+    # ─── Layout & Position ─────────────────────────────────────
+    # Geometry string: "WIDTHxMAX_NOTIFICATIONS-X_OFFSET+Y_OFFSET"
+    # 350px wide, up to 5 stacked notifications,
+    # anchored 15px from the right edge and 50px from the top.
     geometry = "350x5-15+50"
-    
+
+    # ─── Appearance ────────────────────────────────────────────
+    # Window transparency as a percentage (0 = opaque, 100 = fully transparent).
     transparency = 10
-    
+
+    # Border width in pixels drawn around each notification window.
     frame_width = 2
+
+    # Default border color (Catppuccin Mocha blue).
     frame_color = "#89b4fa"
-    
+
+    # Radius in pixels for rounded notification corners.
     corner_radius = 8
-    
+
+    # ─── Icons ─────────────────────────────────────────────────
+    # Position of the application icon relative to the notification text.
+    # Options: left | right | off
     icon_position = left
+
+    # Maximum icon size in pixels. Larger icons are scaled down to fit.
     max_icon_size = 64
-    
+
+# ─── Urgency: Low ──────────────────────────────────────────
+# Applied to low-priority notifications (e.g. background app events).
+# Auto-dismisses after 5 seconds.
 [urgency_low]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#89b4fa"
-    timeout = 5
-    
+    background = "#1e1e2e"  # Catppuccin Mocha base background
+    foreground = "#cdd6f4"  # Catppuccin Mocha text color
+    frame_color = "#89b4fa" # Blue border for low urgency
+    timeout = 5             # Dismiss after 5 seconds
+
+# ─── Urgency: Normal ───────────────────────────────────────
+# Applied to standard notifications (e.g. messages, system events).
+# Auto-dismisses after 10 seconds.
 [urgency_normal]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#89b4fa"
-    timeout = 10
-    
+    background = "#1e1e2e"  # Catppuccin Mocha base background
+    foreground = "#cdd6f4"  # Catppuccin Mocha text color
+    frame_color = "#89b4fa" # Blue border for normal urgency
+    timeout = 10            # Dismiss after 10 seconds
+
+# ─── Urgency: Critical ─────────────────────────────────────
+# Applied to critical notifications (e.g. battery warnings, system alerts).
+# Persists indefinitely until manually dismissed (timeout = 0).
 [urgency_critical]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#f38ba8"
-    timeout = 0
+    background = "#1e1e2e"  # Catppuccin Mocha base background
+    foreground = "#cdd6f4"  # Catppuccin Mocha text color
+    frame_color = "#f38ba8" # Red border to signal critical urgency
+    timeout = 0             # Never auto-dismiss; requires manual action
