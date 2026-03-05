@@ -1,242 +1,327 @@
 /**
- * Rofi Configuration
- * Theme: Catppuccin Macchiato
- * Author: Souleymane Sy 
+ * ═══════════════════════════════════════════════════════════
+ * ROFI - Application Launcher Theme
+ * ═══════════════════════════════════════════════════════════
+ *
+ * Theme:  Catppuccin Macchiato
+ * Author: Souleymane Sy
+ *
+ * Rofi is a window switcher, application launcher, and dmenu replacement.
+ * This file defines its full visual theme using the Catppuccin Macchiato
+ * color palette with a modern rounded card-style layout.
  */
 
 * {
-    /* Catppuccin Macchiato Color Palette */
-    base:     #24273aFF;
-    mantle:   #1e2030FF;
-    crust:    #181926FF;
-    
-    text:     #cad3f5FF;
-    subtext0: #a5adcbFF;
-    subtext1: #b8c0e0FF;
-    
-    surface0: #363a4fFF;
-    surface1: #494d64FF;
-    surface2: #5b6078FF;
-    
-    overlay0: #6e738dFF;
-    overlay1: #8087a2FF;
-    overlay2: #939ab7FF;
-    
-    blue:     #8aadf4FF;
-    lavender: #b7bdf8FF;
-    sapphire: #7dc4e4FF;
-    sky:      #91d7e3FF;
-    teal:     #8bd5caFF;
-    green:    #a6da95FF;
-    yellow:   #eed49fFF;
-    peach:    #f5a97fFF;
-    maroon:   #ee99a0FF;
-    red:      #ed8796FF;
-    mauve:    #c6a0f6FF;
-    pink:     #f5bde6FF;
-    flamingo: #f0c6c6FF;
-    rosewater:#f4dbd6FF;
-    
-    /* Applied Theme Colors */
-    bg-color:        @base;
-    bg-alt-color:    @mantle;
-    bg-selected:     @surface0;
-    
-    fg-color:        @text;
-    fg-alt-color:    @subtext0;
-    
-    border-color:    @lavender;
-    accent-color:    @mauve;
-    urgent-color:    @red;
-    active-color:    @green;
-    
-    /* Spacing & Sizing */
-    font:            "Rec Mono Linear, Bold 11";
-    border-radius:   8px;
-    element-radius:  6px;
-    element-padding: 12px 16px;
-    element-spacing: 8px;
-    window-padding:  18px;
-    inputbar-margin: 0px 0px 20px 0px;
+    /* ── Catppuccin Macchiato Color Palette ─────────────────
+     * Full palette definition. Colors are referenced via @name
+     * aliases throughout the rest of this theme file.
+     * Format: #RRGGBBAA (AA = alpha, FF = fully opaque)
+     */
+
+    /* Base backgrounds (darkest to lightest) */
+    base:     #24273aFF;  /* Darkest background, main window fill */
+    mantle:   #1e2030FF;  /* Slightly lighter than base, used for input areas */
+    crust:    #181926FF;  /* Darkest surface, used for tab bar and deep backgrounds */
+
+    /* Text colors */
+    text:     #cad3f5FF;  /* Primary text color */
+    subtext0: #a5adcbFF;  /* Dimmed text, used for placeholders and secondary labels */
+    subtext1: #b8c0e0FF;  /* Slightly brighter dimmed text */
+
+    /* Surface colors (UI layers) */
+    surface0: #363a4fFF;  /* Hovered/selected item background */
+    surface1: #494d64FF;  /* Slightly lighter surface */
+    surface2: #5b6078FF;  /* Lightest surface */
+
+    /* Overlay colors (borders, dividers) */
+    overlay0: #6e738dFF;  /* Subtle overlay */
+    overlay1: #8087a2FF;  /* Medium overlay */
+    overlay2: #939ab7FF;  /* Brightest overlay */
+
+    /* Accent colors */
+    blue:     #8aadf4FF;  /* Primary blue accent */
+    lavender: #b7bdf8FF;  /* Soft lavender, used for borders */
+    sapphire: #7dc4e4FF;  /* Cool blue-teal */
+    sky:      #91d7e3FF;  /* Light sky blue */
+    teal:     #8bd5caFF;  /* Teal accent */
+    green:    #a6da95FF;  /* Success / active state color */
+    yellow:   #eed49fFF;  /* Warning color */
+    peach:    #f5a97fFF;  /* Warm orange accent */
+    maroon:   #ee99a0FF;  /* Muted red */
+    red:      #ed8796FF;  /* Error / urgent state color */
+    mauve:    #c6a0f6FF;  /* Primary accent color (selection highlight) */
+    pink:     #f5bde6FF;  /* Pink accent */
+    flamingo: #f0c6c6FF;  /* Soft flamingo */
+    rosewater:#f4dbd6FF;  /* Warm rosewater, used for cursor and selection */
+
+    /* ── Applied Theme Colors ───────────────────────────────
+     * Semantic aliases that map palette colors to UI roles.
+     * Edit these to retheme without touching every widget.
+     */
+    bg-color:        @base;      /* Main window background */
+    bg-alt-color:    @mantle;    /* Input bar and message background */
+    bg-selected:     @surface0;  /* Background of the selected list item */
+
+    fg-color:        @text;      /* Primary text color */
+    fg-alt-color:    @subtext0;  /* Placeholder and secondary text color */
+
+    border-color:    @lavender;  /* Default border color */
+    accent-color:    @mauve;     /* Prompt icon and selected item text color */
+    urgent-color:    @red;       /* Background/text for urgent items */
+    active-color:    @green;     /* Background/text for active items */
+
+    /* ── Spacing & Sizing ───────────────────────────────────
+     * Global sizing tokens reused across all widgets.
+     * Modify here to adjust the overall density of the layout.
+     */
+    font:            "Rec Mono Linear, Bold 11"; /* Font family and size for all text */
+    border-radius:   8px;    /* Corner radius for the main window and error box */
+    element-radius:  6px;    /* Corner radius for list items and input bar */
+    element-padding: 12px 16px; /* Inner padding for list items and input bar */
+    element-spacing: 8px;    /* Gap between items in the main layout */
+    window-padding:  18px;   /* Inner padding of the main window */
+    inputbar-margin: 0px 0px 20px 0px; /* Space below the input bar */
 }
 
+/* ── Configuration ───────────────────────────────────────────
+ * Runtime behavior options for the Rofi launcher.
+ * These control which modes are available and how results are displayed.
+ */
 configuration {
-    modi:                    "drun,run,filebrowser,window";
-    show-icons:              true;
-    display-drun:            "App";
-    display-run:             "Run";
-    display-filebrowser:     "Files";
-    display-window:          "Windows";
-    drun-display-format:     "{name}";
-    window-format:           "{w} · {c} · {t}";
-    icon-theme:              "Papirus-Dark";
-    disable-history:         false;
-    hover-select:            true;
-    me-select-entry:         "";
-    me-accept-entry:         "MousePrimary";
+    modi:                "drun,run,filebrowser,window"; /* Available launcher modes */
+    show-icons:          true;            /* Show application icons in results */
+    display-drun:        "App";           /* Label for the app launcher mode */
+    display-run:         "Run";           /* Label for the command runner mode */
+    display-filebrowser: "Files";         /* Label for the file browser mode */
+    display-window:      "Windows";       /* Label for the window switcher mode */
+    drun-display-format: "{name}";        /* Show only the app name (no description) */
+    window-format:       "{w} · {c} · {t}"; /* Workspace · class · title for window mode */
+    icon-theme:          "Papirus-Dark";  /* Icon theme used for application icons */
+    disable-history:     false;           /* Remember previously run commands */
+    hover-select:        true;            /* Highlight the item under the mouse cursor */
+    me-select-entry:     "";              /* Mouse button to select without confirming */
+    me-accept-entry:     "MousePrimary";  /* Left click confirms and launches the entry */
 }
 
+/* ── Window ──────────────────────────────────────────────────
+ * The outermost container of the Rofi UI.
+ * Centered on screen with a solid border and rounded corners.
+ */
 window {
-    transparency:            "real";
-    background-color:        @bg-color;
-    border:                  2px solid;
-    border-color:            @blue;
-    border-radius:           @border-radius;
-    width:                   600px;
-    padding:                 @window-padding;
-    location:                center;
-    anchor:                  center;
+    transparency:     "real";          /* Use real compositor transparency */
+    background-color: @bg-color;       /* Main window background */
+    border:           2px solid;       /* Solid border around the window */
+    border-color:     @blue;           /* Blue border (Macchiato blue) */
+    border-radius:    @border-radius;  /* Rounded corners */
+    width:            600px;           /* Fixed window width */
+    padding:          @window-padding; /* Inner padding on all sides */
+    location:         center;          /* Center the window on the monitor */
+    anchor:           center;          /* Anchor point matches location */
 }
 
+/* ── Mainbox ─────────────────────────────────────────────────
+ * The root layout container inside the window.
+ * Stacks the input bar, list view, and message area vertically.
+ */
 mainbox {
-    enabled:                 true;
-    spacing:                 @element-spacing;
-    background-color:        transparent;
-    children:                [ "inputbar", "listview", "message" ];
+    enabled:          true;
+    spacing:          @element-spacing;   /* Gap between inputbar, listview, and message */
+    background-color: transparent;        /* Inherits window background */
+    children:         [ "inputbar", "listview", "message" ];
 }
 
+/* ── Input Bar ───────────────────────────────────────────────
+ * The search field at the top of the launcher.
+ * Contains the mode prompt label and the text entry field.
+ */
 inputbar {
-    enabled:                 true;
-    spacing:                 12px;
-    margin:                  @inputbar-margin;
-    padding:                 @element-padding;
-    border:                  0px;
-    border-radius:           @element-radius;
-    border-color:            @border-color;
-    background-color:        @bg-alt-color;
-    text-color:              @fg-color;
-    children:                [ "prompt", "entry" ];
+    enabled:          true;
+    spacing:          12px;             /* Gap between prompt and entry */
+    margin:           @inputbar-margin; /* Space below the input bar */
+    padding:          @element-padding; /* Inner padding */
+    border:           0px;
+    border-radius:    @element-radius;
+    border-color:     @border-color;
+    background-color: @bg-alt-color;    /* Slightly lighter than window background */
+    text-color:       @fg-color;
+    children:         [ "prompt", "entry" ];
 }
 
+/* ── Prompt ──────────────────────────────────────────────────
+ * The mode label displayed to the left of the search input.
+ * Rendered in the accent color to visually distinguish it from user input.
+ */
 prompt {
-    enabled:                 true;
-    background-color:        transparent;
-    text-color:              @accent-color;
+    enabled:          true;
+    background-color: transparent;
+    text-color:       @accent-color;    /* Mauve accent for the mode label */
 }
 
+/* ── Entry ───────────────────────────────────────────────────
+ * The text input field where the user types their search query.
+ */
 entry {
-    enabled:                 true;
-    background-color:        transparent;
-    text-color:              @fg-color;
-    placeholder-color:       @fg-alt-color;
-    placeholder:             "Search...";
-    cursor:                  text;
+    enabled:           true;
+    background-color:  transparent;
+    text-color:        @fg-color;
+    placeholder-color: @fg-alt-color;  /* Dimmed color for placeholder text */
+    placeholder:       "Search...";    /* Text shown when the field is empty */
+    cursor:            text;           /* Text cursor style */
 }
 
+/* ── List View ───────────────────────────────────────────────
+ * The scrollable list of search results below the input bar.
+ */
 listview {
-    enabled:                 true;
-    columns:                 1;
-    lines:                   8;
-    cycle:                   true;
-    dynamic:                 true;
-    scrollbar:               false;
-    layout:                  vertical;
-    reverse:                 false;
-    fixed-height:            true;
-    fixed-columns:           true;
-    spacing:                 6px;
-    background-color:        transparent;
-    text-color:              @fg-color;
-    cursor:                  "default";
+    enabled:        true;
+    columns:        1;          /* Single column layout */
+    lines:          8;          /* Show up to 8 results at a time */
+    cycle:          true;       /* Wrap around when navigating past the last/first item */
+    dynamic:        true;       /* Adjust height dynamically based on result count */
+    scrollbar:      false;      /* Hide the scrollbar */
+    layout:         vertical;   /* Stack results vertically */
+    reverse:        false;      /* Show results top-to-bottom (not reversed) */
+    fixed-height:   true;       /* Keep height constant regardless of result count */
+    fixed-columns:  true;
+    spacing:        6px;        /* Gap between result items */
+    background-color: transparent;
+    text-color:     @fg-color;
+    cursor:         "default";
 }
 
+/* ── Element ─────────────────────────────────────────────────
+ * Base styles for each result row in the list.
+ * State-specific overrides are defined below (normal, selected, alternate).
+ */
 element {
-    enabled:                 true;
-    spacing:                 12px;
-    padding:                 @element-padding;
-    border:                  0px solid;
-    border-radius:           @element-radius;
-    border-color:            @border-color;
-    background-color:        transparent;
-    text-color:              @fg-color;
-    cursor:                  pointer;
+    enabled:          true;
+    spacing:          12px;             /* Gap between icon and text */
+    padding:          @element-padding;
+    border:           0px solid;
+    border-radius:    @element-radius;
+    border-color:     @border-color;
+    background-color: transparent;
+    text-color:       @fg-color;
+    cursor:           pointer;          /* Show pointer cursor on hover */
 }
 
+/* ── Element States ──────────────────────────────────────────
+ * Rofi supports three display states (normal, selected, alternate)
+ * each combined with three urgency states (normal, urgent, active).
+ * This gives 9 total state combinations for granular control.
+ */
+
+/* Normal row — default appearance */
 element normal.normal {
-    background-color:        transparent;
-    text-color:              @fg-color;
+    background-color: transparent;
+    text-color:       @fg-color;
 }
 
+/* Normal row — urgent item (e.g. app requiring attention) */
 element normal.urgent {
-    background-color:        @urgent-color;
-    text-color:              @bg-color;
+    background-color: @urgent-color;  /* Red background */
+    text-color:       @bg-color;      /* Dark text for contrast */
 }
 
+/* Normal row — active item (e.g. currently running app) */
 element normal.active {
-    background-color:        @active-color;
-    text-color:              @bg-color;
+    background-color: @active-color;  /* Green background */
+    text-color:       @bg-color;      /* Dark text for contrast */
 }
 
+/* Selected row — currently highlighted item */
 element selected.normal {
-    background-color:        @bg-selected;
-    text-color:              @accent-color;
+    background-color: @bg-selected;   /* Surface0 background for selection */
+    text-color:       @accent-color;  /* Mauve text to highlight selection */
 }
 
+/* Selected row — selected urgent item */
 element selected.urgent {
-    background-color:        @urgent-color;
-    text-color:              @bg-color;
+    background-color: @urgent-color;
+    text-color:       @bg-color;
 }
 
+/* Selected row — selected active item */
 element selected.active {
-    background-color:        @active-color;
-    text-color:              @bg-color;
+    background-color: @active-color;
+    text-color:       @bg-color;
 }
 
+/* Alternate row — every other row (for subtle zebra striping if desired) */
 element alternate.normal {
-    background-color:        transparent;
-    text-color:              @fg-color;
+    background-color: transparent;
+    text-color:       @fg-color;
 }
 
+/* Alternate row — urgent item on an alternate row */
 element alternate.urgent {
-    background-color:        transparent;
-    text-color:              @urgent-color;
+    background-color: transparent;
+    text-color:       @urgent-color;  /* Red text instead of background */
 }
 
+/* Alternate row — active item on an alternate row */
 element alternate.active {
-    background-color:        transparent;
-    text-color:              @active-color;
+    background-color: transparent;
+    text-color:       @active-color;  /* Green text instead of background */
 }
 
+/* ── Element Icon ────────────────────────────────────────────
+ * The application icon displayed to the left of each result label.
+ */
 element-icon {
-    background-color:        transparent;
-    text-color:              inherit;
-    size:                    28px;
-    cursor:                  inherit;
+    background-color: transparent;
+    text-color:       inherit;  /* Inherit color from parent element state */
+    size:             28px;     /* Icon size in pixels */
+    cursor:           inherit;
 }
 
+/* ── Element Text ────────────────────────────────────────────
+ * The application name label displayed next to the icon.
+ */
 element-text {
-    background-color:        transparent;
-    text-color:              inherit;
-    highlight:               inherit;
-    cursor:                   inherit;
-    vertical-align:          0.5;
-    horizontal-align:        0.0;
+    background-color: transparent;
+    text-color:       inherit;       /* Inherit color from parent element state */
+    highlight:        inherit;       /* Inherit search match highlighting */
+    cursor:           inherit;
+    vertical-align:   0.5;           /* Vertically center text within the row */
+    horizontal-align: 0.0;           /* Left-align text */
 }
 
+/* ── Message ─────────────────────────────────────────────────
+ * An optional info area displayed below the list view.
+ * Used by some Rofi modes to show contextual information.
+ */
 message {
-    enabled:                 true;
-    margin:                  16px 0px 0px 0px;
-    padding:                 @element-padding;
-    border:                  0px solid;
-    border-radius:           @element-radius;
-    border-color:            @border-color;
-    background-color:        @bg-alt-color;
-    text-color:              @fg-color;
+    enabled:          true;
+    margin:           16px 0px 0px 0px; /* Space above the message box */
+    padding:          @element-padding;
+    border:           0px solid;
+    border-radius:    @element-radius;
+    border-color:     @border-color;
+    background-color: @bg-alt-color;
+    text-color:       @fg-color;
 }
 
+/* ── Textbox ─────────────────────────────────────────────────
+ * The text rendering widget inside the message area.
+ */
 textbox {
-    background-color:        transparent;
-    text-color:              @fg-color;
-    vertical-align:          0.5;
-    horizontal-align:        0.0;
-    highlight:               none;
+    background-color: transparent;
+    text-color:       @fg-color;
+    vertical-align:   0.5;    /* Vertically center text */
+    horizontal-align: 0.0;    /* Left-align text */
+    highlight:        none;   /* No search highlighting in message text */
 }
 
+/* ── Error Message ───────────────────────────────────────────
+ * Displayed as a standalone overlay when Rofi encounters an error.
+ * Uses the red palette color for text to signal the failure state.
+ */
 error-message {
-    padding:                 @window-padding;
-    border:                  2px solid;
-    border-radius:           @border-radius;
-    border-color:            @border-color;
-    background-color:        @bg-color;
-    text-color:              @red;
+    padding:          @window-padding;
+    border:           2px solid;
+    border-radius:    @border-radius;
+    border-color:     @border-color;
+    background-color: @bg-color;
+    text-color:       @red;   /* Red text to clearly indicate an error */
 }
