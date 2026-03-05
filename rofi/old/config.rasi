@@ -1,102 +1,169 @@
+/**
+ * ═══════════════════════════════════════════════════════════
+ * ROFI - Application Launcher Theme
+ * ═══════════════════════════════════════════════════════════
+ *
+ * A minimal black-and-white theme for Rofi with subtle
+ * transparency, clean typography, and zebra-striped results.
+ */
+
 * {
+    /* ── Typography ─────────────────────────────────────────
+     * Global font applied to all Rofi widgets.
+     * Uses JetBrains Mono Nerd Font for icon glyph support.
+     */
     font: "Jetbrains Mono Nerd Font 10";
-    g-spacing: 10px;
-    g-margin: 0;
-    b-color: #000000FF;
-    fg-color: #FFFFFFFF;
-    fgp-color: #888888FF;
-    b-radius: 8px;
-    g-padding: 8px;
-    hl-color: #FFFFFFFF;
-    hlt-color: #000000FF;
-    alt-color: #111111FF;
-    wbg-color: #000000CC;
-    w-border: 2px solid;
-    w-border-color: #FFFFFFFF;
-    w-padding: 12px;
-    i-spacing: 14px;
+
+    /* ── Global Spacing Tokens ──────────────────────────────
+     * Reusable sizing values referenced throughout all widgets.
+     * Edit here to adjust the overall layout density.
+     */
+    g-spacing: 10px;  /* Default gap between child elements */
+    g-margin:  0;     /* No outer margin on layout containers */
+    g-padding: 8px;   /* Default inner padding for containers */
+
+    /* ── Color Palette ──────────────────────────────────────
+     * Monochromatic black-and-white palette with one transparent variant.
+     * Format: #RRGGBBAA (AA = alpha, FF = fully opaque)
+     */
+    b-color:   #000000FF;  /* Pure black — element borders and base background */
+    fg-color:  #FFFFFFFF;  /* Pure white — primary text and window border */
+    fgp-color: #888888FF;  /* Mid-grey — placeholder text color */
+    hl-color:  #FFFFFFFF;  /* White — selected item background */
+    hlt-color: #000000FF;  /* Black — text on selected items (inverted) */
+    alt-color: #111111FF;  /* Near-black — alternate row background (zebra stripe) */
+
+    /* ── Window ─────────────────────────────────────────────*/
+    wbg-color:     #000000CC;  /* Semi-transparent black window background (CC = ~80% opacity) */
+    w-border:      2px solid;  /* Solid border around the window */
+    w-border-color:#FFFFFFFF;  /* White border to frame the launcher */
+    w-padding:     12px;       /* Inner padding of the main window */
+
+    /* ── Icon Spacing ───────────────────────────────────────*/
+    i-spacing: 14px;  /* Gap between the prompt icon and the text entry field */
 }
 
+/* ── Configuration ───────────────────────────────────────────
+ * Runtime behavior: only the app launcher mode is enabled,
+ * with icons shown and a custom prompt icon (Nerd Font glyph).
+ */
 configuration {
-    modi: "drun";
-    show-icons: true;
-    display-drun: "";
+    modi:         "drun";  /* Only the application launcher mode is active */
+    show-icons:   true;    /* Display application icons next to each result */
+    display-drun: "";     /* Nerd Font icon used as the mode prompt label */
 }
 
+/* ── List View ───────────────────────────────────────────────
+ * The scrollable area displaying search results.
+ */
 listview {
-    columns: 1;
-    lines: 7;
-    fixed-height: true;
+    columns:       1;          /* Single column layout */
+    lines:         7;          /* Show up to 7 results at a time */
+    fixed-height:  true;       /* Keep height constant regardless of result count */
     fixed-columns: true;
-    cycle: false;
-    scrollbar: false;
-    border: 0px solid;
+    cycle:         false;      /* Do not wrap around at the end of the list */
+    scrollbar:     false;      /* Hide the scrollbar */
+    border:        0px solid;  /* No border on the list container */
 }
 
+/* ── Window ──────────────────────────────────────────────────
+ * The outermost container of the Rofi UI.
+ * Semi-transparent with a white border and rounded corners.
+ */
 window {
-    transparency: "real";
-    width: 480px;
-    border-radius: @b-radius;
-    background-color: @wbg-color;
-    border: @w-border;
-    border-color: @w-border-color;
-    padding: @w-padding;
+    transparency:     "real";          /* Use real compositor transparency */
+    width:            480px;           /* Fixed window width */
+    border-radius:    @b-radius;       /* Rounded corners */
+    background-color: @wbg-color;     /* Semi-transparent black background */
+    border:           @w-border;       /* Solid border */
+    border-color:     @w-border-color; /* White border */
+    padding:          @w-padding;      /* Inner padding on all sides */
 }
 
+/* ── Prompt ──────────────────────────────────────────────────
+ * The mode icon displayed to the left of the search input.
+ */
 prompt {
-    text-color: @fg-color;
+    text-color: @fg-color;  /* White icon to match the overall theme */
 }
 
+/* ── Input Bar ───────────────────────────────────────────────
+ * The row containing the prompt icon and the search entry field.
+ */
 inputbar {
-    children: ["prompt", "entry"];
-    spacing: @i-spacing;
+    children: ["prompt", "entry"];  /* Prompt on the left, entry on the right */
+    spacing:  @i-spacing;           /* Gap between prompt icon and text field */
 }
 
+/* ── Entry ───────────────────────────────────────────────────
+ * The text field where the user types their search query.
+ */
 entry {
-    placeholder: "Search Apps";
-    text-color: @fg-color;
-    placeholder-color: @fgp-color;
+    placeholder:       "Search Apps";  /* Hint text shown when the field is empty */
+    text-color:        @fg-color;      /* White text for typed input */
+    placeholder-color: @fgp-color;     /* Grey color for the placeholder hint */
 }
 
+/* ── Mainbox ─────────────────────────────────────────────────
+ * The root layout container stacking the input bar,
+ * list view, and message area vertically.
+ */
 mainbox {
-    spacing: @g-spacing;
-    margin: @g-margin;
-    padding: @g-padding;
+    spacing:  @g-spacing;  /* Gap between inputbar, listview, and message */
+    margin:   @g-margin;   /* No outer margin */
+    padding:  @g-padding;  /* Inner padding */
     children: ["inputbar", "listview", "message"];
 }
 
+/* ── Element ─────────────────────────────────────────────────
+ * Base styles for each result row in the list.
+ * State-specific overrides are defined below.
+ */
 element {
-    spacing: @g-spacing;
-    margin: @g-margin;
-    padding: @g-padding;
-    border: 0px solid;
-    border-radius: @b-radius;
-    border-color: @b-color;
+    spacing:          @g-spacing;   /* Gap between icon and label */
+    margin:           @g-margin;
+    padding:          @g-padding;
+    border:           0px solid;    /* No border on individual rows */
+    border-radius:    @b-radius;    /* Rounded corners on each row */
+    border-color:     @b-color;
     background-color: transparent;
-    text-color: @fg-color;
+    text-color:       @fg-color;
 }
 
+/* ── Element States ──────────────────────────────────────────
+ * State-specific color overrides for result rows.
+ * Provides zebra striping and clear selection feedback.
+ */
+
+/* Default unselected row */
 element normal.normal {
-	background-color: transparent;
-	text-color: @fg-color;
+    background-color: transparent;  /* Transparent — blends with window background */
+    text-color:       @fg-color;    /* White text */
 }
 
+/* Every other unselected row (zebra stripe) */
 element alternate.normal {
-	background-color: @alt-color;
-	text-color: @fg-color;
+    background-color: @alt-color;  /* Near-black stripe for subtle visual separation */
+    text-color:       @fg-color;   /* White text */
 }
 
+/* Selected active item (e.g. currently running app) */
 element selected.active {
-	background-color: @hl-color;
-	text-color: @hlt-color;
+    background-color: @hl-color;   /* White background for high contrast selection */
+    text-color:       @hlt-color;  /* Black text on white background */
 }
 
+/* Selected normal item (keyboard or mouse highlight) */
 element selected.normal {
-	background-color: @hl-color;
-	text-color: @hlt-color;
+    background-color: @hl-color;   /* White background */
+    text-color:       @hlt-color;  /* Black text for contrast */
 }
 
+/* ── Message ─────────────────────────────────────────────────
+ * An optional area below the list view for contextual messages.
+ * Red background makes it visually distinct as an alert area.
+ */
 message {
-    background-color: red;
-    border: 0px solid;
+    background-color: red;        /* High-visibility red to signal important messages */
+    border:           0px solid;  /* No border on the message container */
 }
