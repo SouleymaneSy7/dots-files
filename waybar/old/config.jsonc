@@ -1,11 +1,23 @@
 {
-  "layer": "top",
-  "position": "top",
-  "mode": "dock",
-  "exclusive": true,
-  "passthrough": false,
-  "gtk-layer-shell": true,
-  "height": 0,
+  // ═══════════════════════════════════════════════════════════
+  // WAYBAR - Status Bar Configuration
+  // ═══════════════════════════════════════════════════════════
+  //
+  // Waybar is a highly customizable status bar for Wayland compositors.
+  // This file configures its layout, modules, and per-module display options.
+  // Full documentation: https://github.com/Alexays/Waybar/wiki
+
+  // ─── Bar Layout ────────────────────────────────────────────
+  "layer": "top", // Render the bar above all windows (top layer)
+  "position": "top", // Anchor the bar to the top edge of the monitor
+  "mode": "dock", // Reserve screen space so windows don't overlap the bar
+  "exclusive": true, // Claim exclusive screen space (prevents overlap)
+  "passthrough": false, // Intercept mouse events (don't pass clicks through to windows)
+  "gtk-layer-shell": true, // Use gtk-layer-shell for Wayland layer surface rendering
+  "height": 0, // Auto-size height based on content (0 = dynamic)
+
+  // ─── Module Layout ─────────────────────────────────────────
+  // Defines which modules appear on the left, center, and right of the bar.
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": [
@@ -13,107 +25,156 @@
     "memory",
     "cpu",
     "network",
-    "pulseaudio",
-    "pulseaudio#microphone",
+    "pulseaudio", // Speaker / output volume
+    "pulseaudio#microphone", // Microphone / input volume (named instance)
   ],
 
+  // ─── Hyprland Window Title ─────────────────────────────────
+  // Displays the title of the currently focused window.
+  // (Kept for reference; not listed in modules-* above)
   "hyprland/window": {
-    "format": "󰣇 {}",
+    "format": "󰣇 {}", // Nerd Font Hyprland icon + window title
   },
 
+  // ─── Hyprland Workspaces ───────────────────────────────────
+  // Shows clickable workspace buttons with icon labels.
   "hyprland/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true,
-    "on-click": "activate",
-    "format": "{icon}",
+    "disable-scroll": true, // Disable mouse scroll to switch workspaces on the bar
+    "all-outputs": true, // Show workspaces from all monitors
+    "on-click": "activate", // Click a button to switch to that workspace
+    "format": "{icon}", // Display workspace icon only (defined in Hyprland config)
   },
 
+  // ─── System Tray ───────────────────────────────────────────
+  // Shows system tray icons for background apps.
   "tray": {
-    "icon-size": 13,
-    "spacing": 10,
+    "icon-size": 13, // Tray icon size in pixels
+    "spacing": 10, // Horizontal gap between tray icons in pixels
   },
 
+  // ─── Clock ─────────────────────────────────────────────────
+  // Displays the full date and time with a calendar tooltip.
   "clock": {
-    "format": "{:%A    %B-%d-%Y    %I:%M:%S %p}",
-    "interval": 1,
-    "rotate": 0,
+    // Full format: weekday, month-day-year, 12h time with seconds and AM/PM.
+    "format": "{:%A    %B-%d-%Y    %I:%M:%S %p}",
+    "interval": 1, // Update every second (needed to show seconds)
+    "rotate": 0, // No text rotation
+
+    // Hover tooltip renders an interactive monthly calendar.
     "tooltip-format": "<tt>{calendar}</tt>",
+
     "calendar": {
-      "mode": "month",
-      "mode-mon-col": 3,
-      "on-scroll": 1,
-      "on-click-right": "mode",
+      "mode": "month", // Show a full monthly calendar in the tooltip
+      "mode-mon-col": 3, // Display 3 months side by side in month mode
+      "on-scroll": 1, // Scroll wheel changes month by 1
+      "on-click-right": "mode", // Right-click cycles between calendar display modes
+
+      // Pango markup for calendar cell colors.
+      // All use the same subtext color; customize per key for differentiation.
       "format": {
-        "months": "<span color='#a6adc8'><b>{}</b></span>",
-        "weekdays": "<span color='#a6adc8'><b>{}</b></span>",
-        "today": "<span color='#a6adc8'><b>{}</b></span>",
-        "days": "<span color='#555869'><b>{}</b></span>",
+        "months": "<span color='#a6adc8'><b>{}</b></span>", // Month name header
+        "weekdays": "<span color='#a6adc8'><b>{}</b></span>", // Day-of-week header row
+        "today": "<span color='#a6adc8'><b>{}</b></span>", // Today's date cell
+        "days": "<span color='#555869'><b>{}</b></span>", // Other day cells (dimmed)
       },
     },
   },
 
+  // ─── PulseAudio (Speaker / Output) ─────────────────────────
+  // Displays and controls the current audio output volume.
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "tooltip": false,
-    "format-muted": "  Muted",
-    "on-click": "pamixer -t",
-    "on-scroll-up": "pamixer -i 1",
-    "on-scroll-down": "pamixer -d 1",
-    "scroll-step": 5,
+    "format": "{icon}  {volume}%", // Icon (varies by device) + volume percentage
+    "tooltip": false, // Disable hover tooltip
+    "format-muted": "  Muted", // Shown when output is muted
+
+    // Click and scroll interactions for quick volume control.
+    "on-click": "pamixer -t", // Toggle mute on left click
+    "on-scroll-up": "pamixer -i 1", // Increase volume by 1% on scroll up
+    "on-scroll-down": "pamixer -d 1", // Decrease volume by 1% on scroll down
+    "scroll-step": 5, // Step size used internally (informational)
+
+    // Maps audio output device types to Nerd Font icons.
+    // "default" cycles through icons based on volume level.
     "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", "", ""],
+      "headphone": "", // Wired headphones
+      "hands-free": "", // Hands-free / speakerphone
+      "headset": "", // Headset with microphone
+      "phone": "", // Phone audio output
+      "portable": "", // Portable speaker
+      "car": "", // Car audio system
+      "default": ["", "", "", ""], // Low → medium → high volume icons
     },
   },
 
+  // ─── PulseAudio Microphone (Input) ─────────────────────────
+  // Named instance "#microphone" to style separately from the output module.
+  // Displays and controls the default microphone input volume.
   "pulseaudio#microphone": {
-    "format": "{format_source}",
-    "format-source": " {volume}%",
-    "format-source-muted": "  Muted",
-    "on-click": "pamixer --default-source -t",
-    "on-scroll-up": "pamixer --default-source -i 5",
-    "on-scroll-down": "pamixer --default-source -d 5",
+    "format": "{format_source}", // Delegate to source-specific format
+    "format-source": " {volume}%", // Microphone icon + input volume percentage
+    "format-source-muted": "  Muted", // Shown when the microphone is muted
+
+    // Click and scroll interactions for microphone volume control.
+    "on-click": "pamixer --default-source -t", // Toggle microphone mute
+    "on-scroll-up": "pamixer --default-source -i 5", // Increase mic volume by 5%
+    "on-scroll-down": "pamixer --default-source -d 5", // Decrease mic volume by 5%
     "scroll-step": 5,
   },
 
+  // ─── Memory ────────────────────────────────────────────────
+  // Displays RAM usage with threshold-based icon changes.
   "memory": {
+    // Usage thresholds that trigger different format strings.
     "states": {
-      "c": 90, // critical
-      "h": 60, // high
-      "m": 30, // medium
+      "c": 90, // Critical: ≥90% RAM used
+      "h": 60, // High:     ≥60% RAM used
+      "m": 30, // Medium:   ≥30% RAM used
     },
-    "interval": 10,
-    "format": "󰾆 {used}GB",
-    "format-m": "󰾅 {used}GB",
-    "format-h": "󰓅 {used}GB",
-    "format-c": " {used}GB",
-    "format-alt": "󰾆 {percentage}%",
-    "max-length": 10,
+    "interval": 10, // Update every 10 seconds
+
+    "format": "󰾆 {used}GB", // Normal usage
+    "format-m": "󰾅 {used}GB", // Medium usage (≥30%)
+    "format-h": "󰓅 {used}GB", // High usage (≥60%)
+    "format-c": " {used}GB", // Critical usage (≥90%) — warning icon
+    "format-alt": "󰾆 {percentage}%", // Alt (on click): percentage instead of GB
+
+    "max-length": 10, // Truncate display text at 10 characters
     "tooltip": true,
-    "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
+
+    // Tooltip shows both percentage and absolute GB values.
+    "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
   },
 
+  // ─── CPU ───────────────────────────────────────────────────
+  // Displays CPU usage percentage with an optional per-core bar graph alt format.
   "cpu": {
-    "interval": 10,
-    "format": "󰍛 {usage}%",
+    "interval": 10, // Update every 10 seconds
+    "format": "󰍛 {usage}%", // Nerd Font CPU icon + overall usage percentage
+
+    // Alt format (on click): renders a mini bar graph using block characters
+    // where each icon corresponds to a per-core usage level.
     "format-alt": "{icon0}{icon1}{icon2}{icon3}",
-    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"], // 8-level bar chart glyphs
   },
 
+  // ─── Network ───────────────────────────────────────────────
+  // Shows the active network connection with detailed tooltip info.
   "network": {
     "tooltip": true,
-    "format-wifi": "  {essid}",
-    "format-ethernet": "󰈀 ",
+
+    "format-wifi": "  {essid}", // WiFi: signal icon + network name
+    "format-ethernet": "󰈀 ", // Ethernet: wired icon only
+    "format-linked": "󰈀 {ifname} (No IP)", // Connected interface but no IP assigned
+    "format-disconnected": "󰖪 ", // No active connection
+
+    // Detailed WiFi info shown on hover.
     "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
-    "format-linked": "󰈀 {ifname} (No IP)",
-    "format-disconnected": "󰖪 ",
     "tooltip-format-disconnected": "Disconnected",
-    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
-    "interval": 2,
+
+    // Alt format (on click): real-time download and upload bandwidth.
+    // Green for download, yellow for upload.
+    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
+
+    "interval": 2, // Update every 2 seconds for responsive bandwidth readings
   },
 }
