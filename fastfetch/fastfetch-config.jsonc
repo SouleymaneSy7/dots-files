@@ -1,0 +1,132 @@
+{
+  // ═══════════════════════════════════════════════════════════
+  // FASTFETCH - System Information Display
+  // ═══════════════════════════════════════════════════════════
+  //
+  // Description:
+  //   Displays system information on shell startup or on demand.
+  //   Configured with the Catppuccin Macchiato palette and the
+  //   Arch Linux ASCII logo.
+  //
+  // Location:
+  //   ~/.config/fastfetch/fastfetch-config.jsonc
+  //
+  // Installation:
+  //   sudo pacman -S fastfetch
+  //
+  // Usage:
+  //   fastfetch
+  //
+  // Shell integration (optional — add to .zshrc):
+  //   command -v fastfetch &>/dev/null && fastfetch
+  //
+  // Regenerate config:
+  //   fastfetch --gen-config
+  //
+  // Dependencies:
+  //   - Catppuccin Macchiato palette (via terminal ANSI colors)
+  //
+  // See also:
+  //   zsh/.zshrc (shell integration)
+  //
+  // Documentation:
+  //   https://github.com/fastfetch-cli/fastfetch
+
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  // ─── Logo ──────────────────────────────────────────────────
+  "logo": {
+    "type": "auto",
+    "source": "arch",
+    "color": {
+      "1": "blue", // Primary logo color (mapped to Catppuccin blue via ANSI)
+      "2": "cyan" // Secondary logo color
+    },
+    "padding": {
+      "top": 1,
+      "right": 4
+    }
+  },
+
+  // ─── Display ───────────────────────────────────────────────
+  "display": {
+    "separator": "  ", // Two spaces between label and value
+
+    // ANSI color codes for labels and values.
+    // 35 = magenta (closest ANSI to Catppuccin mauve #c6a0f6)
+    // 34 = blue    (closest ANSI to Catppuccin blue  #8aadf4)
+    // 36 = cyan    (closest ANSI to Catppuccin teal  #8bd5ca)
+    "color": {
+      "keys": "35",
+      "title": "34",
+      "separator": "36"
+    }
+  },
+
+  // ─── Modules ───────────────────────────────────────────────
+  // Each module displays one piece of system information.
+  // Order here determines display order.
+  "modules": [
+    // ─── Title: user@hostname ─────────────────────────────
+    {
+      "type": "title",
+      "format": "{user-name}@{host-name}",
+      "color": {
+        "user": "34", // Blue for the username
+        "at": "36", // Teal for the @ separator
+        "host": "35" // Mauve for the hostname
+      }
+    },
+
+    { "type": "separator", "string": "─" },
+
+    // ─── System Information ──────────────────────────────
+    { "type": "os", "key": "  OS", "keyColor": "35" },
+    { "type": "kernel", "key": "  Kernel", "keyColor": "35" },
+    { "type": "uptime", "key": "󰔚  Uptime", "keyColor": "35" },
+    { "type": "packages", "key": "󰏗  Packages", "keyColor": "35" },
+    { "type": "shell", "key": "  Shell", "keyColor": "35" },
+
+    // ─── Desktop Environment ─────────────────────────────
+    { "type": "wm", "key": "  WM", "keyColor": "34" },
+    { "type": "wmtheme", "key": "  Theme", "keyColor": "34" },
+    { "type": "terminal", "key": "  Terminal", "keyColor": "34" },
+    { "type": "font", "key": "  Font", "keyColor": "34" },
+
+    // ─── Hardware ────────────────────────────────────────
+    { "type": "host", "key": "󰌢  Host", "keyColor": "36" },
+    {
+      "type": "cpu",
+      "key": "  CPU",
+      "keyColor": "36",
+      "showPeCoreCount": true // Show performance and efficiency core counts separately
+    },
+    {
+      "type": "gpu",
+      "key": "󰍛  GPU",
+      "keyColor": "36",
+      "hideType": "integrated" // Hide the integrated GPU when a discrete GPU is present
+    },
+    { "type": "memory", "key": "  RAM", "keyColor": "36" },
+    {
+      "type": "disk",
+      "key": "  Disk",
+      "keyColor": "36",
+      "folders": "/" // Show only the root filesystem
+    },
+    { "type": "battery", "key": "  Battery", "keyColor": "36" },
+
+    // ─── Network ─────────────────────────────────────────
+    { "type": "localip", "key": "󰩠  Local IP", "keyColor": "33" },
+
+    // ─── Color Palette ────────────────────────────────────
+    // ANSI color blocks to verify that the Catppuccin palette renders
+    // correctly in the current terminal (Ghostty or Kitty).
+    { "type": "break" },
+    {
+      "type": "colors",
+      "paddingLeft": 2,
+      "symbol": "circle" // "circle" = ●  "square" = ■
+    }
+  ]
+}

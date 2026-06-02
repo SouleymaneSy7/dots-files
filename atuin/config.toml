@@ -1,0 +1,104 @@
+# ═══════════════════════════════════════════════════════════
+# ATUIN - Shell History Configuration
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+#   Replaces the native shell history with a SQLite database.
+#   Enables structured search by text, directory, exit code,
+#   and date. Ctrl+R opens the interactive search.
+#
+# Location:
+#   ~/.config/atuin/config.toml
+#
+# Installation:
+#   yay -S atuin
+#
+# Usage:
+#   Ctrl+R  (interactive search)
+#   atuin search <query>
+#
+# Shell integration (in .zshrc):
+#   eval "$(atuin init zsh)"
+#
+# Dependencies:
+#   - zsh    (shell — integration is in .zshrc)
+#
+# See also:
+#   zsh/.zshrc  (atuin initialization)
+#
+# Documentation:
+#   https://docs.atuin.sh/configuration/config/
+
+# ─── Search ────────────────────────────────────────────────
+# fuzzy: partial matches anywhere in the command string.
+# prefix: only match from the start (faster, more precise).
+# fulltext: match the entire command as a single string.
+search_mode = "fuzzy"
+
+# What scope of history to search by default.
+# "global": all commands from all directories and sessions.
+# "directory": only commands run in the current directory.
+# "host": only commands from this machine.
+# "session": only commands from the current terminal session.
+filter_mode = "global"
+
+# When Ctrl+R is pressed, search within the current directory first.
+# This makes it easy to re-run project-specific commands.
+filter_mode_shell_up_arrow = "directory"
+
+# ─── Interface ─────────────────────────────────────────────
+# "compact": single-line entries, more results visible.
+# "full": shows command, directory, and time on multiple lines.
+style = "compact"
+
+# Show the full command text in a preview pane at the bottom.
+show_preview = true
+
+# Maximum height of the search UI as a fraction of the terminal.
+# 0.4 = 40% of terminal height, leaving the context visible.
+max_preview_height = 2
+
+# Show the number of times each command has been run.
+show_tabs = true
+
+# ─── Behavior ──────────────────────────────────────────────
+# When the user presses Escape without selecting a result, keep the
+# text they typed in the command line rather than clearing it.
+exit_mode = "return-query"
+
+# Do not record commands shorter than 2 characters.
+# This prevents single-key aliases (l, g, v) from polluting history.
+history_filter = [
+  "^\\s*$",      # Empty or whitespace-only commands
+  "^cd\\s*$",    # cd with no arguments
+  "^ls\\s*$",    # ls with no arguments
+  "^ll\\s*$",
+  "^la\\s*$",
+  "^pwd$",
+  "^clear$",
+  "^exit$",
+  "^history$",
+]
+
+# Do not save commands run in these directories.
+# Useful for directories containing sensitive scripts.
+# cwd_filter = ["/path/to/sensitive/dir"]
+
+# ─── Performance ───────────────────────────────────────────
+# Maximum number of results returned by a search query.
+# Lower values are faster for large history databases.
+max_history_length = 1000000
+
+# ─── Sync (optional) ───────────────────────────────────────
+# Uncomment and fill in to sync history across machines via atuin.sh.
+# Your history is end-to-end encrypted — the server never sees plaintext.
+#
+# [sync]
+# username = "your-username"
+# sync_address = "https://api.atuin.sh"
+# sync_frequency = "10m"
+
+# ─── Key Bindings ──────────────────────────────────────────
+# ctrl_n_shortcuts = true makes Ctrl+N / Ctrl+P navigate results
+# in addition to arrow keys.
+ctrl_n_shortcuts = true

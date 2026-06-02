@@ -1,0 +1,145 @@
+/**
+ * ═══════════════════════════════════════════════════════════
+ * WLOGOUT - Logout Menu Stylesheet
+ * ═══════════════════════════════════════════════════════════
+ *
+ * Description:
+ *   Catppuccin Macchiato theme for wlogout. Six buttons
+ *   arranged in a row: lock, hibernate, logout, shutdown,
+ *   suspend, reboot.
+ *
+ * Location:
+ *   ~/.config/wlogout/style.css
+ *
+ * Installation:
+ *   yay -S wlogout
+ *
+ * Usage:
+ *   wlogout
+ *   Typically launched via a keybind or the Waybar power menu.
+ *
+ * Reload:
+ *   Closing and re-launching wlogout applies style changes.
+ *
+ * Theme:
+ *   Catppuccin Macchiato
+ *
+ * Icons:
+ *   /usr/share/wlogout/icons/  (default Nerd Font icons)
+ *
+ * Dependencies:
+ *   - Nerd Font icons  (for button symbols)
+ *
+ * See also:
+ *   wlogout/layout  (button layout and actions)
+ *
+ * Documentation:
+ *   https://github.com/ArtsyMacaw/wlogout
+ */
+
+/* ─── Catppuccin Macchiato Palette ───────────────────────────*/
+/* base:    #24273a  mantle:  #1e2030  crust:   #181926        */
+/* text:    #cad3f5  blue:    #8aadf4  mauve:   #c6a0f6        */
+/* red:     #ed8796  green:   #a6da95  peach:   #f5a97f        */
+/* yellow:  #eed49f  teal:    #8bd5ca  surface0:#363a4f        */
+
+/* ─── Full-Screen Overlay ────────────────────────────────────
+ * The window covers the entire screen with a semi-transparent
+ * dark overlay so the wallpaper is dimly visible behind the buttons.
+ */
+* {
+  background-image: none;
+  font-family: "Rec Mono Linear", monospace;
+  font-size: 14px;
+}
+
+window {
+  background-color: rgba(
+    36,
+    39,
+    58,
+    0.92
+  ); /* Catppuccin base at ~92% opacity */
+}
+
+/* ─── Button Container ───────────────────────────────────────
+ * Buttons are arranged in a single centered row.
+ */
+button {
+  color: #cad3f5; /* text */
+  background-color: rgba(30, 32, 48, 0.85); /* mantle, slightly transparent */
+  border-style: solid;
+  border-width: 2px;
+  border-color: #494d64; /* surface1 */
+  border-radius: 12px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25%;
+
+  margin: 10px;
+  padding: 40px;
+
+  /* Smooth color transition on hover */
+  transition: all 0.2s ease;
+}
+
+/* ─── Button Hover ───────────────────────────────────────────
+ * Buttons brighten on hover, border switches to the accent color
+ * associated with each action.
+ */
+button:hover {
+  background-color: rgba(54, 58, 79, 0.9); /* surface0 */
+  border-color: #8aadf4; /* blue */
+  color: #cad3f5;
+}
+
+/* ─── Button Focus ───────────────────────────────────────────
+ * Keyboard-focused button gets the mauve accent.
+ */
+button:focus {
+  background-color: rgba(54, 58, 79, 0.9);
+  border-color: #c6a0f6; /* mauve */
+  outline: none;
+}
+
+/* ─── Individual Button Accents ──────────────────────────────
+ * Each action has a unique hover color to make its meaning
+ * visually distinct when the user moves the cursor or navigates.
+ */
+
+/* Lock — blue: safe, reversible */
+#lock:hover {
+  border-color: #8aadf4;
+  background-color: rgba(138, 173, 244, 0.15);
+}
+
+/* Logout — peach: end session */
+#logout:hover {
+  border-color: #f5a97f;
+  background-color: rgba(245, 169, 127, 0.15);
+}
+
+/* Suspend — teal: sleep */
+#suspend:hover {
+  border-color: #8bd5ca;
+  background-color: rgba(139, 213, 202, 0.15);
+}
+
+/* Hibernate — lavender: deep sleep */
+#hibernate:hover {
+  border-color: #b7bdf8;
+  background-color: rgba(183, 189, 248, 0.15);
+}
+
+/* Reboot — yellow: caution */
+#reboot:hover {
+  border-color: #eed49f;
+  background-color: rgba(238, 212, 159, 0.15);
+}
+
+/* Shutdown — red: destructive, irreversible */
+#shutdown:hover {
+  border-color: #ed8796;
+  background-color: rgba(237, 135, 150, 0.15);
+}

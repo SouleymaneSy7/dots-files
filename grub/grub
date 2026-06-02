@@ -1,0 +1,101 @@
+# ═══════════════════════════════════════════════════════════
+# GRUB - Bootloader Configuration
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+#   Main GRUB bootloader configuration for Arch Linux with
+#   Windows dual-boot. Controls default entry, timeout,
+#   kernel parameters, and theme.
+#
+# Location:
+#   /etc/default/grub
+#
+# Installation:
+#   sudo pacman -S grub
+#   sudo grub-install /dev/sdX
+#
+# Usage:
+#   Edit this file directly, then regenerate with:
+#   sudo grub-mkconfig -o /boot/grub/grub.cfg
+#
+# Reload:
+#   sudo grub-mkconfig -o /boot/grub/grub.cfg
+#   (reboot required to see changes in the boot menu)
+#
+# Theme:
+#   Catppuccin Macchiato
+#
+# Author:
+#   Souleymane Sy
+#
+# Dependencies:
+#   - grub-customizer  (optional GUI tool)
+#
+# See also:
+#   grub/40_custom  (Windows boot entry)
+#
+# Documentation:
+#   https://wiki.archlinux.org/title/GRUB
+
+# ─── Boot Entry ───────────────────────────────────────────
+# Index of the default boot entry (0 = first entry = Arch Linux).
+# To default to Windows, run: sudo grub-set-default <index>
+# and change this to: saved
+GRUB_DEFAULT=0
+
+# ─── Timeout ──────────────────────────────────────────────
+# Seconds to wait before booting the default entry.
+# Set to 0 to boot immediately (no menu shown).
+GRUB_TIMEOUT=15
+
+# How the timeout is displayed.
+# menu       = show the full GRUB menu and count down
+# hidden     = hide the menu; hold Shift to reveal it
+# countdown  = show countdown without the full menu
+GRUB_TIMEOUT_STYLE=menu
+
+# ─── Distributor Label ────────────────────────────────────
+# Name shown in the GRUB menu entry for this OS.
+GRUB_DISTRIBUTOR="Arch Linux"
+
+# ─── Kernel Parameters ────────────────────────────────────
+# Parameters passed to the kernel at boot.
+# quiet      = suppress most boot messages
+# loglevel=3 = show only errors and warnings (not info/debug)
+GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"
+
+# Extra parameters added to ALL entries (including recovery).
+# Leave empty unless you need global kernel flags.
+GRUB_CMDLINE_LINUX=""
+
+# ─── Preload Modules ──────────────────────────────────────
+# Load partition table modules early so GRUB can read the disk.
+# part_msdos is required for MBR/Legacy BIOS systems.
+GRUB_PRELOAD_MODULES="part_gpt part_msdos"
+
+# ─── Graphics ─────────────────────────────────────────────
+# Resolution used by the GRUB menu.
+# "auto" uses the highest resolution the firmware supports.
+# Use a fixed value (e.g. 1920x1080) if auto causes issues.
+GRUB_GFXMODE=auto
+
+# Keep the framebuffer resolution set by GRUB when handing
+# off to the kernel. Prevents a resolution flash during early boot.
+GRUB_GFXPAYLOAD_LINUX=keep
+
+# ─── Theme ────────────────────────────────────────────────
+# Path to the Catppuccin Macchiato GRUB theme.
+# Clone and install from: https://github.com/catppuccin/grub
+#   git clone --depth 1 https://github.com/catppuccin/grub
+#   sudo cp -r grub/src/catppuccin-macchiato-grub-theme /boot/grub/themes/catppuccin-macchiato
+GRUB_THEME="/usr/share/grub/themes/catppuccin-macchiato-grub-theme/theme.txt"
+
+# ─── Dual Boot ────────────────────────────────────────────
+# Enable os-prober so GRUB detects Windows on other partitions.
+# Required for dual-boot with Windows 10.
+GRUB_DISABLE_OS_PROBER=false
+
+# ─── Misc ─────────────────────────────────────────────────
+# Hide recovery mode entries from the GRUB menu.
+# Set to false if you want to keep them visible.
+GRUB_DISABLE_RECOVERY=true

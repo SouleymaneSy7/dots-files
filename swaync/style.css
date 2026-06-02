@@ -1,0 +1,244 @@
+/**
+ * ═══════════════════════════════════════════════════════════
+ * SWAYNC - Notification Center Stylesheet
+ * ═══════════════════════════════════════════════════════════
+ *
+ * Description:
+ *   Catppuccin Macchiato theme for SwayNotificationCenter.
+ *   Styles both the popup notifications and the history panel.
+ *
+ * Location:
+ *   ~/.config/swaync/style.css
+ *
+ * Installation:
+ *   yay -S swaync
+ *
+ * Usage:
+ *   Referenced automatically by ~/.config/swaync/config.json.
+ *   Styles apply on swaync restart.
+ *
+ * Reload:
+ *   killall swaync && swaync &
+ *
+ * Theme:
+ *   Catppuccin Macchiato
+ *
+ * Dependencies:
+ *   - Rec Mono Linear font  (notification font)
+ *
+ * See also:
+ *   swaync/config.json  (behavior and layout)
+ *   dunst/dunstrc       (previous notification daemon)
+ *
+ * Documentation:
+ *   https://github.com/ErikReider/SwayNotificationCenter
+ */
+
+/* ─── Catppuccin Macchiato Palette ───────────────────────────*/
+* {
+  font-family: "Rec Mono Linear", monospace;
+  font-size: 13px;
+  all: unset;
+  font-size: 13px;
+}
+
+/* ─── Notification Popup ─────────────────────────────────────
+ * The floating popup that appears when a notification arrives.
+ */
+.notification-row {
+  outline: none;
+}
+
+.notification-row:focus,
+.notification-row:hover {
+  background: transparent;
+}
+
+.notification {
+  background: #1e2030; /* mantle */
+  border: 2px solid #8aadf4; /* blue */
+  border-radius: 10px;
+  margin: 5px 10px;
+  padding: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Urgency-based border colors */
+.notification.critical {
+  border-color: #ed8796; /* red */
+}
+
+.notification.low {
+  border-color: #494d64; /* surface1 — subtle */
+}
+
+.notification-content {
+  background: transparent;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+/* ─── Notification Text ──────────────────────────────────────*/
+.notification-default-action,
+.notification-action {
+  padding: 8px;
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+  color: #cad3f5; /* text */
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+  background: #363a4f; /* surface0 */
+}
+
+.notification-default-action {
+  border-radius: 10px;
+}
+
+.summary {
+  font-size: 14px;
+  font-weight: bold;
+  color: #cad3f5; /* text */
+}
+
+.time {
+  font-size: 12px;
+  color: #6e738d; /* overlay0 */
+  margin-top: 2px;
+}
+
+.body {
+  font-size: 13px;
+  color: #a5adcb; /* subtext0 */
+  margin-top: 4px;
+}
+
+/* ─── Notification Icon ──────────────────────────────────────*/
+.app-icon {
+  border-radius: 8px;
+}
+
+/* ─── Close Button ───────────────────────────────────────────*/
+.close-button {
+  background: #363a4f; /* surface0 */
+  color: #ed8796; /* red */
+  border-radius: 100%;
+  margin: 6px;
+  padding: 2px;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.close-button:hover {
+  background: #ed8796;
+  color: #24273a; /* base */
+}
+
+/* ─── Control Center Panel ───────────────────────────────────
+ * The history panel that slides in from the right.
+ */
+.control-center {
+  background: #1e2030; /* mantle */
+  border: 2px solid #494d64; /* surface1 */
+  border-radius: 12px;
+  padding: 10px;
+  color: #cad3f5;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.control-center-list-placeholder {
+  opacity: 0.5;
+}
+
+/* ─── Panel Title ────────────────────────────────────────────*/
+.widget-title {
+  color: #cad3f5;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 8px 10px;
+}
+
+.widget-title > button {
+  font-size: 12px;
+  color: #a5adcb;
+  background: #363a4f; /* surface0 */
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+.widget-title > button:hover {
+  background: #494d64; /* surface1 */
+  color: #cad3f5;
+}
+
+/* ─── DND Toggle ─────────────────────────────────────────────*/
+.widget-dnd {
+  color: #cad3f5;
+  margin: 6px 10px;
+  font-size: 14px;
+}
+
+.widget-dnd > switch {
+  border-radius: 100px;
+  background: #363a4f;
+  border: none;
+}
+
+.widget-dnd > switch:checked {
+  background: #8aadf4; /* blue */
+}
+
+.widget-dnd > switch slider {
+  background: #cad3f5;
+  border-radius: 100px;
+}
+
+/* ─── Notification in Panel ──────────────────────────────────*/
+.control-center .notification {
+  border-color: #494d64; /* surface1 — less prominent in the panel */
+}
+
+.control-center .notification:hover {
+  border-color: #8aadf4; /* blue on hover */
+}
+
+/* ─── Action Buttons ─────────────────────────────────────────*/
+.notification-action {
+  color: #8aadf4; /* blue */
+  background: #363a4f;
+  border-radius: 6px;
+  border: none;
+  margin: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.notification-action:hover {
+  background: #494d64;
+}
+
+/* ─── Progress Bar (e.g. volume notifications) ───────────────*/
+progressbar {
+  border-radius: 6px;
+  background: #363a4f;
+  margin-top: 4px;
+}
+
+progressbar trough {
+  border-radius: 6px;
+  background: #363a4f;
+  min-height: 6px;
+}
+
+progressbar progress {
+  border-radius: 6px;
+  background: #8aadf4; /* blue */
+  min-height: 6px;
+}

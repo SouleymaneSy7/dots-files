@@ -1,0 +1,139 @@
+{
+  // ═══════════════════════════════════════════════════════════
+  // SWAYNC - Notification Center Configuration
+  // ═══════════════════════════════════════════════════════════
+  //
+  // Description:
+  //   SwayNotificationCenter is a drop-in replacement for Dunst
+  //   that adds a notification history panel (like macOS
+  //   Notification Center). Press SUPER+N to toggle the panel.
+  //
+  // Location:
+  //   ~/.config/swaync/config.json
+  //
+  // Installation:
+  //   yay -S swaync
+  //
+  // Usage:
+  //   Start daemon:  swaync
+  //   Toggle panel:  swaync-client --toggle-panel
+  //   Replaces dunst in hyprland.conf: exec-once = swaync
+  //
+  // Reload:
+  //   killall swaync && swaync &
+  //
+  // Waybar integration (add to waybar/config.jsonc):
+  //   "custom/notification": {
+  //     "tooltip": false,
+  //     "format": "{icon}",
+  //     "format-icons": {
+  //       "notification": "󰂚",
+  //       "none": "󰂜",
+  //       "dnd-notification": "󰂛",
+  //       "dnd-none": "󰂛"
+  //     },
+  //     "return-type": "json",
+  //     "exec-if": "which swaync-client",
+  //     "exec": "swaync-client -swb",
+  //     "on-click": "swaync-client -t -sw",
+  //     "on-click-right": "swaync-client -d -sw",
+  //     "escape": true
+  //   }
+  //
+  // Dependencies:
+  //   - swaync-client  (included with swaync package)
+  //
+  // See also:
+  //   swaync/style.css           (visual theme)
+  //   hyprland/hyprland.conf     (autostart)
+  //   dunst/dunstrc              (previous notification daemon)
+  //
+  // Documentation:
+  //   https://github.com/ErikReider/SwayNotificationCenter
+
+  // ─── Panel Position ──────────────────────────────────────
+  // Position of the notification center panel on screen.
+  // "right" slides the panel in from the right edge.
+  "positionX": "right",
+  "positionY": "top",
+
+  // ─── Notification Timing ─────────────────────────────────
+  // How long each urgency level stays visible before auto-dismissing.
+  // Critical notifications (0) stay until manually dismissed.
+  "timeout": 6, // Default: 6 seconds
+  "timeout-low": 3, // Low urgency: 3 seconds
+  "timeout-critical": 0, // Critical: manual dismiss only
+
+  // ─── Appearance ──────────────────────────────────────────
+  "notification-icon-size": 48,
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+
+  // Fit the notification text to available width instead of truncating.
+  "fit-to-screen": true,
+  "control-center-width": 380,
+  "control-center-height": 0, // 0 = auto height based on content
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 10,
+  "control-center-margin-left": 10,
+
+  // ─── Keyboard Navigation ─────────────────────────────────
+  "keyboard-shortcuts": true, // Enable keyboard navigation in the panel
+  "close-on-unfocus": false, // Keep panel open when clicking elsewhere
+
+  // ─── Do Not Disturb ──────────────────────────────────────
+  // DND suppresses pop-up notifications but stores them for review.
+  // Toggle at runtime: swaync-client --toggle-dnd
+  "hide-on-clear": false, // Keep panel open after clearing notifications
+
+  // ─── Widgets ─────────────────────────────────────────────
+  // Defines the layout of the notification center panel.
+  "widgets": ["inhibitors", "title", "dnd", "notifications"],
+
+  "widget-config": {
+    // Panel title
+    "title": {
+      "text": "Notification Center",
+      "clear-all-button": true,
+      "button-text": "󰆴 Clear All"
+    },
+
+    // DND toggle button in the panel
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+
+    // Inhibitors show apps that have requested notification suppression
+    "inhibitors": {
+      "text": "Inhibitors",
+      "button-text": "Clear",
+      "clear-all-button": true
+    },
+
+    // Main notification list
+    "notifications": {
+      "notification-visibility": {
+        // Hide all notifications from the compositor itself
+        "hyprland": {
+          "state": "muted",
+          "app-name": "Hyprland"
+        }
+      }
+    },
+
+    // Menubar shortcuts (optional)
+    "menubar": {
+      "menu": {
+        "label": "Menu",
+        "position": "right",
+        "actions": [
+          {
+            "label": "Clear all",
+            "command": "swaync-client --close-all"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,180 @@
+# ═══════════════════════════════════════════════════════════
+# GIT - Global Configuration
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+#   Global Git configuration with delta as the diff pager.
+#   delta adds syntax highlighting, line numbers, and side-by-side
+#   diffs to git diff, git log, git show, and git blame output.
+#
+# Location:
+#   ~/.gitconfig
+#
+# Installation:
+#   sudo pacman -S git-delta
+#
+# Usage:
+#   git config --global ...   (modify via CLI)
+#   Changes take effect immediately for new Git commands.
+#
+# Reload:
+#   Git reads this file on every invocation — no reload needed.
+#
+# Dependencies:
+#   - git-delta  (syntax-highlighted diff pager)
+#
+# See also:
+#   lazygit/config.yml  (TUI Git client, uses same Git config)
+#
+# Documentation:
+#   https://git-scm.com/docs/git-config
+#   https://dandavison.github.io/delta/
+
+[user]
+    # ─── Identity ──────────────────────────────────────────────
+    # Your Git identity is attached to every commit you make.
+    # It appears in git log, on GitHub/GitLab, and in blame annotations.
+    #
+    # Set these to YOUR actual name and email before your first commit:
+    #
+    #   git config --global user.name  "Your Full Name"
+    #   git config --global user.email "your.email@example.com"
+    #
+    # or edit the values below directly.
+    #
+    # Requirements:
+    #   - name:  any string (typically first + last name)
+    #   - email: must match the email used on your Git hosting platform
+    #            (GitHub, GitLab, etc.) for commits to be attributed to you.
+    name  = YOUR_NAME_HERE
+	email = YOUR_EMAIL_HERE
+
+[init]
+    defaultBranch = main
+
+[core]
+    # Use delta as the pager for all diff-producing commands.
+    pager = delta
+
+    # Enforce case sensitivity in filenames (correct on Linux).
+    ignorecase = false
+
+    # Default editor for commit messages, interactive rebase, etc.
+    editor = nvim
+
+		# Long paths
+		longpaths = true
+
+[interactive]
+    # Use delta in interactive mode (git add -p) so hunk selection
+    # has the same syntax highlighting as regular diffs.
+    diffFilter = delta --color-only
+
+[delta]
+    # ─── Theme ────────────────────────────────────────────────
+    # Catppuccin Macchiato theme for bat must be installed:
+    #   mkdir -p "$(bat --config-dir)/themes"
+    #   curl -fsSL https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Macchiato.tmTheme \
+    #     -o "$(bat --config-dir)/themes/Catppuccin Macchiato.tmTheme"
+    #   bat cache --build
+    syntax-theme = Catppuccin Macchiato
+
+    # ─── Layout ───────────────────────────────────────────────
+    # side-by-side shows old and new code in two columns.
+    # Disable if the terminal is narrow: git -c delta.side-by-side=false diff
+    side-by-side  = true
+    line-numbers  = true
+    decorations   = true
+    width         = variable  # Adapt to the terminal width
+
+    # ─── Colors (Catppuccin Macchiato) ────────────────────────
+    # Added and removed line backgrounds
+    plus-style            = "syntax #1a2b1a"    # Dark green background for added lines
+    plus-emph-style       = "syntax #1e3a1e"    # Slightly brighter for changed words
+    minus-style           = "syntax #2b1a1a"    # Dark red background for removed lines
+    minus-emph-style      = "syntax #3a1e1e"    # Slightly brighter for changed words
+
+    # File headers
+    file-style                   = "bold #8aadf4"   # Blue for file paths
+    file-decoration-style        = "box #494d64"    # surface1 border box
+
+    # Hunk headers (@@)
+    hunk-header-style            = "file line-number syntax"
+    hunk-header-decoration-style = "box #494d64"
+    hunk-header-file-style       = "#8aadf4"    # Blue
+    hunk-header-line-number-style = "#c6a0f6"   # Mauve
+
+    # Line numbers
+    line-numbers-minus-style  = "#ed8796"  # Red for removed line numbers
+    line-numbers-plus-style   = "#a6da95"  # Green for added line numbers
+    line-numbers-zero-style   = "#6e738d"  # overlay0 for unchanged
+    line-numbers-left-style   = "#494d64"  # surface1
+    line-numbers-right-style  = "#494d64"
+
+[merge]
+    # Show all three versions in conflicts: base, ours, theirs.
+    conflictstyle = zdiff3
+
+[diff]
+    # histogram produces smaller, more readable hunks than the default myers.
+    algorithm = histogram
+    # Detect renames even when content has changed.
+    renames = copies
+
+[pull]
+    # Always rebase when pulling to maintain a linear history.
+    rebase = true
+
+[push]
+    default         = current   # Push to the same-named upstream branch
+    autoSetupRemote = true      # Create the remote branch automatically if it does not exist
+
+[rebase]
+    autoStash = true   # Stash uncommitted changes automatically during rebase
+
+[fetch]
+    prune     = true   # Remove remote-tracking branches deleted on the server
+    pruneTags = true
+
+[status]
+    # Show untracked files recursively instead of just the parent directory.
+    showUntrackedFiles = all
+
+[log]
+    follow = true   # Follow renames in git log
+
+[alias]
+    # ─── Status & Log ─────────────────────────────────────────
+    s   = status --short --branch
+    l   = log --oneline --graph --decorate --all
+    ll  = log --oneline --graph --decorate -20
+
+    # ─── Diff ─────────────────────────────────────────────────
+    d   = diff
+    ds  = diff --staged
+
+    # ─── Stage & Commit ───────────────────────────────────────
+    a   = add
+    aa  = add --all
+    c   = commit
+    cm  = commit -m
+    ca  = commit --amend --no-edit
+
+    # ─── Remote ───────────────────────────────────────────────
+    p   = push
+    pl  = pull
+
+    # ─── Branches ─────────────────────────────────────────────
+    sw  = switch
+    sc  = switch -c                 # Create and switch to a new branch
+    # Format: [current] branch-name - YYYY-MM-DD - commit subject
+    branches = branch --sort=-committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:bold green)%(committerdate:short)%(color:reset) - %(contents:subject)'
+
+    # ─── Rebase & Stash ───────────────────────────────────────
+    rb  = rebase
+    ri  = rebase --interactive
+    re  = restore
+    rs  = restore --staged
+    st  = stash
+    sp  = stash pop
+    sl  = stash list

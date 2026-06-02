@@ -1,0 +1,38 @@
+# ═══════════════════════════════════════════════════════════
+# GRUB - Custom Windows Boot Entry
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+#   Custom GRUB menu entry for booting Windows on a dual-boot
+#   system. This file is sourced by grub-mkconfig and appended
+#   to the generated grub.cfg.
+#
+# Location:
+#   /etc/grub.d/40_custom
+#
+# Installation:
+#   Place in /etc/grub.d/ and make executable:
+#   sudo chmod +x /etc/grub.d/40_custom
+#
+# Usage:
+#   Replace YOUR-WINDOWS-PARTITION-UUID below with the actual
+#   UUID of your Windows partition. Find it with:
+#   lsblk -o NAME,UUID,FSTYPE
+#
+# Reload:
+#   sudo grub-mkconfig -o /boot/grub/grub.cfg
+#   (reboot required to see changes)
+#
+# See also:
+#   grub/grub  (main GRUB configuration)
+#
+# Documentation:
+#   https://wiki.archlinux.org/title/GRUB#Custom_grub.cfg
+
+menuentry 'Windows 10' --class windows --class os {
+    insmod part_msdos
+    insmod ntfs
+    insmod chain
+    search --no-floppy --fs-uuid --set=root YOUR-WINDOWS-PARTITION-UUID
+    chainloader +1
+}

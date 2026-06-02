@@ -1,0 +1,160 @@
+// ═══════════════════════════════════════════════════════════
+// ZELLIJ - Terminal Multiplexer Configuration
+// ═══════════════════════════════════════════════════════════
+//
+// Description:
+//   Zellij is a modern terminal multiplexer written in Rust.
+//   It provides persistent sessions, pane layouts, and floating
+//   terminals without the complexity of tmux.
+//
+// Location:
+//   ~/.config/zellij/config.kdl
+//
+// Installation:
+//   sudo pacman -S zellij
+//
+// Usage:
+//   zellij             (start new session)
+//   zellij attach      (reattach to existing session)
+//   zellij list-sessions
+//
+// Reload:
+//   Restart Zellij (no hot reload for config.kdl)
+//
+// Theme:
+//   Catppuccin Macchiato (applied via theme reference below)
+//
+// Dependencies:
+//   - zellij/themes/catppuccin-macchiato.kdl  (theme file)
+//
+// See also:
+//   zellij/catppuccin-macchiato.kdl  (color theme)
+//
+// Documentation:
+//   https://zellij.dev/documentation/
+
+// ─── Theme ────────────────────────────────────────────────
+// Catppuccin Macchiato theme defined in themes/catppuccin-macchiato.kdl
+theme "catppuccin-macchiato"
+
+// ─── Default Shell ────────────────────────────────────────
+default_shell "zsh"
+
+// ─── Default Layout ───────────────────────────────────────
+// "default" = single pane on startup
+// Use "compact" for a minimal UI without pane frames
+default_layout "compact"
+
+// ─── Mouse ────────────────────────────────────────────────
+mouse_mode true
+
+// ─── Copy on Select ───────────────────────────────────────
+// Automatically copy selected text to the system clipboard.
+copy_on_select true
+copy_command "wl-copy"   // Wayland clipboard
+
+// ─── Scrollback ───────────────────────────────────────────
+// Number of lines to keep in the scrollback buffer per pane.
+scroll_buffer_size 10000
+
+// ─── Frame ────────────────────────────────────────────────
+// Show pane borders and titles.
+pane_frames false   // Disable frames for a cleaner look (compact mode)
+
+// ─── Session ──────────────────────────────────────────────
+// Automatically attach to an existing session on startup,
+// or create a new one if none exists.
+attach_to_session true
+
+// ─── Keybindings ──────────────────────────────────────────
+// Zellij uses a modal key system. The default prefix is Ctrl+g.
+// These bindings use Ctrl+a as the prefix (tmux-compatible).
+//
+// Modes: Normal, Locked, Pane, Tab, Resize, Move, Search, Scroll
+
+keybinds {
+    // Global keybind — works in all modes
+    shared_except "locked" {
+        // Enter locked mode (pass all keys to the terminal)
+        bind "Ctrl g" { SwitchToMode "locked"; }
+
+        // Quick pane navigation with Alt + vim keys (no prefix needed)
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt l" { MoveFocus "Right"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt j" { MoveFocus "Down"; }
+
+        // Create new pane
+        bind "Alt n" { NewPane; SwitchToMode "Normal"; }
+
+        // Toggle floating pane
+        bind "Alt f" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+
+        // Switch tabs
+        bind "Alt 1" { GoToTab 1; SwitchToMode "Normal"; }
+        bind "Alt 2" { GoToTab 2; SwitchToMode "Normal"; }
+        bind "Alt 3" { GoToTab 3; SwitchToMode "Normal"; }
+        bind "Alt 4" { GoToTab 4; SwitchToMode "Normal"; }
+        bind "Alt 5" { GoToTab 5; SwitchToMode "Normal"; }
+        bind "Alt [" { GoToPreviousTab; }
+        bind "Alt ]" { GoToNextTab; }
+
+        // Zoom active pane (toggle fullscreen for current pane)
+        bind "Alt z" { TogglePaneFrames; }
+    }
+
+    normal {
+        // Enter pane management mode
+        bind "Ctrl a" { SwitchToMode "Pane"; }
+    }
+
+    pane {
+        // Pane splits (consistent with Neovim split direction)
+        bind "s" { NewPane "Down"; SwitchToMode "Normal"; }      // Horizontal split
+        bind "v" { NewPane "Right"; SwitchToMode "Normal"; }     // Vertical split
+
+        // Close current pane
+        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+
+        // Zoom (fullscreen) current pane
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+
+        // Move focus with vim keys
+        bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
+        bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
+        bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
+        bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
+
+        // New tab
+        bind "t" { NewTab; SwitchToMode "Normal"; }
+
+        // Toggle floating pane
+        bind "f" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+
+        bind "Esc" { SwitchToMode "Normal"; }
+    }
+
+    locked {
+        // Escape locked mode
+        bind "Ctrl g" { SwitchToMode "Normal"; }
+    }
+
+    scroll {
+        // Vim-style scrolling
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        bind "G" { ScrollToBottom; SwitchToMode "Normal"; }
+        bind "g" { ScrollToTop; }
+        bind "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
+        bind "q" { SwitchToMode "Normal"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+    }
+
+    search {
+        bind "n" { Search "down"; }
+        bind "N" { Search "up"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+    }
+}

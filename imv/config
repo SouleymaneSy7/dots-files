@@ -1,0 +1,109 @@
+# ═══════════════════════════════════════════════════════════
+# IMV - Image Viewer Configuration
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+#   imv is a lightweight Wayland-native image viewer with a
+#   minimal interface and scriptable keybindings.
+#
+# Location:
+#   ~/.config/imv/config
+#
+# Installation:
+#   sudo pacman -S imv
+#
+# Usage:
+#   imv image.png        (single image)
+#   imv ~/Pictures/      (browse directory)
+#
+# Reload:
+#   Restart imv (no hot reload)
+#
+# Dependencies:
+#   - FreeImage / libpng  (image format backends)
+#
+# See also:
+#   mpv/mpv.conf   (video player, same Yazi media pipeline)
+#   yazi/yazi.toml (uses imv as default image opener)
+#
+# Documentation:
+#   https://github.com/eXeC64/imv
+
+[options]
+# ─── Window ────────────────────────────────────────────────
+# Background color: Catppuccin Macchiato base (#24273a as 0xRRGGBB).
+background = 0x24273a
+
+# Full-screen mode on launch when viewing a single image.
+fullscreen = false
+
+# Title bar format: show the filename and zoom level.
+title_text = imv — [${imv_current_file}] (${imv_scaling_mode} ${imv_zoom}%)
+
+# ─── Overlay (HUD) ─────────────────────────────────────────
+# Show an info overlay with the filename, index, and zoom level.
+overlay        = false        # Hidden by default, toggle with 'd'
+overlay_font   = Rec Mono Linear:12
+overlay_text   = ${imv_current_file} [${imv_file_index}/${imv_file_count}] ${imv_width}×${imv_height} ${imv_scaling_mode} ${imv_zoom}%
+overlay_text_color = 0xcad3f5  # Catppuccin Macchiato text
+overlay_background_color = 0x1e2030  # Catppuccin Macchiato mantle
+overlay_background_alpha = 0.8
+
+# ─── Scaling ───────────────────────────────────────────────
+# "best_fit": scale the image to fit the window, preserving aspect ratio.
+# "actual_size": show at 1:1 pixel ratio.
+# "none": no scaling (same as actual_size).
+scaling_mode = best_fit
+
+# Zoom increment when pressing + or - (percentage points).
+zoom_rate = 0.1
+
+# ─── Slideshow ─────────────────────────────────────────────
+# Seconds between slides when autoplay is active (toggle with 's').
+slideshow_duration = 5
+
+# ─── Upscaling ─────────────────────────────────────────────
+# Use nearest-neighbor interpolation when zooming above 100%.
+# Gives a crisp, pixel-art look instead of blurry bilinear.
+upscaling_method = linear
+
+[binds]
+# ─── Navigation ────────────────────────────────────────────
+# Vim-style navigation for moving between images in a folder.
+<j>          = next_image          # Next image
+<k>          = prev_image          # Previous image
+<h>          = prev_image          # Alternative: left
+<l>          = next_image          # Alternative: right
+<Left>       = prev_image
+<Right>      = next_image
+<gg>         = goto 1              # First image
+<G>          = goto -1             # Last image
+
+# ─── Zoom ──────────────────────────────────────────────────
+<plus>       = zoom 10             # Zoom in
+<minus>      = zoom -10            # Zoom out
+<equal>      = zoom_optimal        # Fit to window
+<0>          = zoom 100            # Reset to 100%
+<Up>         = zoom 10
+<Down>       = zoom -10
+
+# ─── Pan ───────────────────────────────────────────────────
+# Shift+vim keys to pan when zoomed in.
+<shift-h>    = pan -50 0           # Pan left
+<shift-l>    = pan 50 0            # Pan right
+<shift-k>    = pan 0 -50           # Pan up
+<shift-j>    = pan 0 50            # Pan down
+
+# ─── Rotation ──────────────────────────────────────────────
+<r>          = rotate 90           # Rotate clockwise
+<R>          = rotate -90          # Rotate counter-clockwise
+
+# ─── Display ───────────────────────────────────────────────
+<f>          = fullscreen          # Toggle fullscreen
+<d>          = overlay             # Toggle info overlay
+<s>          = slideshow           # Toggle slideshow
+<x>          = close               # Close current image (multi-image mode)
+
+# ─── Quit ──────────────────────────────────────────────────
+<q>          = quit
+<Escape>     = quit

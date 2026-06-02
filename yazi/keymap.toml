@@ -1,0 +1,54 @@
+# ═══════════════════════════════════════════════════════════
+# YAZI - Keybindings
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+#   Additional keyboard shortcuts for yazi. Vim-style keybindings
+#   consistent with Hyprland (h/j/k/l) and Neovim. prepend_keymap
+#   adds these bindings before the defaults.
+#
+# Location:
+#   ~/.config/yazi/yazi-keymap.toml
+#
+# Usage:
+#   e       → open in Neovim
+#   <Space> → toggle selection
+#   y/p     → copy path to clipboard
+#   <C-t>   → open a Ghostty terminal
+#   .       → toggle hidden files
+#
+# Dependencies:
+#   - wl-copy   (Wayland clipboard for path copying)
+#   - ghostty   (terminal for <C-t>)
+#   - nvim      (editor for 'e')
+#
+# See also:
+#   yazi/yazi.toml        (main configuration)
+#   yazi/yazi-theme.toml  (theme)
+#
+# Documentation:
+#   https://yazi-rs.github.io/docs/configuration/keymap
+
+[manager]
+prepend_keymap = [
+  # Open the file under the cursor in Neovim.
+  # --block causes yazi to wait for Neovim to close before resuming.
+  { on = "e",         run = 'shell "nvim $@" --block', desc = "Open in Neovim" },
+
+  # Toggle selection on the current entry (Space is the default in yazi,
+  # kept here for explicit documentation).
+  { on = "<Space>",   run = "select --state=none", desc = "Toggle selection" },
+
+  # Copy the absolute path of the current entry to the clipboard via wl-copy.
+  { on = ["y", "p"],  run = "shell 'echo -n $@ | wl-copy' --confirm", desc = "Copy path to clipboard" },
+
+  # Open a new Ghostty terminal in the current directory.
+  # --orphan detaches the process so closing yazi does not kill the terminal.
+  { on = "<C-t>",     run = "shell 'ghostty &' --orphan", desc = "Open terminal here" },
+
+  # Extract the selected archive in the current directory.
+  { on = ["x", "x"],  run = "extract", desc = "Extract archive" },
+
+  # Toggle hidden files (dotfiles). Consistent with oil.nvim (g.) and snacks.
+  { on = ".",         run = "toggle_hidden", desc = "Toggle hidden files" },
+]

@@ -1,0 +1,53 @@
+// ═══════════════════════════════════════════════════════════
+// ZELLIJ - Catppuccin Macchiato Theme
+// ═══════════════════════════════════════════════════════════
+//
+// Description:
+//   Catppuccin Macchiato color palette for Zellij. Referenced
+//   by config.kdl via: theme "catppuccin-macchiato"
+//
+// Location:
+//   ~/.config/zellij/themes/catppuccin-macchiato.kdl
+//
+// Installation:
+//   Place in ~/.config/zellij/themes/ (referenced by config.kdl)
+//
+// Usage:
+//   Automatically applied when the theme is set in config.kdl.
+//   No manual activation needed.
+//
+// Palette:
+//   base:    #24273a   mantle:  #1e2030   crust:   #181926
+//   text:    #cad3f5   blue:    #8aadf4   mauve:   #c6a0f6
+//   red:     #ed8796   green:   #a6da95   yellow:  #eed49f
+//   teal:    #8bd5ca   surface0:#363a4f   overlay0:#6e738d
+//
+// See also:
+//   zellij/config.kdl  (main configuration, references this theme)
+//
+// Documentation:
+//   https://zellij.dev/documentation/
+
+themes {
+    catppuccin-macchiato {
+        // ─── Pane Frame Colors ────────────────────────────
+        fg          "#cad3f5"   // text — foreground text color
+        bg          "#24273a"   // base — main background
+        black       "#494d64"   // surface1
+        red         "#ed8796"   // red
+        green       "#a6da95"   // green
+        yellow      "#eed49f"   // yellow
+        blue        "#8aadf4"   // blue
+        magenta     "#c6a0f6"   // mauve
+        cyan        "#8bd5ca"   // teal
+        white       "#b8c0e0"   // subtext1
+
+        // ─── Brighter Variants ────────────────────────────
+        orange      "#f5a97f"   // peach
+
+        // ─── UI Accent Colors ─────────────────────────────
+        // Active pane border
+        // Inactive pane border
+        // Tab bar active/inactive
+    }
+}

@@ -1,0 +1,129 @@
+# ═══════════════════════════════════════════════════════════
+# YAZI - Terminal File Manager Configuration
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+#   Terminal file manager (Rust) with Vim navigation, image/
+#   video/PDF previews, and Git integration. The y() function
+#   in .zshrc returns to the directory where yazi was closed.
+#
+# Location:
+#   ~/.config/yazi/yazi.toml
+#
+# Installation:
+#   sudo pacman -S yazi ffmpegthumbnailer poppler unarj
+#   yay -S glow        (Markdown preview — optional)
+#
+# Usage:
+#   yazi
+#   Or via the shell function: y
+#
+# Dependencies:
+#   - ffmpegthumbnailer   (video preview)
+#   - poppler             (PDF preview)
+#   - unarj               (archive extraction)
+#   - glow                (Markdown preview — optional)
+#   - nvim                (default editor)
+#
+# See also:
+#   yazi/yazi-theme.toml   (Catppuccin theme)
+#   yazi/yazi-keymap.toml  (keyboard shortcuts)
+#   zsh/.zshrc             (y function)
+#
+# Documentation:
+#   https://yazi-rs.github.io/docs/
+
+[manager]
+# ─── Panel Layout ─────────────────────────────────────────
+# Three-column layout: [parent directory, current directory, preview]
+ratio = [1, 2, 3]
+
+# Lines of context kept visible above and below the cursor.
+scrolloff = 5
+
+# Show dotfiles by default — consistent with snacks.lua (hidden = true)
+# and oil.nvim (show_hidden = true).
+show_hidden = true
+
+# Show symlink targets next to symlink entries.
+show_symlink = true
+
+# ─── Sorting ──────────────────────────────────────────────
+sort_by        = "natural"   # Natural sort: file2 before file10
+sort_sensitive = false        # Case-insensitive sort
+sort_reverse   = false
+sort_dir_first = true         # Directories listed before files (matches eza behavior)
+
+[preview]
+# ─── Preview Limits ───────────────────────────────────────
+max_width  = 600
+max_height = 900
+
+# Maximum text file size to syntax-highlight in the preview.
+# Files larger than this are shown as plain text for performance.
+tab_size = 2
+
+[opener]
+# ─── Application Associations ─────────────────────────────
+# Defines which application opens each file type.
+
+edit = [
+  # Open any text file in Neovim.
+  # block = true waits for Neovim to close before returning to yazi.
+  { run = 'nvim "$@"', desc = "Neovim", block = true },
+]
+
+open = [
+  # Open URLs and HTML files in Brave.
+  { run = 'brave "$@"', desc = "Brave", orphan = true },
+]
+
+play = [
+  # Play audio and video files with mpv.
+  { run = 'mpv "$@"', desc = "mpv", orphan = true },
+]
+
+reveal = [
+  # Open the parent directory of the selected file in Thunar.
+  { run = 'thunar "$(dirname "$1")"', desc = "Thunar", orphan = true },
+]
+
+[open]
+# ─── Open Rules ───────────────────────────────────────────
+# Maps MIME types to opener entries defined above.
+
+rules = [
+  # Text-based files → Neovim
+  { mime = "text/*",                   use = "edit" },
+  { mime = "application/json",         use = "edit" },
+  { mime = "application/javascript",   use = "edit" },
+  { mime = "application/typescript",   use = "edit" },
+
+  # Media files → mpv
+  { mime = "video/*", use = "play" },
+  { mime = "audio/*", use = "play" },
+
+  # Documents and images → system default / Brave
+  { mime = "application/pdf", use = "open" },
+  { mime = "image/*",         use = "open" },
+]
+
+[tasks]
+# ─── Background Task Workers ──────────────────────────────
+# Parallel workers for copy, move, and delete operations.
+micro_workers = 5
+macro_workers = 10
+
+[plugin]
+# ─── Plugin Previewers ────────────────────────────────────
+# Override the default previewer for specific file patterns.
+# glow renders Markdown files with proper formatting and colors.
+# Install with: yay -S glow
+prepend_previewers = [
+  { name = "*.md", run = "glow" },
+]
+
+[input]
+# ─── Input Modal Settings ─────────────────────────────────
+# Cursor in rename/create dialogs: static, consistent with Ghostty.
+cursor_blink = false
