@@ -1,0 +1,73 @@
+# ═══════════════════════════════════════════════════════════
+# DOTS-FILES - .gitignore
+# ═══════════════════════════════════════════════════════════
+
+# ─── Sensitive Files ──────────────────────────────────────
+# Never commit secrets, tokens, or passwords.
+.env
+.env.*
+!*.env.example
+*.secret
+*.token
+*.local
+secrets/
+private/
+**/credentials.json
+
+# p10k config may contain personal information such as hostname,
+# username display format, or segment order preferences.
+.p10k.zsh
+
+# HTTP environment variables for kulala.nvim
+# These often contain Authorization headers and API tokens.
+http-client.env.json
+*.http.env.json
+.env.http
+
+# ─── Local Files & Folders ────────────────────────
+/not-importants
+
+# AI session artifacts — contain absolute paths with system username
+thoughts/
+
+# ─── Backups Created by install.sh ────────────────────────
+*.bak
+*.bak.*
+*.backup
+
+# ─── Build Artifacts and Caches ──────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.cache/
+.tmp/
+tmp/
+
+# ─── Editor Metadata ──────────────────────────────────────
+.DS_Store           # macOS Finder metadata
+Thumbs.db           # Windows Explorer thumbnails
+*.swp               # Vim swap files
+*.swo
+*~                  # Generic editor backup files
+.idea/              # JetBrains project files
+.vscode/            # VS Code workspace settings (user settings are tracked separately)
+
+# ─── Node.js ──────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ─── Wallpapers ───────────────────────────────────────────
+# Wallpaper images can be large. Use a download link in USEFUL_RESOURCES.md
+# instead of committing binary files. Uncomment the lines below to exclude them.
+# assets/wallpaper/*.png
+# assets/wallpaper/*.jpg
+# assets/wallpaper/*.jpeg
+
+# ─── Screenshots ──────────────────────────────────────────
+# Demo screenshots for the README are welcome in the repo.
+# Personal screenshots taken during use are not.
+assets/screenshots/personal/
+Pictures/Screenshots/
