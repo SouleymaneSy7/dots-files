@@ -19,7 +19,7 @@ local header = [[
  ]]
 
 return {
-  "snacks.nvim",
+  "folke/snacks.nvim",
   opts = {
     dashboard = {
       preset = {
@@ -29,7 +29,7 @@ return {
         -- 'cmd' is the picker command (e.g. "files", "oldfiles")
         -- and 'opts' are forwarded as picker options.
         pick = function(cmd, opts)
-          return LazyVim.pick(cmd, opts)()
+          return LazyVim.pick.picker(cmd, opts)()
         end,
 
         -- ─── Header ──────────────────────────────────────────

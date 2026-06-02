@@ -1,100 +1,54 @@
 -- ═══════════════════════════════════════════════════════════
--- PLUGINS - noice.nvim & nvim-notify (Notifications & Messages)
+-- PLUGINS - nvim-notify & noice.nvim (Notification System)
 -- ═══════════════════════════════════════════════════════════
 --
--- Full notification and message system configuration.
--- noice.nvim replaces the default cmdline, messages, and popupmenu
--- with a modern floating UI. nvim-notify handles styled popup notifications
--- with persistence, animations, and interactive dismissal keymaps.
+-- Full notification system configuration.
+-- nvim-notify handles styled popup notifications with persistence,
+-- animations, and interactive dismissal keymaps.
+-- The noice.nvim spec here configures only notification-related
+-- concerns: routes, message views, and the notify integration.
+-- Command-line UI and popup menus live in noice.lua.
 
 return {
+
   -- ─────────────────────────────────────────────────────────
-  --  NOICE - Modern interface for messages/commands
+  -- NOICE - Notification routes & message views
   -- ─────────────────────────────────────────────────────────
+  -- LazyVim merges multiple specs for the same plugin, so this
+  -- spec coexists with noice.lua without conflict. Only notification-
+  -- related options are set here.
   {
     "folke/noice.nvim",
+    opts = function(_, opts)
+      -- ─── Message defaults ────────────────────────────────────
+      -- Sets the default views for different categories of Neovim
+      -- messages before any route-specific overrides are applied.
+      opts.messages = {
+        enabled = true,
+        view = "notify", -- Default view for general messages
+        view_error = "notify", -- Errors always go to the notify popup
+        view_warn = "notify", -- Warnings always go to the notify popup
+        view_history = "messages", -- :messages history uses the messages view
+        view_search = "virtualtext", -- Search count shown inline as virtual text
+      }
 
-    -- Load after the UI is ready; noice is not needed during startup.
-    event = "VeryLazy",
+      -- ─── Notify integration ──────────────────────────────────
+      -- Ensures noice routes its notification-level messages through
+      -- nvim-notify for consistent styled popup rendering.
+      opts.notify = {
+        enabled = true,
+        view = "notify",
+      }
 
-    -- nui.nvim provides the low-level UI components (popups, splits, layouts)
-    -- that noice.nvim uses to render its floating windows.
-    -- nvim-notify is used as the notification backend for error/warn messages.
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
+      -- ─── Routes ──────────────────────────────────────────────
+      -- Redirect messages by content or event to specific views,
+      -- or suppress them entirely. Rules are evaluated top-to-bottom;
+      -- first match wins.
+      opts.routes = vim.list_extend(opts.routes or {}, {
 
-    opts = {
-      -- ───────────────────────────────────────────────────────
-      -- LSP Configuration (progress messages, hover, signature)
-      -- ───────────────────────────────────────────────────────
-      lsp = {
-        override = {
-          -- Route LSP hover and documentation through noice's
-          -- markdown renderer instead of the default Neovim handler.
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-
-        -- ─── LSP Progress ──────────────────────────────────
-        -- Displays LSP indexing/loading progress in the mini view.
-        -- Throttled to 30fps to avoid flooding the notification area.
-        progress = {
-          enabled = true,
-          format = "lsp_progress",
-          format_done = "lsp_progress_done",
-          throttle = 1000 / 30, -- 30 fps
-          view = "mini",
-        },
-
-        -- ─── Hover Documentation ───────────────────────────
-        -- Renders LSP hover documentation in a styled floating window.
-        -- silent = false means an error is shown if no hover info is available.
-        hover = {
-          enabled = true,
-          silent = false,
-        },
-
-        -- ─── Signature Help ────────────────────────────────
-        -- Shows function signature help automatically when typing arguments.
-        -- luasnip integration ensures it works correctly inside snippets.
-        signature = {
-          enabled = true,
-          auto_open = {
-            enabled = true,
-            trigger = true, -- Trigger on '(' character
-            luasnip = true, -- Also trigger inside LuaSnip snippet fields
-            throttle = 50, -- Minimum ms between signature updates
-          },
-        },
-      },
-
-      -- ───────────────────────────────────────────────────────
-      -- Presets
-      -- ───────────────────────────────────────────────────────
-      -- Presets are opinionated bundles of configuration that enable
-      -- common UI patterns with a single boolean toggle.
-      presets = {
-        bottom_search = true, -- Show search (/ and ?) at the bottom like classic Vim
-        command_palette = true, -- Show : cmdline as a centered floating palette
-        long_message_to_split = true, -- Redirect messages taller than the screen to a split
-        inc_rename = false, -- No special handling for inc-rename.nvim
-        lsp_doc_border = true, -- Add a border around LSP hover/signature windows
-      },
-
-      -- ───────────────────────────────────────────────────────
-      -- ROUTES - Message redirection rules
-      -- ───────────────────────────────────────────────────────
-      -- Routes allow filtering messages by content or event and
-      -- redirecting them to different views or suppressing them entirely.
-      -- Rules are evaluated top-to-bottom; first match wins.
-      routes = {
-
-        -- ─── Persistent Error/Warning Notifications ─────────
-        -- Important messages matching error/warning patterns are sent
-        -- to nvim-notify with a 30-second timeout so they are not missed.
+        -- ─── Persistent Error/Warning Notifications ───────────
+        -- Important messages are sent to nvim-notify with a 30-second
+        -- timeout so they are never missed.
         {
           filter = {
             event = "msg_show",
@@ -114,9 +68,9 @@ return {
           },
         },
 
-        -- ─── Short Success Notifications ────────────────────
-        -- Write, save, and yank confirmations are shown briefly
-        -- in the non-intrusive mini view at the bottom-right corner.
+        -- ─── Short Success Notifications ─────────────────────
+        -- Write, save, and yank confirmations are shown briefly in
+        -- the non-intrusive mini view at the bottom-right corner.
         {
           filter = {
             event = "msg_show",
@@ -129,7 +83,31 @@ return {
           view = "mini",
         },
 
-        -- ─── Suppressed Spam Messages ───────────────────────
+        -- ─── Write Confirmation → Mini ────────────────────────
+        -- Ensures :write confirmation messages are shown discretely
+        -- in the mini view rather than a full notification popup.
+        {
+          filter = {
+            event = "msg_show",
+            kind = "",
+            find = "written",
+          },
+          opts = { skip = false },
+          view = "mini",
+        },
+
+        -- ─── Long Messages → Split ────────────────────────────
+        -- Messages taller than 10 lines are redirected to a split
+        -- window so the user can scroll and read them comfortably.
+        {
+          filter = {
+            event = "msg_show",
+            min_height = 10,
+          },
+          view = "split",
+        },
+
+        -- ─── Suppressed Spam Messages ─────────────────────────
         -- High-frequency or low-value messages are silently discarded
         -- to keep the notification area clean during normal editing.
         {
@@ -147,88 +125,14 @@ return {
           },
           opts = { skip = true }, -- Discard silently, show nothing
         },
+      })
 
-        -- ─── Long Messages → Split ───────────────────────────
-        -- Messages taller than 10 lines are redirected to a split
-        -- window so the user can scroll and read them comfortably.
-        {
-          filter = {
-            event = "msg_show",
-            min_height = 10,
-          },
-          view = "split",
-        },
+      -- ─── Notification views ──────────────────────────────────
+      -- Layout for notification-specific surfaces. Popup/cmdline
+      -- views are configured in noice.lua.
+      opts.views = vim.tbl_deep_extend("force", opts.views or {}, {
 
-        -- ─── Write Confirmation → Mini ───────────────────────
-        -- Ensures :write confirmation messages are shown discretely
-        -- in the mini view rather than a full notification popup.
-        {
-          filter = {
-            event = "msg_show",
-            kind = "",
-            find = "written",
-          },
-          opts = { skip = false },
-          view = "mini",
-        },
-      },
-
-      -- ───────────────────────────────────────────────────────
-      -- VIEWS - Configuration for each display surface
-      -- ───────────────────────────────────────────────────────
-
-      views = {
-
-        -- ─── Cmdline Popup ───────────────────────────────────
-        -- The floating window used for : command-line input.
-        -- Centered on screen to function as a command palette.
-        cmdline_popup = {
-          position = {
-            row = "50%", -- Vertically centered
-            col = "50%", -- Horizontally centered
-          },
-          size = {
-            width = 60,
-            height = "auto",
-          },
-          border = {
-            style = "rounded",
-            padding = { 0, 1 },
-          },
-          win_options = {
-            winhighlight = {
-              Normal = "Normal",
-              FloatBorder = "DiagnosticInfo", -- Teal/blue border matching diagnostic info color
-            },
-          },
-        },
-
-        -- ─── Popupmenu ───────────────────────────────────────
-        -- The completion/confirmation dropdown popup window.
-        -- Positioned slightly below center to sit under the cmdline popup.
-        popupmenu = {
-          relative = "editor",
-          position = {
-            row = "60%",
-            col = "50%",
-          },
-          size = {
-            width = 60,
-            height = 10,
-          },
-          border = {
-            style = "rounded",
-            padding = { 0, 1 },
-          },
-          win_options = {
-            winhighlight = {
-              Normal = "Normal",
-              FloatBorder = "DiagnosticInfo",
-            },
-          },
-        },
-
-        -- ─── Mini View ───────────────────────────────────────
+        -- ─── Mini View ──────────────────────────────────────
         -- A small borderless notification anchored to the bottom-right
         -- corner of the screen. Used for low-priority transient messages.
         -- Disappears automatically after 2 seconds.
@@ -246,174 +150,46 @@ return {
           },
           timeout = 2000, -- Auto-dismiss after 2 seconds
         },
-      },
+      })
+    end,
 
-      -- ───────────────────────────────────────────────────────
-      -- CMDLINE - Command line configuration
-      -- ───────────────────────────────────────────────────────
-      -- Controls how the : command line and search prompts are displayed.
-      -- Each format entry defines the icon prefix for that command type.
-      cmdline = {
-        enabled = true,
-        view = "cmdline_popup", -- Use the centered floating popup defined above
-        format = {
-          cmdline = { icon = ">" }, -- Regular : commands
-          search_down = { icon = "🔍⌄" }, -- / forward search
-          search_up = { icon = "🔍⌃" }, -- ? backward search
-          filter = { icon = "$" }, -- Shell filter commands
-          lua = { icon = "☾" }, -- :lua commands
-          help = { icon = "?" }, -- :help commands
-        },
-      },
-
-      -- ───────────────────────────────────────────────────────
-      -- MESSAGES - General message routing defaults
-      -- ───────────────────────────────────────────────────────
-      -- Sets the default views for different categories of Neovim messages
-      -- before any route-specific overrides are applied.
-      messages = {
-        enabled = true,
-        view = "notify", -- Default view for general messages
-        view_error = "notify", -- Errors always go to the notify popup
-        view_warn = "notify", -- Warnings always go to the notify popup
-        view_history = "messages", -- :messages history uses the messages view
-        view_search = "virtualtext", -- Search count shown inline as virtual text
-      },
-
-      -- ───────────────────────────────────────────────────────
-      -- POPUPMENU - Completion menu backend
-      -- ───────────────────────────────────────────────────────
-      -- Uses nui.nvim as the rendering backend for the completion popupmenu,
-      -- enabling the styled floating window defined in the views section above.
-      popupmenu = {
-        enabled = true,
-        backend = "nui",
-      },
-
-      -- ───────────────────────────────────────────────────────
-      -- NOTIFY integration
-      -- ───────────────────────────────────────────────────────
-      -- Ensures noice routes its notification-level messages through
-      -- nvim-notify for consistent styled popup rendering.
-      notify = {
-        enabled = true,
-        view = "notify",
-      },
-    },
-
-    -- ───────────────────────────────────────────────────────
-    -- Keymaps
-    -- ───────────────────────────────────────────────────────
+    -- ─── Notification keymaps (noice side) ──────────────────
     keys = {
-      -- Open the full Noice message history list
-      {
-        "<leader>nm",
-        "<cmd>Noice<cr>",
-        desc = "📜 Historique messages (Noice)",
-      },
 
-      -- Browse notification history via the Noice history command
+      -- Browse notification history via the Noice history command.
       {
         "<leader>nn",
         function()
           require("noice").cmd("history")
         end,
-        desc = "📋 Historique notifications",
+        desc = "Notification history (Noice)",
       },
 
-      -- Show only the most recently displayed message
-      {
-        "<leader>nl",
-        function()
-          require("noice").cmd("last")
-        end,
-        desc = "📄 Dernier message",
-      },
-
-      -- Dismiss all currently visible notifications immediately
+      -- Dismiss all currently visible notifications immediately.
       {
         "<leader>nd",
         function()
           require("noice").cmd("dismiss")
         end,
-        desc = "🗑️ Effacer notifications",
-      },
-
-      -- Temporarily disable Noice (useful when debugging UI issues)
-      {
-        "<leader>nD",
-        function()
-          require("noice").cmd("disable")
-        end,
-        desc = "🚫 Désactiver Noice",
-      },
-
-      -- Re-enable Noice after it has been disabled
-      {
-        "<leader>nE",
-        function()
-          require("noice").cmd("enable")
-        end,
-        desc = "✅ Activer Noice",
-      },
-
-      -- Open the Noice message history inside Telescope for fuzzy searching
-      {
-        "<leader>ns",
-        function()
-          require("noice").cmd("telescope")
-        end,
-        desc = "🔭 Messages dans Telescope",
-      },
-
-      -- ─── LSP Doc Scroll ──────────────────────────────────
-      -- Scroll forward/backward inside a noice LSP hover or signature
-      -- window without leaving insert or select mode.
-      -- expr = true allows returning a fallback keypress when no doc is open.
-      {
-        "<c-f>",
-        function()
-          if not require("noice.lsp").scroll(4) then
-            return "<c-f>"
-          end
-        end,
-        silent = true,
-        expr = true,
-        desc = "Scroll forward (LSP doc)",
-        mode = { "i", "n", "s" },
-      },
-      {
-        "<c-b>",
-        function()
-          if not require("noice.lsp").scroll(-4) then
-            return "<c-b>"
-          end
-        end,
-        silent = true,
-        expr = true,
-        desc = "Scroll backward (LSP doc)",
-        mode = { "i", "n", "s" },
+        desc = "Dismiss notifications",
       },
     },
   },
 
   -- ─────────────────────────────────────────────────────────
-  -- 🔔 NVIM-NOTIFY - Notification system
+  -- NVIM-NOTIFY - Styled popup notification backend
   -- ─────────────────────────────────────────────────────────
   {
     "rcarriga/nvim-notify",
-    opts = {
-      -- ───────────────────────────────────────────────────────
-      -- Timeout
-      -- ───────────────────────────────────────────────────────
-      -- false = notifications persist until manually dismissed.
-      -- Set to a number (e.g. 5000) for auto-dismissal after N milliseconds.
-      timeout = false,
 
-      -- ───────────────────────────────────────────────────────
-      -- Appearance
-      -- ───────────────────────────────────────────────────────
-      -- Background color used when the terminal lacks true transparency support.
+    opts = {
+      -- ─── Position ────────────────────────────────────────
+      -- false = notifications stack upward from the bottom-right corner.
+      -- true  = notifications stack downward from the top-right corner.
+      top_down = false,
+
+      -- ─── Appearance ──────────────────────────────────────
+      -- Background color used when the terminal lacks true transparency.
       background_colour = "#000000",
 
       -- Icons displayed in the notification title bar per severity level.
@@ -425,23 +201,12 @@ return {
         TRACE = "✎",
       },
 
-      -- ───────────────────────────────────────────────────────
-      -- Position
-      -- ───────────────────────────────────────────────────────
-      -- false = notifications stack upward from the bottom-right corner.
-      -- true  = notifications stack downward from the top-right corner.
-      top_down = false,
-
-      -- ───────────────────────────────────────────────────────
-      -- Animation
-      -- ───────────────────────────────────────────────────────
+      -- ─── Animation ───────────────────────────────────────
       -- Controls the enter/exit animation style for notification windows.
       -- Options: "fade" | "slide" | "fade_in_slide_out" | "static"
       stages = "fade_in_slide_out",
 
-      -- ───────────────────────────────────────────────────────
-      -- Rendering
-      -- ───────────────────────────────────────────────────────
+      -- ─── Rendering ───────────────────────────────────────
       -- Controls the visual layout of each notification window.
       -- Options: "default" | "minimal" | "simple" | "compact"
       render = "default",
@@ -451,9 +216,12 @@ return {
       max_height = 10, -- Never taller than 10 rows
       minimum_width = 30, -- Always at least 30 columns wide
 
-      -- ───────────────────────────────────────────────────────
-      -- Behavior
-      -- ───────────────────────────────────────────────────────
+      -- ─── Timeout ─────────────────────────────────────────
+      -- false = notifications persist until manually dismissed.
+      -- Set to a number (e.g. 5000) for auto-dismissal after N ms.
+      timeout = false,
+
+      -- ─── Behavior ────────────────────────────────────────
       -- false = new notifications are stacked alongside existing ones.
       -- true  = new notifications replace the previous one in-place.
       replace = false,
@@ -466,9 +234,7 @@ return {
       -- Messages below this level (e.g. DEBUG when set to INFO) are suppressed.
       level = vim.log.levels.INFO,
 
-      -- ───────────────────────────────────────────────────────
-      -- Callbacks
-      -- ───────────────────────────────────────────────────────
+      -- ─── Callbacks ───────────────────────────────────────
       -- on_open fires each time a new notification window is created.
       -- Used here to make notifications focusable and add dismiss keymaps.
       on_open = function(win)
@@ -479,13 +245,13 @@ return {
 
         -- Press 'q' inside the notification buffer to dismiss it immediately.
         vim.keymap.set("n", "q", function()
-          require("notify").dismiss({ buffer = buf })
-        end, { buffer = buf, desc = "Fermer notification" })
+          require("notify").dismiss({ buffer = buf } --[[@as any]])
+        end, { buffer = buf, desc = "Close notification" })
 
         -- Press <Esc> inside the notification buffer to dismiss it immediately.
         vim.keymap.set("n", "<Esc>", function()
-          require("notify").dismiss({ buffer = buf })
-        end, { buffer = buf, desc = "Fermer notification" })
+          require("notify").dismiss({ buffer = buf } --[[@as any]])
+        end, { buffer = buf, desc = "Close notification" })
       end,
 
       -- on_close fires when a notification window is closed.
@@ -493,9 +259,7 @@ return {
       on_close = function() end,
     },
 
-    -- ───────────────────────────────────────────────────────
-    -- Keymaps for nvim-notify
-    -- ───────────────────────────────────────────────────────
+    -- ─── Keymaps ─────────────────────────────────────────────
     keys = {
       -- Browse the full notification history inside Telescope.
       {
@@ -503,7 +267,7 @@ return {
         function()
           require("telescope").extensions.notify.notify()
         end,
-        desc = "📜 Historique notifications (Telescope)",
+        desc = "Notification history (Telescope)",
       },
 
       -- Immediately dismiss all currently visible notifications,
@@ -511,15 +275,13 @@ return {
       {
         "<leader>nc",
         function()
-          require("notify").dismiss({ silent = true, pending = true })
+          require("notify").dismiss({ silent = true, pending = true } --[[@as any]])
         end,
-        desc = "🧹 Effacer toutes notifications",
+        desc = "Clear all notifications",
       },
     },
 
-    -- ───────────────────────────────────────────────────────
-    -- Initialization
-    -- ───────────────────────────────────────────────────────
+    -- ─── Initialization ───────────────────────────────────────
     -- Overrides the global vim.notify() function with nvim-notify
     -- so all plugins and user code that call vim.notify() will
     -- automatically use the styled popup renderer.
@@ -529,7 +291,7 @@ return {
   },
 
   -- ─────────────────────────────────────────────────────────
-  -- 🔭 TELESCOPE EXTENSION - Notification history browser
+  -- TELESCOPE EXTENSION - Notification history browser
   -- ─────────────────────────────────────────────────────────
   -- Extends an existing Telescope configuration (if present) to load
   -- the notify and noice extensions, enabling history browsing via Telescope.
