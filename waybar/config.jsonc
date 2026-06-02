@@ -1,0 +1,268 @@
+{
+  // ═══════════════════════════════════════════════════════════
+  // WAYBAR - Status Bar Configuration
+  // ═══════════════════════════════════════════════════════════
+  //
+  // Description:
+  //   Customizable status bar for Wayland compositors. Defines the
+  //   bar layout (left/center/right modules) with Hyprland workspace
+  //   integration, PulseAudio controls, system monitors, and MPRIS
+  //   media player support.
+  //
+  // Location:
+  //   ~/.config/waybar/config.jsonc
+  //
+  // Installation:
+  //   sudo pacman -S waybar
+  //
+  // Usage:
+  //   Launched automatically via exec-once in hyprland.conf.
+  //
+  // Reload:
+  //   killall waybar && waybar &
+  //
+  // Theme:
+  //   Catppuccin Macchiato
+  //
+  // Author:
+  //   Souleymane Sy
+  //
+  // Modules:
+  //   Left   — hyprland/workspaces, mpris
+  //   Center — clock (with calendar tooltip)
+  //   Right  — tray, memory, cpu, network, pulseaudio, pulseaudio#microphone
+  //
+// Dependencies:
+//   - playerctl  — MPRIS media player control (for mpris module)
+//
+// Note on terminal-dependent click handlers:
+//   The cpu and network modules use "ghostty -e <command>" as their on-click
+//   action. These are tied to Ghostty — if you change your default terminal,
+//   update the following modules: cpu, network
+//
+  // See also:
+  //   hyprland/hyprland.conf  (autostart)
+  //   waybar/style.css        (visual theme)
+  //
+  // Documentation:
+  //   https://github.com/Alexays/Waybar/wiki
+  //   pamixer    — scroll-to-adjust volume & mute toggle
+  //   pavucontrol — full audio mixer (right-click on pulseaudio)
+  //   btop       — CPU detail view (click on cpu module)
+  //   nmtui      — network manager TUI (click on network module)
+
+  // ─── Bar Layout ────────────────────────────────────────────
+  "layer": "top", // Render above all windows
+  "position": "top", // Anchor to the top edge of the monitor
+  "mode": "dock", // Reserve screen space so windows do not overlap the bar
+  "exclusive": true,
+  "passthrough": false, // Intercept mouse events
+  "gtk-layer-shell": true,
+  "height": 0, // Dynamic height based on content
+
+  // ─── Module Layout ─────────────────────────────────────────
+  "modules-left": ["hyprland/workspaces", "mpris"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "custom/notification",
+    "tray",
+    "memory",
+    "cpu",
+    "network",
+    "pulseaudio",
+    "pulseaudio#microphone"
+  ],
+
+  // ─── Hyprland Workspaces ───────────────────────────────────
+  // Clickable workspace switcher with numbered circle icons.
+  "hyprland/workspaces": {
+    "disable-scroll": true, // Disable scroll-to-switch on the bar
+    "all-outputs": true, // Show workspaces from all monitors
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "1": "①",
+      "2": "②",
+      "3": "③",
+      "4": "④",
+      "5": "⑤",
+      "6": "⑥",
+      "7": "⑦",
+      "8": "⑧",
+      "9": "⑨",
+      "10": "⑩",
+      "urgent": "",
+      "focused": "",
+      "default": "",
+    },
+  },
+
+  // ─── MPRIS (Media Player) ──────────────────────────────────
+  // Displays the current track from any MPRIS-compatible player
+  // (Spotify, Firefox, Chromium, mpv, VLC, etc.)
+  // Requires: sudo pacman -S playerctl
+  "mpris": {
+    "format": "{player_icon}  {title}",
+    "format-paused": "{player_icon}  <i>{title}</i>",
+    "format-stopped": "", // Hidden when nothing is playing
+
+    "title-len": 30, // Truncate title at 30 characters
+    "artist-len": 20,
+
+    "player-icons": {
+      "default": "▶",
+      "spotify": "",
+      "firefox": "󰈹",
+      "chromium": "󰛦",
+      "brave": "󰖟",
+      "mpv": "🎵",
+      "vlc": "󰕼",
+    },
+    "status-icons": {
+      "paused": "⏸",
+      "playing": "▶",
+      "stopped": "",
+    },
+
+    "on-click": "playerctl play-pause", // Left click: toggle play/pause
+    "on-click-right": "playerctl next", // Right click: next track
+    "on-click-middle": "playerctl previous", // Middle click: previous track
+    "interval": 1,
+  },
+
+  // ─── Clock ─────────────────────────────────────────────────
+  // Full date + time with seconds. Click to toggle to short date.
+  // Hover to open an interactive 3-month calendar tooltip.
+  "clock": {
+    "format": "  {:%A  %d %B  %H:%M:%S}", // Full date + time + clock icon
+    "format-alt": "  {:%d/%m/%Y}", // Short date on left click
+    "interval": 1, // 1s for live seconds display
+    "tooltip-format": "<tt>{calendar}</tt>",
+
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3, // 3 months side by side
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#cad3f5'><b>{}</b></span>", // @text
+        "weekdays": "<span color='#8aadf4'><b>{}</b></span>", // @blue
+        "today": "<span color='#c6a0f6'><b><u>{}</u></b></span>", // @mauve
+        "days": "<span color='#a5adcb'>{}</span>", // @subtext0
+      },
+    },
+  },
+
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󰂚",
+      "none": "󰂜",
+      "dnd-notification": "󰂛",
+      "dnd-none": "󰂛"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  }
+
+  // ─── System Tray ───────────────────────────────────────────
+  "tray": {
+    "icon-size": 13,
+    "spacing": 10,
+  },
+
+  // ─── Memory ────────────────────────────────────────────────
+  // RAM usage with threshold-based icons and color changes.
+  // Click to toggle between GB and percentage display.
+  "memory": {
+    "states": {
+      "c": 90, // Critical: >= 90%
+      "h": 60, // High:     >= 60%
+      "m": 30, // Medium:   >= 30%
+    },
+    "interval": 10,
+    "format": "󰾆 {used}GB",
+    "format-m": "󰾅 {used}GB",
+    "format-h": "󰓅 {used}GB",
+    "format-c": " {used}GB", // Warning icon at critical usage
+    "format-alt": "󰾆 {percentage}%", // Percentage on click
+    "max-length": 10,
+    "tooltip": true,
+    "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
+  },
+
+  // ─── CPU ───────────────────────────────────────────────────
+  // CPU usage percentage. Click to open btop for detailed stats.
+  // Alt format shows a per-core bar graph using block characters.
+  // Requires: btop
+  "cpu": {
+    "interval": 10,
+    "format": "󰍛 {usage}%",
+    "format-alt": "{icon0}{icon1}{icon2}{icon3}", // Per-core bar graph on click
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "on-click": "ghostty -e btop", // Open btop in Ghostty (change terminal here if needed)
+  },
+
+  // ─── Network ───────────────────────────────────────────────
+  // WiFi SSID or Ethernet interface. Click to open nmtui.
+  // Alt format (click) shows live download/upload bandwidth.
+  // Requires: nmtui
+  "network": {
+    "tooltip": true,
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀 {ifname}",
+    "format-linked": "󰈀 {ifname} (No IP)",
+    "format-disconnected": "󰖪  Disconnected",
+    // Bandwidth colors use Macchiato hex values (Pango span does not support @color variables)
+    "format-alt": "<span foreground='#a6da95'> {bandwidthDownBytes}</span> <span foreground='#eed49f'> {bandwidthUpBytes}</span>",
+    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 2, // 2s for responsive bandwidth display
+    "on-click": "ghostty -e nmtui", // Open nmtui in Ghostty (change terminal here if needed)
+  },
+
+  // ─── PulseAudio — Speaker / Output ─────────────────────────
+  // Volume display with scroll-to-adjust and mute toggle.
+  // Right click opens pavucontrol for the full mixer.
+  // Requires: pamixer, pavucontrol
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "  Muted",
+    "tooltip": false,
+    "on-click": "pamixer -t", // Toggle mute
+    "on-click-right": "pavucontrol", // Open full mixer
+    "on-scroll-up": "pamixer -i 2", // Volume +2%
+    "on-scroll-down": "pamixer -d 2", // Volume -2%
+    "scroll-step": 2,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      // Array order: [muted (0%), low (1-33%), medium (34-66%), high (67-100%)]
+      "default": ["󰸈", "", "", ""],
+    },
+  },
+
+  // ─── PulseAudio — Microphone / Input ───────────────────────
+  // Named instance so it can be styled independently in CSS.
+  // Scroll to adjust mic gain. Click to toggle mic mute.
+  // Requires: pamixer
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": "  Muted",
+    "tooltip": false,
+    "on-click": "pamixer --default-source -t", // Toggle mic mute
+    "on-scroll-up": "pamixer --default-source -i 2", // Mic gain +2%
+    "on-scroll-down": "pamixer --default-source -d 2", // Mic gain -2%
+    "scroll-step": 2,
+  },
+}

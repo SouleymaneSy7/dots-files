@@ -1,0 +1,289 @@
+/**
+ * ═══════════════════════════════════════════════════════════
+ * WAYBAR - Status Bar Stylesheet
+ * ═══════════════════════════════════════════════════════════
+ *
+ * Description:
+ *   Catppuccin Macchiato visual theme for Waybar. Styles the
+ *   status bar background, module groups (left/center/right),
+ *   workspaces, clock, system monitors, and media player.
+ *
+ * Location:
+ *   ~/.config/waybar/style.css
+ *
+ * Installation:
+ *   sudo pacman -S waybar
+ *
+ * Usage:
+ *   Referenced automatically by ~/.config/waybar/config.jsonc.
+ *   Styles are applied on Waybar restart.
+ *
+ * Reload:
+ *   killall waybar && waybar &
+ *
+ * Theme:
+ *   Catppuccin Macchiato
+ *
+ * Author:
+ *   Souleymane Sy
+ *
+ * Module groups:
+ *   Left   — workspaces · mpris
+ *   Center — clock
+ *   Right  — tray · [memory · cpu] · [network · pulseaudio · microphone]
+ *
+ * Dependencies:
+ *   - Rec Mono Linear font  (bar font)
+ *
+ * See also:
+ *   waybar/config.jsonc  (bar layout and modules)
+ *
+ * Documentation:
+ *   https://github.com/Alexays/Waybar/wiki
+ */
+
+/* ─── Global Reset ───────────────────────────────────────────
+ * Remove default GTK borders and radii so every widget starts
+ * from a clean slate and can define its own rounding.
+ */
+* {
+  border:        none;
+  border-radius: 0;
+  font-family:   "Rec Mono Linear", "Fira Code", monospace;
+  font-weight:   600;
+  font-size:     13px;
+  min-height:    0;  /* Remove GTK minimum height constraint */
+}
+
+/* ─── Catppuccin Macchiato Palette ───────────────────────────
+ * Full palette as GTK CSS custom color variables.
+ * All module colors reference these variables.
+ */
+
+/* Base backgrounds */
+@define-color base      #24273a;
+@define-color mantle    #1e2030;
+@define-color crust     #181926;
+
+/* Text */
+@define-color text      #cad3f5;
+@define-color subtext0  #a5adcb;
+@define-color subtext1  #b8c0e0;
+
+/* Surfaces */
+@define-color surface0  #363a4f;
+@define-color surface1  #494d64;
+@define-color surface2  #5b6078;
+
+/* Overlays */
+@define-color overlay0  #6e738d;
+@define-color overlay1  #8087a2;
+@define-color overlay2  #939ab7;
+
+/* Accents */
+@define-color blue      #8aadf4;
+@define-color lavender  #b7bdf8;
+@define-color sapphire  #7dc4e4;
+@define-color sky       #91d7e3;
+@define-color teal      #8bd5ca;
+@define-color green     #a6da95;
+@define-color yellow    #eed49f;
+@define-color peach     #f5a97f;
+@define-color maroon    #ee99a0;
+@define-color red       #ed8796;
+@define-color mauve     #c6a0f6;
+@define-color pink      #f5bde6;
+@define-color flamingo  #f0c6c6;
+@define-color rosewater #f4dbd6;
+
+/* ─── Bar Window ─────────────────────────────────────────────
+ * Transparent background lets the wallpaper show through.
+ * Each module has its own opaque background.
+ */
+window#waybar {
+  background: transparent;
+  color:      @text;
+}
+
+/* ─── Tooltips ───────────────────────────────────────────────*/
+tooltip {
+  background:    @base;
+  border-radius: 6px;
+  border:        1px solid @surface1;  /* Subtle border for depth */
+  padding:       10px;
+}
+
+tooltip label {
+  color: @text;
+}
+
+/* ─── Workspaces ─────────────────────────────────────────────*/
+#workspaces {
+  background:    @mantle;
+  border-radius: 6px;
+  margin:        5px 0px 5px 10px;
+  padding:       3px;
+}
+
+#workspaces button {
+  padding:       6px 10px;
+  color:         @overlay0;    /* Inactive: dimmed */
+  margin:        3px 4px;
+  border-radius: 6px;
+  transition:    all 0.15s ease;  /* Smooth state transitions */
+}
+
+#workspaces button:hover {
+  background: @surface0;  /* Visible hover feedback */
+  color:      @text;
+  border:     none;
+}
+
+#workspaces button.active {
+  color:       @mauve;
+  background:  @surface0;
+  font-weight: bold;
+}
+
+#workspaces button.focused {
+  color:       @base;
+  background:  @mauve;   /* Full mauve fill for focused workspace */
+  font-weight: bold;
+}
+
+#workspaces button.urgent {
+  color:       @base;
+  background:  @red;     /* Red fill: window requesting attention */
+  font-weight: bold;
+}
+
+/* ─── MPRIS (Media Player) ───────────────────────────────────
+ * Displayed left of center, next to the workspaces.
+ * Teal accent distinguishes it from system status modules.
+ */
+#mpris {
+  background:    @mantle;
+  color:         @teal;
+  border-radius: 6px;
+  margin:        5px 0px 5px 8px;
+  padding:       6px 14px;
+  font-style:    italic;  /* Track title in italics */
+}
+
+#mpris.paused {
+  color:      @overlay1;  /* Dimmed when paused */
+  font-style: italic;
+}
+
+#mpris.stopped {
+  /* Visually hidden when nothing is playing */
+  color:      transparent;
+  background: transparent;
+  padding:    0;
+  margin:     0;
+}
+
+/* ─── Shared Module Base ─────────────────────────────────────
+ * Common background, padding, and margin for center and right-side modules.
+ * NOTE: #clock (center bar) is included here for visual consistency
+ * even though it sits in the center, not the right.
+ * Individual modules override border-radius and accent color below.
+ */
+#window,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#tray,
+#backlight {
+  background: @mantle;
+  padding:    6px 14px;
+  margin:     5px 0px;
+}
+
+/* ─── Clock ──────────────────────────────────────────────────*/
+#clock {
+  color:         @mauve;   /* Matches the active workspace accent */
+  border-radius: 6px;
+  font-weight:   bold;
+}
+
+/* ─── System Tray ────────────────────────────────────────────*/
+#tray {
+  border-radius: 6px;
+  margin-right:  10px;
+  padding:       6px 12px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;        /* Dim icons for inactive tray apps */
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: @red;       /* Red background for apps needing attention */
+}
+
+/* ─── Memory ─────────────────────────────────────────────────
+ * Left module in the [memory · cpu] pair.
+ * Flat right edge joins seamlessly with #cpu.
+ */
+#memory {
+  color:         @green;
+  border-radius: 6px 0px 0px 6px;
+}
+
+#memory.critical { color: @red;    }
+#memory.high     { color: @yellow; }
+#memory.medium   { color: @green;  }
+
+/* ─── CPU ────────────────────────────────────────────────────
+ * Right module in the [memory · cpu] pair.
+ * Flat left edge joins seamlessly with #memory.
+ */
+#cpu {
+  color:         @blue;
+  border-radius: 0px 6px 6px 0px;
+  margin-right:  10px;
+}
+
+/* ─── Network ────────────────────────────────────────────────
+ * Left module in the [network · pulseaudio · microphone] group.
+ */
+#network {
+  color:         @sapphire;
+  border-radius: 6px 0px 0px 6px;
+}
+
+#network.disconnected {
+  color: @red;
+}
+
+/* ─── PulseAudio — Speaker Output ───────────────────────────
+ * Middle module in the [network · pulseaudio · microphone] group.
+ * Both edges are flat for a seamless connected group.
+ */
+#pulseaudio {
+  color:         @peach;
+  border-radius: 0px 0px 0px 0px;
+}
+
+#pulseaudio.muted {
+  color: @overlay0;   /* Dimmed when muted */
+}
+
+/* ─── PulseAudio — Microphone Input ─────────────────────────
+ * Right module in the [network · pulseaudio · microphone] group.
+ * Rounded right edge closes the group cleanly.
+ */
+#pulseaudio.microphone {
+  color:         @lavender;
+  border-radius: 0px 6px 6px 0px;
+  margin-right:  10px;
+}
+
+#pulseaudio.microphone.muted {
+  color: @overlay0;
+}

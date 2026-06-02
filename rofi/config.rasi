@@ -3,12 +3,41 @@
  * ROFI - Application Launcher Theme
  * ═══════════════════════════════════════════════════════════
  *
- * Theme:  Catppuccin Macchiato
- * Author: Souleymane Sy
+ * Description:
+ *   Rofi is a window switcher, application launcher, and dmenu
+ *   replacement. This file defines its full visual theme using
+ *   the Catppuccin Macchiato palette with a modern rounded card
+ *   layout.
  *
- * Rofi is a window switcher, application launcher, and dmenu replacement.
- * This file defines its full visual theme using the Catppuccin Macchiato
- * color palette with a modern rounded card-style layout.
+ * Location:
+ *   ~/.config/rofi/config.rasi
+ *
+ * Installation:
+ *   sudo pacman -S rofi
+ *
+ * Usage:
+ *   rofi -show drun      (application launcher)
+ *   rofi -show run       (command runner)
+ *   rofi -show window    (window switcher)
+ *
+ * Reload:
+ *   Changes take effect immediately on next Rofi invocation.
+ *
+ * Theme:
+ *   Catppuccin Macchiato
+ *
+ * Author:
+ *   Souleymane Sy
+ *
+ * Dependencies:
+ *   - Rec Mono Linear font  (launcher font)
+ *   - rofi-calc             (calculator plugin, optional)
+ *
+ * See also:
+ *   hyprland/hyprland.conf  (launcher keybind: SUPER + Space)
+ *
+ * Documentation:
+ *   https://github.com/davatorium/rofi
  */
 
 * {
