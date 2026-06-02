@@ -86,7 +86,17 @@
 [pacman] thunar # Lightweight GTK file manager (primary)
 [pacman] thunar-volman # Removable volumes support for Thunar
 [pacman] thunar-archive-plugin # Archive support for Thunar
+[pacman] thunar-media-tags-plugin # Media tag editor in Thunar properties
+[pacman] thunar-shares-plugin # Samba share integration in Thunar
 [pacman] gvfs # Virtual filesystem (automatic mounting)
+[pacman] gvfs-mtp # MTP support (Android phones, media devices)
+[pacman] gvfs-afc # AFC support (Apple devices)
+[pacman] gvfs-smb # SMB/CIFS support (Windows shares)
+[pacman] file-roller # Archive manager (GUI)
+[pacman] xarchiver # Lightweight archive manager (alternative)
+[pacman] unrar # RAR archive extraction support
+[pacman] tumbler # Thumbnail generation for Thunar
+[pacman] catfish # File search GUI
 [pacman] dolphin # KDE file manager (secondary)
 
 # ─── Yazi — Terminal File Manager ─────────────────────────
@@ -98,6 +108,7 @@
 
 # ─── mpv — Media Player ───────────────────────────────────
 [pacman] mpv # Video/audio player (used by Yazi)
+[pacman] vlc # Alternative video/audio player (GUI)
 
 # ─── Audio — PipeWire ─────────────────────────────────────
 # PipeWire replaces PulseAudio and JACK. Required for sound.
@@ -151,8 +162,13 @@
 
 # ─── Fonts ────────────────────────────────────────────────
 # Nerd Fonts: icons used by Waybar, Neovim, Yazi, Fastfetch
+[pacman] ttf-cascadia-code-nerd # Cascadia Code with Nerd icons
+[pacman] ttf-cascadia-mono-nerd # Cascadia Mono with Nerd icons
 [pacman] ttf-firacode-nerd # Fira Code with Nerd icons (Kitty)
+[pacman] ttf-ibmplex-mono-nerd # IBM Plex Mono with Nerd icons
+[pacman] ttf-iosevka-nerd # Iosevka with Nerd icons
 [pacman] ttf-jetbrains-mono-nerd # JetBrains Mono with Nerd icons
+[pacman] ttf-meslo-nerd # Meslo with Nerd icons
 [pacman] ttf-nerd-fonts-symbols # Nerd Fonts symbols only
 [pacman] ttf-nerd-fonts-symbols-mono # Nerd Fonts symbols monospace
 [pacman] noto-fonts # Complete Unicode fonts (fallback)
