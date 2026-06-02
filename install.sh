@@ -28,7 +28,7 @@ set -euo pipefail
 # 4. Enables systemd services if necessary
 #
 # Documentation:
-# HYPERLAND_INSTALLATION_GUIDE.md
+# HYPRLAND_INSTALLATION_GUIDE.md
 # ═══════════════════════════════════════════════════════════
 # CONSTANTS
 # ═══════════════════════════════════════════════════════════
@@ -421,7 +421,7 @@ install_vscode() {
 	aur_install visual-studio-code-bin
 	local vscode_dir="${HOME}/.config/Code/User"
 	mkdir -p "$vscode_dir"
-	copy_config "${DOTS_DIR}/vscode/settings.json" "${vscode_dir}/settings.json"
+	copy_config "${DOTS_DIR}/vs code/settings.json" "${vscode_dir}/settings.json"
 	info "Extensions must be installed manually in VS Code."
 }
 
@@ -562,7 +562,7 @@ install_sddm() {
 		sudo cp "${DOTS_DIR}/sddm/sddm.conf" /etc/sddm.conf.d/sddm.conf
 		success "SDDM configuration copied."
 	fi
-	local theme_script="${DOTS_DIR}/scripts/install-sddm-theme.sh"
+	local theme_script="${DOTS_DIR}/sddm/install-sddm-theme.sh"
 	if [[ -x "$theme_script" ]]; then
 		"$theme_script"
 	else
