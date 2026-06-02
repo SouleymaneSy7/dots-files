@@ -22,7 +22,7 @@ return {
       eslint = function()
         -- on_attach fires every time any LSP client attaches to a buffer.
         -- We use it to fine-tune formatting responsibilities per client:
-        require("lazyvim.util").lsp.on_attach(function(client)
+        require("lazyvim.plugins.lsp").on_attach(function(client)
           if client.name == "eslint" then
             -- Explicitly grant ESLint the documentFormatting capability
             -- so it can be used as the formatter (e.g. via :lua vim.lsp.buf.format()).
