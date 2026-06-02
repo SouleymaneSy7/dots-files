@@ -285,7 +285,7 @@ enable_service() {
 install_core() {
 	step "Base Tools"
 	pacman_install base-devel git curl wget xdg-utils xdg-user-dirs \
-		polkit-kde-agent networkmanager network-manager-applet
+		polkit-kde-agent networkmanager network-manager-applet nm-connection-editor
 	enable_service NetworkManager
 	# Create standard XDG directories (~/Documents, ~/Pictures, etc.)
 	xdg-user-dirs-update 2>/dev/null || true
@@ -394,24 +394,27 @@ install_zsh() {
 
 install_neovim() {
 	step "Neovim + LazyVim"
-	pacman_install neovim ripgrep fd tree-sitter-cli lazygit luarocks
+	pacman_install neovim ripgrep fd tree-sitter-cli lazygit luarocks nodejs npm
+	# Backup existing config if present
 	if [[ -d "${HOME}/.config/nvim" ]]; then
 		local backup_nvim="${BACKUP_DIR}/nvim"
 		mkdir -p "$BACKUP_DIR"
 		cp -r "${HOME}/.config/nvim" "$backup_nvim"
 		warn "nvim config backed up: ${backup_nvim}"
+		rm -rf "${HOME}/.config/nvim"
 	fi
+	# Clone the LazyVim starter first — provides init.lua and base structure
+	info "Cloning LazyVim starter..."
+	git clone --depth=1 --quiet "https://github.com/LazyVim/starter" \
+		"${HOME}/.config/nvim" 2>&1 | tee -a "$LOG_FILE"
+	rm -rf "${HOME}/.config/nvim/.git"
+	success "LazyVim starter cloned."
+	# Overlay custom dotfiles on top (config/ + plugins/)
 	if [[ -d "${DOTS_DIR}/nvim" ]]; then
-		mkdir -p "${HOME}/.config/nvim"
 		cp -r "${DOTS_DIR}/nvim/." "${HOME}/.config/nvim/"
-		success "Neovim config copied."
+		success "Custom Neovim config applied."
 	else
-		warn "nvim/ directory not found in repository."
-		info "Cloning LazyVim starter..."
-		git clone --depth=1 --quiet "https://github.com/LazyVim/starter" \
-			"${HOME}/.config/nvim" 2>&1 | tee -a "$LOG_FILE"
-		rm -rf "${HOME}/.config/nvim/.git"
-		success "LazyVim starter cloned — customize in ~/.config/nvim/lua/"
+		warn "nvim/ directory not found in repository — using stock LazyVim starter."
 	fi
 	info "Plugins will be installed automatically on first Neovim launch."
 }
@@ -437,7 +440,11 @@ install_git() {
 
 install_thunar() {
 	step "Thunar (File Manager)"
-	pacman_install thunar thunar-volman thunar-archive-plugin gvfs dolphin
+	pacman_install thunar thunar-volman thunar-archive-plugin \
+		thunar-media-tags-plugin thunar-shares-plugin \
+		gvfs gvfs-mtp gvfs-afc gvfs-smb \
+		file-roller xarchiver unrar \
+		tumbler catfish dolphin
 }
 
 install_yazi() {
@@ -464,7 +471,7 @@ install_yazi() {
 
 install_mpv() {
 	step "mpv"
-	pacman_install mpv
+	pacman_install mpv vlc
 	copy_config "${DOTS_DIR}/mpv" "${HOME}/.config/mpv"
 }
 
@@ -542,7 +549,9 @@ install_zellij() {
 
 install_fonts() {
 	step "Fonts"
-	pacman_install ttf-firacode-nerd ttf-jetbrains-mono-nerd ttf-meslo-nerd \
+	pacman_install ttf-cascadia-code-nerd ttf-cascadia-mono-nerd \
+		ttf-firacode-nerd ttf-ibmplex-mono-nerd ttf-iosevka-nerd \
+		ttf-jetbrains-mono-nerd ttf-meslo-nerd \
 		ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-mono \
 		noto-fonts noto-fonts-cjk noto-fonts-emoji
 	warn "Rec Mono (main font) is not in the official repositories."
