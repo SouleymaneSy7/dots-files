@@ -2,19 +2,46 @@
 # GHOSTTY - Terminal Emulator Configuration
 # ═══════════════════════════════════════════════════════════
 #
-# Theme: Catppuccin Macchiato
-# Author: Souleymane Sy
+# Description:
+#   Ghostty terminal with the Catppuccin Macchiato theme.
+#   Configures the Rec Mono font, ANSI colors, cursor behavior,
+#   margins, and shell integration. Ghostty is the primary
+#   terminal in this config.
 #
-# Ghostty is a fast, native terminal emulator.
-# This file configures its font, colors, cursor, and window behavior.
-# Changes take effect after restarting Ghostty.
+# Location:
+#   ~/.config/ghostty/config
+#
+# Installation:
+#   sudo pacman -S ghostty
+#
+# Usage:
+#   ghostty
+#   Default terminal in hyprland.conf: $terminal = ghostty
+#
+# Reload:
+#   Restart Ghostty (no hot reload)
+#
+# Theme:
+#   Catppuccin Macchiato
+#
+# Dependencies:
+#   - Rec Mono Casual font  (primary font)
+#   - Rec Mono Linear font  (fallback and other tools)
+#
+# See also:
+#   kitty/kitty.conf         (secondary terminal — same palette)
+#   hyprland/hyprland.conf   (set as default terminal)
+#
+# Documentation:
+#   https://ghostty.org/docs/configuration
 
 # ─── Font Configuration ────────────────────────────────────
 # Primary font family used for all terminal text rendering.
 font-family = "Rec Mono Casual"
 
 # Font weight variant. Bold gives glyphs slightly more visual weight.
-font-style = Bold
+font-family-bold = "Rec Mono Casual Bold"
+font-weight = Bold
 
 # Base font size in points.
 font-size = 12
@@ -47,17 +74,17 @@ foreground = cad3f5
 
 # ─── Selection Colors ──────────────────────────────────────
 # Background color applied to selected text regions.
-selection-background = f4dbd6  # Macchiato rosewater
+selection-background = f4dbd6
 
 # Foreground (text) color applied to selected text regions.
-selection-foreground = 24273a  # Macchiato base (inverted for contrast)
+selection-foreground = 24273a
 
 # ─── Cursor Colors ─────────────────────────────────────────
 # Color of the cursor block/bar/underline itself.
-cursor-color = f4dbd6  # Macchiato rosewater
+cursor-color = f4dbd6
 
 # Color of the character underneath the cursor when the cursor overlaps it.
-cursor-text = 24273a   # Macchiato base (ensures legibility under cursor)
+cursor-text = 24273a
 
 # ─── Window border colors (if applicable) ──────────────────
 # Ghostty handles window decorations differently
@@ -68,36 +95,36 @@ cursor-text = 24273a   # Macchiato base (ensures legibility under cursor)
 # Index 0-7 = normal colors, 8-15 = bright variants.
 
 # Black
-palette = 0=#494d64   # Normal black  (Macchiato surface1)
-palette = 8=#5b6078   # Bright black  (Macchiato surface2)
+palette = 0=#494d64
+palette = 8=#5b6078
 
 # Red
-palette = 1=#ed8796   # Normal red    (Macchiato red)
-palette = 9=#ed8796   # Bright red    (same shade, no separate bright variant)
+palette = 1=#ed8796
+palette = 9=#ed8796
 
 # Green
-palette = 2=#a6da95   # Normal green  (Macchiato green)
-palette = 10=#a6da95  # Bright green  (same shade)
+palette = 2=#a6da95
+palette = 10=#a6da95
 
 # Yellow
-palette = 3=#eed49f   # Normal yellow (Macchiato yellow)
-palette = 11=#eed49f  # Bright yellow (same shade)
+palette = 3=#eed49f
+palette = 11=#eed49f
 
 # Blue
-palette = 4=#8aadf4   # Normal blue   (Macchiato blue)
-palette = 12=#8aadf4  # Bright blue   (same shade)
+palette = 4=#8aadf4
+palette = 12=#8aadf4
 
 # Magenta
-palette = 5=#f5bde6   # Normal magenta (Macchiato pink)
-palette = 13=#f5bde6  # Bright magenta (same shade)
+palette = 5=#f5bde6
+palette = 13=#f5bde6 
 
 # Cyan
-palette = 6=#8bd5ca   # Normal cyan   (Macchiato teal)
-palette = 14=#8bd5ca  # Bright cyan   (same shade)
+palette = 6=#8bd5ca
+palette = 14=#8bd5ca
 
 # White
-palette = 7=#b8c0e0   # Normal white  (Macchiato subtext1)
-palette = 15=#a5adcb  # Bright white  (Macchiato subtext0, slightly dimmer)
+palette = 7=#b8c0e0
+palette = 15=#a5adcb
 
 # ─── Window Settings ───────────────────────────────────────
 # Horizontal padding in pixels added inside the terminal window edges.
@@ -115,8 +142,8 @@ window-padding-balance = true
 # Options: block | bar | underline
 cursor-style = block
 
-# Disable cursor blinking for a static, non-distracting cursor.
-cursor-style-blink = false
+# Enable a subtle cursor blink for visual tracking while typing.
+cursor-style-blink = true
 
 # ─── Shell Integration ─────────────────────────────────────
 # Automatically detect the running shell and inject Ghostty's shell
@@ -131,4 +158,3 @@ mouse-hide-while-typing = true
 # ─── Window Opacity (optional) ─────────────────────────────
 # Uncomment to enable terminal background transparency.
 # Values range from 0.0 (fully transparent) to 1.0 (fully opaque).
-# background-opacity = 0.95

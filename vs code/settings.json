@@ -3,9 +3,35 @@
   // VSCODE - User Settings
   // ═══════════════════════════════════════════════════════════
   //
-  // Full editor configuration covering appearance, behavior,
-  // language-specific formatters, terminal, Git, and extensions.
-  // Changes take effect immediately or after a window reload.
+  // Description:
+  //   Complete VS Code editor configuration — appearance,
+  //   behavior, per-language formatters, integrated terminal,
+  //   Git, extensions, and Vim integration.
+  //
+  // Location:
+  //   ~/.config/Code/User/settings.json
+  //
+  // Installation:
+  //   sudo pacman -S code  (or via AUR: visual-studio-code-bin)
+  //
+  // Usage:
+  //   code
+  //   Changes take effect immediately or after reloading the
+  //   window (F1 → Developer: Reload Window).
+  //
+  // Key extensions:
+  //   - esbenp.prettier-vscode     (default formatter)
+  //   - DavidAnson.vscode-markdownlint (Markdown formatter)
+  //   - gitlens                    (Git integration)
+  //   - vscodevim.vim              (Vim emulation)
+  //   - bradlc.vscode-tailwindcss  (Tailwind IntelliSense)
+  //
+  // Dependencies:
+  //   - Rec Mono Casual font       (editor font)
+  //   - Rec Mono Linear font       (terminal/inlay font)
+  //
+  // Documentation:
+  //   https://code.visualstudio.com/docs/getstarted/settings
 
   // ─────────────────────────────────────────────────────────
   // 1) Editor Appearance
