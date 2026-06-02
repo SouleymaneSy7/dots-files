@@ -9,7 +9,7 @@
 --   behavior.
 --
 -- Location:
---   ~/.config/nvim/lua/configs/lazy.lua
+--   ~/.config/nvim/lua/config/lazy.lua
 --
 -- Installation:
 --   Requires Neovim 0.9+. The bootstrap script auto-installs
@@ -25,9 +25,9 @@
 --   Catppuccin Macchiato (via catppuccin/nvim plugin)
 --
 -- See also:
---   nvim/lua/configs/options.lua   (editor settings)
---   nvim/lua/configs/keymaps.lua   (keybindings)
---   nvim/lua/configs/autocmds.lua  (autocommands)
+--   nvim/lua/config/options.lua   (editor settings)
+--   nvim/lua/config/keymaps.lua   (keybindings)
+--   nvim/lua/config/autocmds.lua  (autocommands)
 --   nvim/lua/plugins/              (individual plugin specs)
 --
 -- Documentation:

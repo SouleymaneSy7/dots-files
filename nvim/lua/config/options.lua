@@ -9,7 +9,7 @@
 --   overridden by filetype-specific autocommands.
 --
 -- Location:
---   ~/.config/nvim/lua/configs/options.lua
+--   ~/.config/nvim/lua/config/options.lua
 --
 -- Installation:
 --   Loaded automatically by lazy.nvim (no manual require needed).
@@ -18,9 +18,9 @@
 --   Catppuccin Macchiato (via catppuccin/nvim plugin)
 --
 -- See also:
---   nvim/lua/configs/keymaps.lua   (keybindings)
---   nvim/lua/configs/autocmds.lua  (autocommands)
---   nvim/lua/configs/lazy.lua      (plugin manager entry point)
+--   nvim/lua/config/keymaps.lua   (keybindings)
+--   nvim/lua/config/autocmds.lua  (autocommands)
+--   nvim/lua/config/lazy.lua      (plugin manager entry point)
 --
 -- Documentation:
 --   https://neovim.io/doc/user/options.html

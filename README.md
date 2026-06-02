@@ -115,7 +115,7 @@ dots-files/
 ├── kitty/                    # Secondary terminal (kitty.conf)
 ├── lazygit/                  # Git TUI (config.yml)
 ├── mpv/                      # Media player (mpv.conf · input.conf)
-├── nvim/lua/                 # configs/ (options, keymaps, autocmds) · plugins/
+├── nvim/lua/                 # config/ (options, keymaps, autocmds) · plugins/
 ├── opencode/                 # OpenCode AI coding assistant
 ├── pyprland/                 # Scratchpad extension (pyprland.toml)
 ├── rofi/                     # Launcher theme (config.rasi)

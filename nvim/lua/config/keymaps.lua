@@ -8,15 +8,15 @@
 --   adds utility commands.
 --
 -- Location:
---   ~/.config/nvim/lua/configs/keymaps.lua
+--   ~/.config/nvim/lua/config/keymaps.lua
 --
 -- Installation:
 --   Loaded automatically by lazy.nvim (no manual require needed).
 --
 -- See also:
---   nvim/lua/configs/options.lua   (editor settings)
---   nvim/lua/configs/autocmds.lua  (autocommands)
---   nvim/lua/configs/lazy.lua      (plugin manager entry point)
+--   nvim/lua/config/options.lua   (editor settings)
+--   nvim/lua/config/autocmds.lua  (autocommands)
+--   nvim/lua/config/lazy.lua      (plugin manager entry point)
 --
 -- Documentation:
 --   https://neovim.io/doc/user/mapping.html
@@ -42,6 +42,27 @@ keymap.set({ "n", "v" }, "J", "10j", { noremap = true, desc = "Down faster" })
 --   <leader>j → J (join current line with the line below)
 keymap.set({ "n", "v" }, "<leader>k", "K", { noremap = true, desc = "Keyword" })
 keymap.set({ "n", "v" }, "<leader>j", "J", { noremap = true, desc = "Join lines" })
+
+-- ─── Select All ────────────────────────────────────────────────────────────────
+-- Maps <leader>sa to select all content in the current buffer.
+-- 'gg' moves to the first line, 'V' starts visual line mode, 'G' jumps to
+-- the last line — selecting everything in between.
+keymap.set("n", "<leader>sa", "ggVG", { noremap = true, silent = true, desc = "Select All" })
+
+-- ─── Move Lines ────────────────────────────────────────────────────────────────
+-- Alt+J / Alt+K moves the current line (or visual selection) up or down.
+-- After the move, the line/selection is re-indented to fit the new context.
+-- In visual mode, `gv` preserves the selection so you can spam Alt+J/K.
+keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
+-- ─── Duplicate Line ────────────────────────────────────────────────────────────
+-- <leader>dd yanks the current line (`yy`) and pastes it below (`p`).
+-- This shadows LazyVim's debug disconnect mapping — if you use a debugger,
+-- consider remapping to something else.
+keymap.set("n", "<leader>dd", "yyp", { desc = "Duplicate line" })
 
 -- ─── Quick Save ───────────────────────────────────────────────────────────────
 -- Moved from <leader>w to <leader>fs to avoid conflicting with the
@@ -73,3 +94,10 @@ vim.api.nvim_create_user_command("CopyPath", function()
   vim.fn.setreg("+", file_path)
   vim.notify("Copied path: " .. file_path)
 end, { nargs = 0, desc = "Copy full path of current file to clipboard" })
+
+-- ─── Toggle Terminal ────────────────────────────────────────────────────────────
+-- Opens LazyTerm in a float (<leader>tt), toggles it closed on second press.
+-- LazyVim provides lazyterm as a floating terminal; this is just the toggle key.
+vim.keymap.set("n", "<leader>tt", function()
+  Snacks.terminal.toggle()
+end, { desc = "[T]oggle [T]erminal (LazyTerm)" })

@@ -9,15 +9,15 @@
 --   interaction.
 --
 -- Location:
---   ~/.config/nvim/lua/configs/autocmds.lua
+--   ~/.config/nvim/lua/config/autocmds.lua
 --
 -- Installation:
 --   Loaded automatically by lazy.nvim (no manual require needed).
 --
 -- See also:
---   nvim/lua/configs/options.lua   (editor settings)
---   nvim/lua/configs/keymaps.lua   (keybindings)
---   nvim/lua/configs/lazy.lua      (plugin manager entry point)
+--   nvim/lua/config/options.lua   (editor settings)
+--   nvim/lua/config/keymaps.lua   (keybindings)
+--   nvim/lua/config/lazy.lua      (plugin manager entry point)
 --
 -- Documentation:
 --   https://neovim.io/doc/user/autocmd.html
