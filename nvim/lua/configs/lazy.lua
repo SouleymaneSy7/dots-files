@@ -2,9 +2,36 @@
 -- BOOTSTRAP - lazy.nvim Plugin Manager Entry Point
 -- ═══════════════════════════════════════════════════════════
 --
--- This is the main entry point for Neovim's plugin system.
--- It bootstraps lazy.nvim if not already installed, then initializes
--- it with all plugin specs, performance settings, and update behavior.
+-- Description:
+--   Main entry point for Neovim's plugin system. Bootstraps
+--   lazy.nvim if not already installed, then initializes it
+--   with all plugin specs, performance settings, and update
+--   behavior.
+--
+-- Location:
+--   ~/.config/nvim/lua/configs/lazy.lua
+--
+-- Installation:
+--   Requires Neovim 0.9+. The bootstrap script auto-installs
+--   lazy.nvim on first run — no manual plugin setup needed.
+--
+-- Usage:
+--   nvim              (lazy.nvim auto-installs on first launch)
+--   :Lazy             (open lazy.nvim dashboard)
+--   :Lazy update      (update all plugins)
+--   :Lazy clean       (remove unused plugins)
+--
+-- Theme:
+--   Catppuccin Macchiato (via catppuccin/nvim plugin)
+--
+-- See also:
+--   nvim/lua/configs/options.lua   (editor settings)
+--   nvim/lua/configs/keymaps.lua   (keybindings)
+--   nvim/lua/configs/autocmds.lua  (autocommands)
+--   nvim/lua/plugins/              (individual plugin specs)
+--
+-- Documentation:
+--   https://github.com/folke/lazy.nvim
 
 -- ─── Bootstrap lazy.nvim ───────────────────────────────────
 -- Resolves the expected installation path for lazy.nvim using Neovim's

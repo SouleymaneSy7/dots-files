@@ -1,10 +1,29 @@
 -- ═══════════════════════════════════════════════════════════
--- NEOVIM OPTIONS - Base configuration
+-- NEOVIM OPTIONS - Base Configuration
 -- ═══════════════════════════════════════════════════════════
 --
--- This module defines all core Neovim settings via the vim.opt and vim.g APIs.
--- These options control the editor's appearance, editing behavior, and global defaults.
--- Settings here apply globally unless overridden by filetype-specific autocommands.
+-- Description:
+--   Defines all core Neovim settings via the vim.opt and vim.g
+--   APIs. Controls the editor's appearance, editing behavior,
+--   and global defaults. Settings here apply globally unless
+--   overridden by filetype-specific autocommands.
+--
+-- Location:
+--   ~/.config/nvim/lua/configs/options.lua
+--
+-- Installation:
+--   Loaded automatically by lazy.nvim (no manual require needed).
+--
+-- Theme:
+--   Catppuccin Macchiato (via catppuccin/nvim plugin)
+--
+-- See also:
+--   nvim/lua/configs/keymaps.lua   (keybindings)
+--   nvim/lua/configs/autocmds.lua  (autocommands)
+--   nvim/lua/configs/lazy.lua      (plugin manager entry point)
+--
+-- Documentation:
+--   https://neovim.io/doc/user/options.html
 
 local opt = vim.opt -- Shorthand for setting global/window/buffer options
 local g = vim.g -- Shorthand for setting global variables (vim.g)
@@ -41,7 +60,15 @@ opt.termguicolors = true -- Enable 24-bit RGB color support in the terminal
 -- Indentation
 opt.tabstop = 2 -- A <Tab> character visually occupies 2 spaces
 opt.shiftwidth = 2 -- >> / << indentation and auto-indent use 2-space steps
-opt.expandtab = false -- Keep real tab characters (do not convert to spaces)
+
+-- expandtab = true converts tab keypresses to spaces.
+-- Reason: virtually all JS/TS projects, Prettier configs, and ESLint rules
+-- expect spaces. Prettier reformats to spaces anyway, but creating a new file
+-- with real tab characters would produce unnecessary diffs in CI or with
+-- collaborators who normalize to spaces. guess-indent.nvim will override this
+-- setting per-buffer when it detects an existing project that uses real tabs.
+opt.expandtab = true
+
 opt.smartindent = true -- Automatically add extra indentation for new blocks (C-like syntax)
 opt.autoindent = true -- Copy indentation from the previous line when starting a new one
 

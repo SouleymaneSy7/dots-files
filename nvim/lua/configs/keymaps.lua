@@ -2,8 +2,24 @@
 -- NEOVIM KEYMAPS - Custom Keymaps
 -- ═══════════════════════════════════════════════════════════
 --
--- This module sets up custom keymaps for Neovim using the vim.keymap API.
--- It improves navigation speed, remaps commonly used keys, and adds utility commands.
+-- Description:
+--   Sets up custom keymaps for Neovim using the vim.keymap API.
+--   Improves navigation speed, remaps commonly used keys, and
+--   adds utility commands.
+--
+-- Location:
+--   ~/.config/nvim/lua/configs/keymaps.lua
+--
+-- Installation:
+--   Loaded automatically by lazy.nvim (no manual require needed).
+--
+-- See also:
+--   nvim/lua/configs/options.lua   (editor settings)
+--   nvim/lua/configs/autocmds.lua  (autocommands)
+--   nvim/lua/configs/lazy.lua      (plugin manager entry point)
+--
+-- Documentation:
+--   https://neovim.io/doc/user/mapping.html
 
 local keymap = vim.keymap
 
@@ -28,8 +44,9 @@ keymap.set({ "n", "v" }, "<leader>k", "K", { noremap = true, desc = "Keyword" })
 keymap.set({ "n", "v" }, "<leader>j", "J", { noremap = true, desc = "Join lines" })
 
 -- ─── Quick Save ───────────────────────────────────────────────────────────────
--- <leader>w triggers the ':w' write command in normal mode, saving the current buffer.
-keymap.set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "Save window" })
+-- Moved from <leader>w to <leader>fs to avoid conflicting with the
+-- "Window" group declared in which-key.lua.
+keymap.set("n", "<leader>fs", "<cmd>w<cr>", { noremap = true, desc = "Save file" })
 
 -- ─── LSP Hover ────────────────────────────────────────────────────────────────
 -- 'gh' in normal mode triggers vim.lsp.buf.hover(), which displays documentation

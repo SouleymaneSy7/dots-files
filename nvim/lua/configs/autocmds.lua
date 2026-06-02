@@ -1,10 +1,26 @@
 -- ═══════════════════════════════════════════════════════════
--- NEOVIM AUTO-COMMANDS - Automatic actions
+-- NEOVIM AUTO-COMMANDS - Automatic Actions
 -- ═══════════════════════════════════════════════════════════
 --
--- This module defines Neovim autocommands organized into logical groups.
--- Autocommands allow Neovim to automatically react to specific events
--- (file open, resize, filetype detection, etc.) without user interaction.
+-- Description:
+--   Defines Neovim autocommands organized into logical groups.
+--   Autocommands allow Neovim to automatically react to events
+--   (file open, resize, filetype detection, etc.) without user
+--   interaction.
+--
+-- Location:
+--   ~/.config/nvim/lua/configs/autocmds.lua
+--
+-- Installation:
+--   Loaded automatically by lazy.nvim (no manual require needed).
+--
+-- See also:
+--   nvim/lua/configs/options.lua   (editor settings)
+--   nvim/lua/configs/keymaps.lua   (keybindings)
+--   nvim/lua/configs/lazy.lua      (plugin manager entry point)
+--
+-- Documentation:
+--   https://neovim.io/doc/user/autocmd.html
 
 local auto_cmd = vim.api.nvim_create_autocmd -- Shorthand for creating autocommands
 local auto_group = vim.api.nvim_create_augroup -- Shorthand for creating autocommand groups (used to avoid duplicate registrations)
