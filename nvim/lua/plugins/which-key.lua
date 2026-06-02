@@ -88,6 +88,7 @@ return {
       -- making it easier to discover related keymaps at a glance.
       -- Each entry defines: the prefix, a display name, an icon, and the mode.
       wk.add({
+        { "<leader>a", group = "AI", icon = "", mode = "n" },
         { "<leader>b", group = "Buffers", icon = "󰓩", mode = "n" }, -- Buffer management
         { "<leader>c", group = "Code", icon = "", mode = "n" }, -- Code actions, LSP commands
         { "<leader>d", group = "Debug", icon = "", mode = "n" }, -- DAP debugger commands

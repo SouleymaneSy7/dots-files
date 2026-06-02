@@ -49,12 +49,17 @@ return {
     {
       "<leader>p",
       function()
-        if LazyVim.pick.picker.name == "telescope" then
-          require("telescope").extensions.yank_history.yank_history({})
-        elseif LazyVim.pick.picker.name == "snacks" then
-          Snacks.picker.yanky()
+        local has_telescope, telescope = pcall(require, "telescope")
+        if has_telescope and telescope.extensions and telescope.extensions.yank_history then
+          telescope.extensions.yank_history.yank_history({})
         else
-          vim.cmd([[YankyRingHistory]])
+          ---@diagnostic disable-next-line: undefined-global
+          local has_snacks = type(Snacks) == "table" and Snacks.picker and Snacks.picker.yanky
+          if has_snacks then
+            Snacks.picker.yanky()
+          else
+            vim.cmd([[YankyRingHistory]])
+          end
         end
       end,
       mode = { "n", "x" },
