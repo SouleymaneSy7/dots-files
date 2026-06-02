@@ -1,0 +1,33 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openrouter": {
+      "options": {
+        "websearch_cited": {
+          "model": "x-ai/grok-4.1-fast"
+        }
+      }
+    },
+    "openai": {
+      "options": {
+        "websearch_cited": {
+          "model": "gpt-5.2"
+        }
+      }
+    },
+    "google": {
+      "options": {
+        "websearch_cited": {
+          "model": "gemini-2.5-flash"
+        }
+      }
+    }
+  },
+  "plugin": [
+    "micode",
+    "opencode-wakatime",
+    "@nick-vi/opencode-type-inject",
+    "opencode-websearch-cited@1.2.0",
+    "opencode-supermemory@latest"
+  ]
+}
