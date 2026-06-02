@@ -18,24 +18,26 @@ return {
       -- ─── Trouble Symbol Integration ──────────────────────────
       -- Pulls LSP document symbols (functions, classes, variables, etc.)
       -- from Trouble and renders them in lualine_c as breadcrumb-style context.
-      local trouble = require("trouble")
-      local symbols = trouble.statusline({
-        mode = "lsp_document_symbols", -- Show symbols for the current document
-        groups = {},
-        title = false, -- Don't prepend a title to the symbol display
-        filter = { range = true }, -- Only show symbols relevant to the visible range
-        format = "{kind_icon}{symbol.name:Normal}", -- Icon + symbol name with Normal highlight
-        -- The following line is needed to fix the background color
-        -- Set it to the lualine section you want to use
-        hl_group = "lualine_c_normal", -- Match background to lualine_c to avoid color mismatch
-      })
+      local has_trouble, trouble = pcall(require, "trouble")
+      if has_trouble then
+        local symbols = trouble.statusline({
+          mode = "lsp_document_symbols", -- Show symbols for the current document
+          groups = {},
+          title = false, -- Don't prepend a title to the symbol display
+          filter = { range = true }, -- Only show symbols relevant to the visible range
+          format = "{kind_icon}{symbol.name:Normal}", -- Icon + symbol name with Normal highlight
+          -- The following line is needed to fix the background color
+          -- Set it to the lualine section you want to use
+          hl_group = "lualine_c_normal", -- Match background to lualine_c to avoid color mismatch
+        })
 
-      -- Append the Trouble symbol component to the existing lualine_c section
-      -- inherited from LazyVim defaults, rather than overwriting it.
-      table.insert(opts.sections.lualine_c, {
-        symbols.get, -- Function that returns the current symbol string
-        cond = symbols.has, -- Only render the component when symbols are available
-      })
+        -- Append the Trouble symbol component to the existing lualine_c section
+        -- inherited from LazyVim defaults, rather than overwriting it.
+        table.insert(opts.sections.lualine_c, {
+          symbols.get, -- Function that returns the current symbol string
+          cond = symbols.has, -- Only render the component when symbols are available
+        })
+      end
 
       return {
         -- ───────────────────────────────────────────────────────
