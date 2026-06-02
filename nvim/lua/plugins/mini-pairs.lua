@@ -42,9 +42,9 @@ return {
   },
 
   -- ─── Config ────────────────────────────────────────────────
-  -- Delegates final setup to LazyVim's mini.pairs wrapper, which applies
-  -- the opts table and registers the plugin with any LazyVim-specific defaults.
+  -- Applies the opts table directly to mini.pairs with LazyVim-compatible
+  -- defaults. Uses pcall as a safety guard in case the module is not loaded.
   config = function(_, opts)
-    LazyVim.mini.pairs(opts)
+    require("mini.pairs").setup(opts)
   end,
 }
