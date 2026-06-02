@@ -62,10 +62,17 @@ cp -r ~/dots-files/hyprland/*  ~/.config/hypr/
 cp -r ~/dots-files/waybar/*    ~/.config/waybar/
 cp -r ~/dots-files/dunst/*     ~/.config/dunst/
 cp -r ~/dots-files/rofi/*      ~/.config/rofi/
-cp -r ~/dots-files/ghostty/*   ~/.config/ghostty/
-cp -r ~/dots-files/kitty/*     ~/.config/kitty/
-cp -r ~/dots-files/nvim/*      ~/.config/nvim/
-cp    ~/dots-files/zsh/.zshrc  ~/.zshrc
+cp -r ~/dots-files/ghostty/*      ~/.config/ghostty/
+cp -r ~/dots-files/kitty/*        ~/.config/kitty/
+cp -r ~/dots-files/pyprland/*     ~/.config/pyprland/
+cp -r ~/dots-files/btop/*         ~/.config/btop/
+cp -r ~/dots-files/swaync/*       ~/.config/swaync/
+cp -r ~/dots-files/nvim/*         ~/.config/nvim/
+cp    ~/dots-files/zsh/.zshrc     ~/.zshrc
+cp    ~/dots-files/git/.gitconfig ~/.gitconfig
+
+# Make Hyprland scripts executable
+chmod +x ~/.config/hypr/scripts/*.sh
 
 # Reload
 hyprctl reload
