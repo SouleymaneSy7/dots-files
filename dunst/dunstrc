@@ -2,71 +2,147 @@
 # DUNST - Notification Daemon Configuration
 # ═══════════════════════════════════════════════════════════
 #
-# Dunst is a lightweight, customizable notification daemon for Linux.
-# This file configures its appearance, layout, and per-urgency behavior.
-# Changes take effect after restarting dunst: `killall dunst && dunst &`
+# Description:
+#   Lightweight notification daemon with the Catppuccin
+#   Macchiato theme. Configures appearance, behavior,
+#   urgency levels (low/normal/critical), and per-application
+#   rules (volume, screenshot).
+#
+# Location:
+#   ~/.config/dunst/dunstrc
+#
+# Installation:
+#   sudo pacman -S dunst
+#
+# Usage:
+#   dunst
+#   Launched automatically via exec-once in hyprland.conf
+#
+# Reload:
+#   killall dunst && dunst &
+#
+# Dependencies:
+#   - Rec Mono Linear font (notification font)
+#   - Papirus-Dark         (icon theme)
+#
+# See also:
+#   hyprland/hyprland.conf  (autostart dunst)
+#   hyprland/scripts/screenshot.sh  (screenshot notifications)
+#
+# Documentation:
+#   https://dunst-project.org/documentation/
 
 [global]
-    # ─── Typography ────────────────────────────────────────────
-    # Font used to render notification title and body text.
-    # Rec Mono Linear is a monospaced programming font.
-    font = Rec Mono Linear
+    # ─── Display & Position ────────────────────────────────
+    monitor  = 0         # Show notifications on the primary monitor
+    follow   = mouse     # Follow the monitor where the mouse cursor is
+    origin   = top-right # Anchor corner for notification stack
+    offset   = 10x10     # Distance in pixels from the anchor corner (x, y)
 
-    # Notification text format using Pango markup.
-    # %s = summary (title), %b = body text.
-    # <b>%s</b> renders the title in bold above the body.
-    format = "<b>%s</b>\n%b"
+    # ─── Geometry ──────────────────────────────────────────
+    width             = 320   # Fixed notification width in pixels
+    height            = 100   # Maximum height per notification
+    gap_size          = 8     # Gap between stacked notifications
+    padding           = 12    # Inner vertical padding
+    horizontal_padding = 16   # Inner horizontal padding
+    text_icon_padding = 8     # Space between icon and text
 
-    # ─── Layout & Position ─────────────────────────────────────
-    # Geometry string: "WIDTHxMAX_NOTIFICATIONS-X_OFFSET+Y_OFFSET"
-    # 350px wide, up to 5 stacked notifications,
-    # anchored 15px from the right edge and 50px from the top.
-    geometry = "350x5-15+50"
+    # ─── Progress Bar ──────────────────────────────────────
+    # Shown for notifications that carry a value, such as volume or brightness.
+    progress_bar              = true
+    progress_bar_height       = 6
+    progress_bar_frame_width  = 0
+    progress_bar_min_width    = 150
+    progress_bar_max_width    = 300
+    progress_bar_corner_radius = 3
+    progress_bar_corners      = all
 
-    # ─── Appearance ────────────────────────────────────────────
-    # Window transparency as a percentage (0 = opaque, 100 = fully transparent).
-    transparency = 10
+    # ─── Appearance ────────────────────────────────────────
+    transparency   = 0     # 0 = fully opaque (compositor handles transparency)
+    corner_radius  = 8     # Slightly larger than Hyprland (6) for visual contrast
+    corners        = all
 
-    # Border width in pixels drawn around each notification window.
-    frame_width = 2
+    frame_width    = 2            # Border thickness in pixels
+    frame_color    = "#8aadf4"    # Catppuccin Macchiato blue — default border
 
-    # Default border color (Catppuccin Mocha blue).
-    frame_color = "#89b4fa"
+    separator_height = 1          # Height of the separator line between sections
+    separator_color  = frame      # Inherits the frame color
 
-    # Radius in pixels for rounded notification corners.
-    corner_radius = 8
+    # ─── Font ──────────────────────────────────────────────
+    # Rec Mono Linear is used across Waybar, Kitty, and Rofi for consistency.
+    font = Rec Mono Linear 10
 
-    # ─── Icons ─────────────────────────────────────────────────
-    # Position of the application icon relative to the notification text.
-    # Options: left | right | off
+    line_height = 0               # 0 = calculated automatically
+    markup      = full            # Allow full Pango markup in message body
+    format      = "<b>%s</b>\n%b" # Title in bold, body below
+    alignment   = left
+    vertical_alignment = center
+
+    # ─── Icons ─────────────────────────────────────────────
+    icon_theme    = Papirus-Dark  # Consistent with the Rofi configuration | Requires: sudo pacman -S papirus-icon-theme
     icon_position = left
+    min_icon_size = 32
+    max_icon_size = 48
 
-    # Maximum icon size in pixels. Larger icons are scaled down to fit.
-    max_icon_size = 64
+    # ─── Timing ────────────────────────────────────────────
+    show_age_threshold = 60   # Show notification age after 60s if it is still stacked
+    idle_threshold     = 120  # Do not show new notifications if idle for 120s
+
+    # ─── Stacking ──────────────────────────────────────────
+    stack_duplicates       = true  # Group identical notifications together
+    hide_duplicate_count   = false
+    notification_limit     = 5     # Maximum visible notifications at once
+
+    # ─── Behavior ──────────────────────────────────────────
+    indicate_hidden  = yes  # Show how many notifications are hidden beyond the limit
+    sticky_history   = yes  # Keep notifications in history after they are dismissed
+    history_length   = 20
+
+    always_run_script = true
+    ignore_newline    = no   # Respect newlines in the notification body
+    show_indicators   = yes  # Show action (a) and urgency (u) indicators
+
+    # ─── Mouse Bindings ────────────────────────────────────
+    mouse_left_click   = close_current              # Left click: dismiss
+    mouse_middle_click = do_action, close_current   # Middle click: trigger action then dismiss
+    mouse_right_click  = close_all                  # Right click: dismiss all
 
 # ─── Urgency: Low ──────────────────────────────────────────
-# Applied to low-priority notifications (e.g. background app events).
-# Auto-dismisses after 5 seconds.
+# Informational notifications: confirmations, status updates.
 [urgency_low]
-    background = "#1e1e2e"  # Catppuccin Mocha base background
-    foreground = "#cdd6f4"  # Catppuccin Mocha text color
-    frame_color = "#89b4fa" # Blue border for low urgency
-    timeout = 5             # Dismiss after 5 seconds
+    background  = "#1e2030"   # Catppuccin Macchiato mantle
+    foreground  = "#a5adcb"   # Catppuccin Macchiato subtext0
+    frame_color = "#494d64"   # Catppuccin Macchiato surface1 — subtle border
+    timeout     = 4
 
 # ─── Urgency: Normal ───────────────────────────────────────
-# Applied to standard notifications (e.g. messages, system events).
-# Auto-dismisses after 10 seconds.
+# Standard notifications: messages, app events, system activity.
 [urgency_normal]
-    background = "#1e1e2e"  # Catppuccin Mocha base background
-    foreground = "#cdd6f4"  # Catppuccin Mocha text color
-    frame_color = "#89b4fa" # Blue border for normal urgency
-    timeout = 10            # Dismiss after 10 seconds
+    background  = "#1e2030"   # Catppuccin Macchiato mantle
+    foreground  = "#cad3f5"   # Catppuccin Macchiato text
+    frame_color = "#8aadf4"   # Catppuccin Macchiato blue
+    timeout     = 6
 
 # ─── Urgency: Critical ─────────────────────────────────────
-# Applied to critical notifications (e.g. battery warnings, system alerts).
-# Persists indefinitely until manually dismissed (timeout = 0).
+# Critical notifications: errors, low battery, important failures.
+# Stays visible until manually dismissed (timeout = 0).
 [urgency_critical]
-    background = "#1e1e2e"  # Catppuccin Mocha base background
-    foreground = "#cdd6f4"  # Catppuccin Mocha text color
-    frame_color = "#f38ba8" # Red border to signal critical urgency
-    timeout = 0             # Never auto-dismiss; requires manual action
+    background  = "#1e2030"   # Catppuccin Macchiato mantle
+    foreground  = "#ed8796"   # Catppuccin Macchiato red
+    frame_color = "#ed8796"   # Red border to draw attention
+    timeout     = 0
+
+# ─── Application Rules ─────────────────────────────────────
+# Override appearance or behavior for specific applications.
+
+[volume_notif]
+    # Volume change notifications are transient — no need to keep them in history.
+    appname        = "Volume"
+    timeout        = 2
+    history_ignore = yes
+
+[screenshot_notif]
+    # Screenshot confirmation uses a green border to signal success.
+    appname     = "Screenshot"
+    frame_color = "#a6da95"   # Catppuccin Macchiato green
+    timeout     = 3
