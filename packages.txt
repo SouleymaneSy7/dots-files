@@ -1,0 +1,180 @@
+# ═══════════════════════════════════════════════════════════
+# PACKAGES - Complete package list for the dots-files project
+# ═══════════════════════════════════════════════════════════
+#
+# Description:
+# Exhaustive reference of all packages needed to run
+# this Arch Linux + Hyprland configuration.
+# Packages are organized by functional component.
+#
+# Manual Installation:
+# pacman -S <package> (official repositories)
+# yay -S <package> (AUR — requires yay)
+#
+# Automatic Installation:
+# ./install.sh (selective installer)
+#
+# Legend:
+# [pacman] Available in official Arch repositories
+# [aur] Available in the AUR (requires yay)
+# [manual] Manual download required
+
+# ─── Base Tools ───────────────────────────────────────────
+# Required before everything else. Provides compilers and
+# tools needed to build AUR packages.
+[pacman] base-devel # Build group (gcc, make, etc.)
+[pacman] git # Version control
+[pacman] curl # HTTP downloads (installation scripts)
+[pacman] wget # Alternative download tool
+[pacman] xdg-utils # Application associations (xdg-open)
+[pacman] xdg-user-dirs # Standard XDG directories (~/Pictures, etc.)
+[pacman] polkit-kde-agent # Graphical authentication agent (sudo GUI)
+
+# ─── Hyprland — Wayland Compositor ────────────────────────
+[pacman] hyprland # Dynamic Wayland compositor
+[pacman] hyprlock # Official lock screen
+[pacman] hyprpaper # Wallpaper daemon
+[pacman] hypridle # Idle management daemon
+[pacman] xdg-desktop-portal-hyprland # XDG portal for Hyprland (screenshare, etc.)
+[pacman] qt5-wayland # Wayland support for Qt5 applications
+[pacman] qt6-wayland # Wayland support for Qt6 applications
+[pacman] brightnessctl # Brightness control (hypridle)
+[pacman] wl-clipboard # Wayland clipboard utilities (wl-copy, wl-paste)
+[pacman] cliphist # Clipboard history (waybar)
+
+# ─── Pyprland — Hyprland Extensions ───────────────────────
+[aur] pyprland # Scratchpad terminal and other Hyprland extensions
+
+# ─── Waybar — Status Bar ──────────────────────────────────
+[pacman] waybar # Customizable status bar
+[pacman] playerctl # MPRIS control (media module in Waybar)
+[pacman] pamixer # Volume control via CLI (scroll on Waybar)
+[pacman] pavucontrol # Full audio mixer (right-click on volume)
+
+# ─── Rofi — Application Launcher ──────────────────────────
+[pacman] rofi-wayland # Launcher + native Wayland dmenu
+
+# ─── Ghostty — Main Terminal ──────────────────────────────
+[pacman] ghostty # GPU-accelerated terminal (main terminal)
+
+# ─── Kitty — Secondary Terminal ───────────────────────────
+[pacman] kitty # GPU-accelerated terminal (secondary)
+
+# ─── Zsh — Shell ──────────────────────────────────────────
+[pacman] zsh # Z shell (replaces bash)
+[pacman] zsh-completions # Additional completions for Zsh
+# Oh My Zsh and its plugins are installed via curl/git (see install.sh)
+# Plugins: zsh-autocomplete, zsh-autosuggestions, fast-syntax-highlighting
+# Theme: Powerlevel10k
+
+# ─── Neovim — Main Editor ─────────────────────────────────
+[pacman] neovim # Editor (v0.10+ required for LazyVim)
+[pacman] ripgrep # Ultra-fast text search (Telescope, LazyVim)
+[pacman] fd # File search (alternative to find)
+[pacman] tree-sitter-cli # Treesitter parser (syntax grammars)
+[pacman] lazygit # Git TUI interface (LazyVim: <leader>gg)
+[pacman] luarocks # Lua package manager (some nvim plugins)
+
+# ─── VS Code — GUI Editor ─────────────────────────────────
+[aur] visual-studio-code-bin # VS Code (extensions in settings.json)
+
+# ─── Git — Version Control ────────────────────────────────
+[pacman] git-delta # Syntax-highlighted diff pager
+# Configuration: ~/.gitconfig (copied from git/.gitconfig)
+
+# ─── GUI File Managers ────────────────────────────────────
+[pacman] thunar # Lightweight GTK file manager (primary)
+[pacman] thunar-volman # Removable volumes support for Thunar
+[pacman] thunar-archive-plugin # Archive support for Thunar
+[pacman] gvfs # Virtual filesystem (automatic mounting)
+[pacman] dolphin # KDE file manager (secondary)
+
+# ─── Yazi — Terminal File Manager ─────────────────────────
+[pacman] yazi # Terminal file manager (Rust)
+[pacman] ffmpegthumbnailer # Video thumbnails in Yazi
+[pacman] poppler # PDF preview in Yazi
+[pacman] unarj # Archive extraction in Yazi
+[aur] glow # Markdown preview in Yazi
+
+# ─── mpv — Media Player ───────────────────────────────────
+[pacman] mpv # Video/audio player (used by Yazi)
+
+# ─── Audio — PipeWire ─────────────────────────────────────
+# PipeWire replaces PulseAudio and JACK. Required for sound.
+[pacman] pipewire # Modern audio/video server
+[pacman] pipewire-alsa # ALSA compatibility
+[pacman] pipewire-pulse # PulseAudio compatibility (pamixer, pavucontrol)
+[pacman] pipewire-jack # JACK compatibility
+[pacman] wireplumber # PipeWire session manager
+
+# ─── Screenshot ───────────────────────────────────────────
+[pacman] grim # Wayland screenshot tool (backend)
+[pacman] slurp # Screen region selection (used by grim)
+[aur] satty # Screenshot annotation tool (post-capture)
+[pacman] hyprpicker # Screen color picker (SUPER + P)
+
+# ─── Notifications ────────────────────────────────────────
+[pacman] dunst # Lightweight notification daemon (active)
+[aur] swaync # Notification center (alternative to dunst)
+[pacman] libnotify # notify-send library (notifications from scripts)
+
+# ─── Logout Menu ──────────────────────────────────────────
+[aur] wlogout # Graphical logout/shutdown menu (SUPER + ESC)
+
+# ─── System Tools ─────────────────────────────────────────
+[pacman] btop # Resource monitor (CPU click in Waybar)
+[pacman] fastfetch # System information on shell startup
+[aur] atuin # SQLite shell history (replaces Ctrl+R)
+[pacman] zoxide # Smart cd with learning (replaces cd)
+[pacman] fzf # Interactive fuzzy finder (Ctrl+T, Ctrl+R)
+[pacman] bat # cat with syntax highlighting
+[pacman] eza # Modern ls with icons and git (replaces ls)
+[pacman] jq # JSON processor (used in kulala.nvim)
+[pacman] less # Pager (fallback for man pages)
+
+# ─── Network ──────────────────────────────────────────────
+[pacman] networkmanager # Network manager (WiFi, Ethernet)
+[pacman] network-manager-applet # NetworkManager systray icon (nm-applet)
+[pacman] nm-connection-editor # NetworkManager connections editor
+
+# ─── Zellij — Terminal Multiplexer ────────────────────────
+[pacman] zellij # Modern terminal multiplexer (Rust)
+
+# ─── SDDM — Display Manager ───────────────────────────────
+[pacman] sddm # Display manager (login screen)
+[pacman] qt6-svg # SVG rendering for SDDM Qt6
+[pacman] qt6-declarative # Qt6 QML components for SDDM
+[pacman] qt5-quickcontrols2 # Qt5 components (older SDDM themes)
+
+# ─── Brave — Browser ──────────────────────────────────────
+[aur] brave-bin # Brave browser (Chromium-based)
+
+# ─── Fonts ────────────────────────────────────────────────
+# Nerd Fonts: icons used by Waybar, Neovim, Yazi, Fastfetch
+[pacman] ttf-firacode-nerd # Fira Code with Nerd icons (Kitty)
+[pacman] ttf-jetbrains-mono-nerd # JetBrains Mono with Nerd icons
+[pacman] ttf-nerd-fonts-symbols # Nerd Fonts symbols only
+[pacman] ttf-nerd-fonts-symbols-mono # Nerd Fonts symbols monospace
+[pacman] noto-fonts # Complete Unicode fonts (fallback)
+[pacman] noto-fonts-cjk # CJK characters (Chinese, Japanese, Korean)
+[pacman] noto-fonts-emoji # Emojis
+# Rec Mono — Main font of the project (Ghostty, VS Code, Waybar, etc.)
+# Not available in official repositories or AUR.
+# Download from: https://www.recursive.design/
+# Or from GitHub: https://github.com/arrowtype/recursive/releases
+[manual] Recursive (Rec Mono Casual + Rec Mono Linear)
+
+# ─── Development Tools ────────────────────────────────────
+[pacman] nodejs # JavaScript runtime (LSP, JS tools)
+[pacman] npm # Node.js package manager
+[pacman] python # Python 3 (some scripts and plugins)
+
+# ─── Optional Dependencies ────────────────────────────────
+[pacman] wf-recorder # Wayland screen recording (optional)
+[pacman] obs-studio # Streaming/recording (optional)
+[pacman] mpv # Already listed, confirmed required for Yazi
+[aur] hyprprop # Hyprland window properties (debug)
+
+# ─── AUR Packages Summary ─────────────────────────────────
+# To install with yay (in recommended order):
+# yay -S pyprland wlogout swaync satty atuin glow brave-bin visual-studio-code-bin
