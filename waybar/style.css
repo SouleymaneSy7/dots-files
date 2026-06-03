@@ -203,6 +203,15 @@ tooltip label {
   margin:     5px 0px;
 }
 
+/* ─── Notification Center ────────────────────────────────────*/
+#custom-notification {
+  background: @mantle;
+  padding:    6px 14px;
+  margin:     5px 0px;
+  color:      @mauve;
+  border-radius: 6px 0px 0px 6px;
+}
+
 /* ─── Clock ──────────────────────────────────────────────────*/
 #clock {
   color:         @mauve;   /* Matches the active workspace accent */

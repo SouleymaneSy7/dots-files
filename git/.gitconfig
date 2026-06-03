@@ -47,7 +47,7 @@
     #   - email: must match the email used on your Git hosting platform
     #            (GitHub, GitLab, etc.) for commits to be attributed to you.
     name  = YOUR_NAME_HERE
-	email = YOUR_EMAIL_HERE
+    email = YOUR_EMAIL_HERE
 
 [init]
     defaultBranch = main
@@ -62,8 +62,8 @@
     # Default editor for commit messages, interactive rebase, etc.
     editor = nvim
 
-		# Long paths
-		longpaths = true
+    # Long paths
+    longpaths = true
 
 [interactive]
     # Use delta in interactive mode (git add -p) so hunk selection

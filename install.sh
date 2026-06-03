@@ -285,7 +285,7 @@ enable_service() {
 install_core() {
 	step "Base Tools"
 	pacman_install base-devel git curl wget xdg-utils xdg-user-dirs \
-		polkit-kde-agent networkmanager network-manager-applet nm-connection-editor
+		polkit-kde-agent networkmanager network-manager-applet
 	enable_service NetworkManager
 	# Create standard XDG directories (~/Documents, ~/Pictures, etc.)
 	xdg-user-dirs-update 2>/dev/null || true
@@ -485,7 +485,7 @@ install_audio() {
 
 install_screenshot() {
 	step "Screenshot"
-	pacman_install grim slurp hyprpicker
+	pacman_install grim slurp hyprpicker wl-clipboard
 	aur_install satty
 	local scripts_dir="${HOME}/.config/hypr/scripts"
 	if [[ -d "$scripts_dir" ]]; then

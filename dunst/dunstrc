@@ -34,7 +34,7 @@
 
 [global]
     # ─── Display & Position ────────────────────────────────
-    monitor  = 0         # Show notifications on the primary monitor
+    # monitor  = 0         # Disabled: overridden by follow = mouse below
     follow   = mouse     # Follow the monitor where the mouse cursor is
     origin   = top-right # Anchor corner for notification stack
     offset   = 10x10     # Distance in pixels from the anchor corner (x, y)

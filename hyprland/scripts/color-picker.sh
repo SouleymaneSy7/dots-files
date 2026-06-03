@@ -58,7 +58,7 @@ check_dependencies() {
 # Inherits the full Catppuccin Macchiato theme from config.rasi.
 # listview stays enabled — this is a short list, not a plain input.
 pick_format() {
-	printf '%s\n' hex rgb hsl hsv cmyk |
+	printf '%s\n' hex rgb hsl hsv |
 		rofi -dmenu \
 			-i \
 			-p "󰏘  Color Format"

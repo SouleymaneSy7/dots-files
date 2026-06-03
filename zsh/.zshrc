@@ -11,7 +11,7 @@
 #   ~/.zshrc
 #
 # Installation:
-#   sudo pacman -S zsh oh-my-zsh
+#   sudo pacman -S zsh && sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #
 # Usage:
 #   source ~/.zshrc   (apply changes in current session)
