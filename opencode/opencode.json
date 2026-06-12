@@ -24,7 +24,6 @@
     }
   },
   "plugin": [
-    "micode",
     "opencode-wakatime",
     "@nick-vi/opencode-type-inject",
     "opencode-websearch-cited@1.2.0",
