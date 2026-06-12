@@ -35,13 +35,16 @@
 # Documentation:
 #   https://ghostty.org/docs/configuration
 
+# ─── Localization ──────────────────────────────────────────
+# Language for the Ghostty UI.
+language = en
+
 # ─── Font Configuration ────────────────────────────────────
 # Primary font family used for all terminal text rendering.
 font-family = "Rec Mono Casual"
 
 # Font weight variant. Bold gives glyphs slightly more visual weight.
 font-family-bold = "Rec Mono Casual Bold"
-font-weight = Bold
 
 # Base font size in points.
 font-size = 12
@@ -86,7 +89,7 @@ cursor-color = f4dbd6
 # Color of the character underneath the cursor when the cursor overlaps it.
 cursor-text = 24273a
 
-# ─── Window border colors (if applicable) ──────────────────
+# ─── Window Border Colors (if applicable) ──────────────────────────────────
 # Ghostty handles window decorations differently
 # (border color is managed by the compositor/window manager, not Ghostty itself)
 
@@ -158,3 +161,4 @@ mouse-hide-while-typing = true
 # ─── Window Opacity (optional) ─────────────────────────────
 # Uncomment to enable terminal background transparency.
 # Values range from 0.0 (fully transparent) to 1.0 (fully opaque).
+background-opacity = 1.0
