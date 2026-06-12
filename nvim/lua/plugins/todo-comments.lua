@@ -10,13 +10,13 @@
 -- This file overrides the default opts to use Catppuccin Macchiato
 -- colors and to configure ripgrep to respect the project's exclusions.
 --
--- Keymaps provided by LazyVim (preserved, not redefined here):
---   ]t / [t      Jump to next / previous TODO comment
---   <leader>st   List all TODOs via Telescope
---   <leader>xT   Open TODOs in Trouble
+-- Keymaps:
+--   ]t / [t          Jump to next / previous TODO comment
+--   <leader>st       List all TODOs via Telescope
+--   <leader>xT       Open TODOs in Trouble
+--   <leader>fT       Browse only TODO + FIXME in Telescope (added)
 --
 -- Documentation: https://github.com/folke/todo-comments.nvim
-
 return {
   "folke/todo-comments.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
@@ -67,6 +67,23 @@ return {
       },
     },
 
+    -- Merge with any keywords LazyVim itself registers rather than replacing them.
+    merge_keywords = true,
+
+    -- ─── Highlight ────────────────────────────────────────────
+    highlight = {
+      multiline = true, -- Follow TODO comments that span multiple lines
+      multiline_pattern = "^.", -- A continuing line starts with anything
+      multiline_context = 10, -- Look ahead up to 10 lines for context
+      before = "", -- No extra highlight before the keyword token
+      keyword = "wide_bg", -- Default keyword highlight style
+      after = "fg", -- Highlight the rest of the comment text
+      pattern = [[.*<(KEYWORDS)\s*:]], -- Match keyword followed by colon
+      comments_only = true, -- Only match inside comment syntax nodes
+      max_line_len = 400, -- Skip extremely long lines
+      exclude = {}, -- No file patterns to exclude
+    },
+
     -- ─── Ripgrep Search ───────────────────────────────────────
     -- Exclude the same directories ignored by snacks.lua and yazi.
     search = {
@@ -82,6 +99,31 @@ return {
         "--glob=!.git/**",
       },
       pattern = [[\b(KEYWORDS):]],
+    },
+  },
+
+  -- ─── Keymaps ──────────────────────────────────────────────
+  keys = {
+    {
+      "]t",
+      function()
+        require("todo-comments").jump_next()
+      end,
+      desc = "Next TODO",
+    },
+    {
+      "[t",
+      function()
+        require("todo-comments").jump_prev()
+      end,
+      desc = "Prev TODO",
+    },
+    { "<leader>xT", "<cmd>TodoTrouble<cr>", desc = "TODOs (Trouble)" },
+    { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "TODOs (Telescope)" },
+    {
+      "<leader>fT",
+      "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
+      desc = "TODO + FIXME (Telescope)",
     },
   },
 }
