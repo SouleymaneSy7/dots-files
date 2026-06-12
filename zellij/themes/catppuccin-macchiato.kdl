@@ -46,8 +46,8 @@ themes {
         orange      "#f5a97f"   // peach
 
         // ─── UI Accent Colors ─────────────────────────────
-        // Active pane border
-        // Inactive pane border
-        // Tab bar active/inactive
+        // Pane frames and tab bar inherit colors from the palette above
+        // (fg, bg, blue, etc.). Zellij does not expose separate keys for
+        // these elements — they're controlled by the standard 16-color set.
     }
 }
