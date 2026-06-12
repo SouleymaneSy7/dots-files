@@ -8,7 +8,7 @@
 #   adds these bindings before the defaults.
 #
 # Location:
-#   ~/.config/yazi/yazi-keymap.toml
+#   ~/.config/yazi/keymap.toml
 #
 # Usage:
 #   e       → open in Neovim
@@ -23,8 +23,8 @@
 #   - nvim      (editor for 'e')
 #
 # See also:
-#   yazi/yazi.toml        (main configuration)
-#   yazi/yazi-theme.toml  (theme)
+#   yazi/yazi.toml   (main configuration)
+#   yazi/theme.toml  (theme)
 #
 # Documentation:
 #   https://yazi-rs.github.io/docs/configuration/keymap

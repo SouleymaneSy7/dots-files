@@ -26,8 +26,8 @@
 #   - nvim                (default editor)
 #
 # See also:
-#   yazi/yazi-theme.toml   (Catppuccin theme)
-#   yazi/yazi-keymap.toml  (keyboard shortcuts)
+#   yazi/theme.toml        (Catppuccin theme)
+#   yazi/keymap.toml       (keyboard shortcuts)
 #   zsh/.zshrc             (y function)
 #
 # Documentation:

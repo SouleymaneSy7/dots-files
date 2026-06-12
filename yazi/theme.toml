@@ -8,7 +8,7 @@
 #   notifications, and syntax highlighting.
 #
 # Location:
-#   ~/.config/yazi/yazi-theme.toml
+#   ~/.config/yazi/theme.toml
 #
 # Installation:
 #   ya pack -a catppuccin/yazi:macchiato  (official flavor — recommended)
@@ -24,8 +24,8 @@
 #     bat cache --build
 #
 # See also:
-#   yazi/yazi.toml         (main configuration)
-#   yazi/yazi-keymap.toml  (keyboard shortcuts)
+#   yazi/yazi.toml   (main configuration)
+#   yazi/keymap.toml (keyboard shortcuts)
 #
 # Documentation:
 #   https://yazi-rs.github.io/docs/configuration/theme
