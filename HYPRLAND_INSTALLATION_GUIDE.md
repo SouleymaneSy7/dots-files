@@ -330,7 +330,7 @@ yay -S atuin
 
 ```bash
 # NetworkManager (WiFi, Ethernet)
-sudo pacman -S networkmanager network-manager-applet nm-connection-editor
+sudo pacman -S networkmanager network-manager-applet
 sudo systemctl enable --now NetworkManager
 ```
 

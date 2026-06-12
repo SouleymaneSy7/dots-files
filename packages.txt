@@ -146,7 +146,7 @@
 # ─── Network ──────────────────────────────────────────────
 [pacman] networkmanager # Network manager (WiFi, Ethernet)
 [pacman] network-manager-applet # NetworkManager systray icon (nm-applet)
-[pacman] nm-connection-editor # NetworkManager connections editor
+# nm-connection-editor removed: this package does not exist in the official repositories
 
 # ─── Zellij — Terminal Multiplexer ────────────────────────
 [pacman] zellij # Modern terminal multiplexer (Rust)
