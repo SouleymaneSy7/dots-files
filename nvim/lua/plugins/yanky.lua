@@ -14,20 +14,21 @@ return {
   -- relevant in the context of an active buffer.
   event = "LazyFile",
 
-  -- ─── Yank Ring Configuration ───────────────────────────────
-  -- Controls the behavior of the yank history ring that stores
-  -- previous yanks and allows cycling through them on paste.
-  ring = {
-    history_length = 1000, -- Keep the last 1000 yanked entries in history
-    storage = "shada", -- Persist the ring to ShaDa file so history survives restarts
-    sync_with_numbered_registers = true, -- Keep numbered registers (0-9) in sync with the ring
-    cancel_event = "update", -- Clear the active ring cycle when the buffer is updated
-    ignore_registers = { "_" }, -- Never store yanks from the black hole register
-    update_register_on_cycle = false, -- Do not overwrite the default register when cycling history
-    permanent_wrapper = nil, -- No permanent transform applied to yanked text
-  },
-
   opts = {
+    -- ─── Yank Ring Configuration ───────────────────────────────
+    -- NOTE: 'ring' must live inside opts so lazy.nvim passes it to setup().
+    -- Placing it at the plugin-spec level (a sibling of 'opts') has no effect.
+
+    ring = {
+      history_length = 1000, -- Keep the last 1000 yanked entries
+      storage = "shada", -- Persist to ShaDa; survives restarts
+      sync_with_numbered_registers = true, -- Keep registers 0-9 in sync with the ring
+      cancel_event = "update", -- Clear the active ring cycle on buffer update
+      ignore_registers = { "_" }, -- Never store yanks from the black hole register
+      update_register_on_cycle = false, -- Don't overwrite the default register when cycling
+      permanent_wrapper = nil, -- No permanent transform applied to yanked text
+    },
+
     -- ─── System Clipboard ──────────────────────────────────────
     -- Syncs the yank ring with the system clipboard unless Neovim is
     -- running inside an SSH session, where clipboard sync is unavailable.
@@ -49,17 +50,12 @@ return {
     {
       "<leader>p",
       function()
-        local has_telescope, telescope = pcall(require, "telescope")
-        if has_telescope and telescope.extensions and telescope.extensions.yank_history then
-          telescope.extensions.yank_history.yank_history({})
+        if LazyVim.pick.picker.name == "telescope" then
+          require("telescope").extensions.yank_history.yank_history({})
+        elseif LazyVim.pick.picker.name == "snacks" then
+          Snacks.picker.yanky()
         else
-          ---@diagnostic disable-next-line: undefined-global
-          local has_snacks = type(Snacks) == "table" and Snacks.picker and Snacks.picker.yanky
-          if has_snacks then
-            Snacks.picker.yanky()
-          else
-            vim.cmd([[YankyRingHistory]])
-          end
+          vim.cmd([[YankyRingHistory]])
         end
       end,
       mode = { "n", "x" },
