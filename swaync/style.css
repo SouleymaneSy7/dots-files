@@ -35,6 +35,43 @@
  */
 
 /* ─── Catppuccin Macchiato Palette ───────────────────────────*/
+
+/* Base backgrounds */
+@define-color base      #24273a;
+@define-color mantle    #1e2030;
+@define-color crust     #181926;
+
+/* Text */
+@define-color text      #cad3f5;
+@define-color subtext0  #a5adcb;
+@define-color subtext1  #b8c0e0;
+
+/* Surfaces */
+@define-color surface0  #363a4f;
+@define-color surface1  #494d64;
+@define-color surface2  #5b6078;
+
+/* Overlays */
+@define-color overlay0  #6e738d;
+@define-color overlay1  #8087a2;
+@define-color overlay2  #939ab7;
+
+/* Accents */
+@define-color blue      #8aadf4;
+@define-color lavender  #b7bdf8;
+@define-color sapphire  #7dc4e4;
+@define-color sky       #91d7e3;
+@define-color teal      #8bd5ca;
+@define-color green     #a6da95;
+@define-color yellow    #eed49f;
+@define-color peach     #f5a97f;
+@define-color maroon    #ee99a0;
+@define-color red       #ed8796;
+@define-color mauve     #c6a0f6;
+@define-color pink      #f5bde6;
+@define-color flamingo  #f0c6c6;
+@define-color rosewater #f4dbd6;
+
 * {
   font-family: "Rec Mono Linear", monospace;
   font-size: 13px;
@@ -55,8 +92,8 @@
 }
 
 .notification {
-  background: #1e2030; /* mantle */
-  border: 2px solid #8aadf4; /* blue */
+  background: @mantle;
+  border: 2px solid @blue;
   border-radius: 10px;
   margin: 5px 10px;
   padding: 0;
@@ -65,11 +102,11 @@
 
 /* Urgency-based border colors */
 .notification.critical {
-  border-color: #ed8796; /* red */
+  border-color: @red;
 }
 
 .notification.low {
-  border-color: #494d64; /* surface1 — subtle */
+  border-color: @surface1;
 }
 
 .notification-content {
@@ -86,12 +123,12 @@
   box-shadow: none;
   background: transparent;
   border-radius: 0;
-  color: #cad3f5; /* text */
+  color: @text;
 }
 
 .notification-default-action:hover,
 .notification-action:hover {
-  background: #363a4f; /* surface0 */
+  background: @surface0;
 }
 
 .notification-default-action {
@@ -101,18 +138,18 @@
 .summary {
   font-size: 14px;
   font-weight: bold;
-  color: #cad3f5; /* text */
+  color: @text;
 }
 
 .time {
   font-size: 12px;
-  color: #6e738d; /* overlay0 */
+  color: @overlay0;
   margin-top: 2px;
 }
 
 .body {
   font-size: 13px;
-  color: #a5adcb; /* subtext0 */
+  color: @subtext0;
   margin-top: 4px;
 }
 
@@ -123,8 +160,8 @@
 
 /* ─── Close Button ───────────────────────────────────────────*/
 .close-button {
-  background: #363a4f; /* surface0 */
-  color: #ed8796; /* red */
+  background: @surface0;
+  color: @red;
   border-radius: 100%;
   margin: 6px;
   padding: 2px;
@@ -133,19 +170,17 @@
 }
 
 .close-button:hover {
-  background: #ed8796;
-  color: #24273a; /* base */
+  background: @red;
+  color: @base;
 }
 
 /* ─── Control Center Panel ───────────────────────────────────
  * The history panel that slides in from the right.
  */
 .control-center {
-  background: #1e2030; /* mantle */
-  border: 2px solid #494d64; /* surface1 */
-  border-radius: 12px;
-  padding: 10px;
-  color: #cad3f5;
+  background: @mantle;
+  border: 2px solid @surface1;
+  color: @text;
 }
 
 .control-center-list {
@@ -158,7 +193,7 @@
 
 /* ─── Panel Title ────────────────────────────────────────────*/
 .widget-title {
-  color: #cad3f5;
+  color: @text;
   font-size: 15px;
   font-weight: bold;
   margin: 8px 10px;
@@ -166,53 +201,53 @@
 
 .widget-title > button {
   font-size: 12px;
-  color: #a5adcb;
-  background: #363a4f; /* surface0 */
+  color: @subtext0;
+  background: @surface0;
   border: none;
   border-radius: 6px;
   padding: 4px 10px;
 }
 
 .widget-title > button:hover {
-  background: #494d64; /* surface1 */
-  color: #cad3f5;
+  background: @surface1;
+  color: @text;
 }
 
 /* ─── DND Toggle ─────────────────────────────────────────────*/
 .widget-dnd {
-  color: #cad3f5;
+  color: @text;
   margin: 6px 10px;
   font-size: 14px;
 }
 
 .widget-dnd > switch {
   border-radius: 100px;
-  background: #363a4f;
+  background: @surface0;
   border: none;
 }
 
 .widget-dnd > switch:checked {
-  background: #8aadf4; /* blue */
+  background: @blue;
 }
 
 .widget-dnd > switch slider {
-  background: #cad3f5;
+  background: @text;
   border-radius: 100px;
 }
 
 /* ─── Notification in Panel ──────────────────────────────────*/
 .control-center .notification {
-  border-color: #494d64; /* surface1 — less prominent in the panel */
+  border-color: @surface1;
 }
 
 .control-center .notification:hover {
-  border-color: #8aadf4; /* blue on hover */
+  border-color: @blue;
 }
 
 /* ─── Action Buttons ─────────────────────────────────────────*/
 .notification-action {
-  color: #8aadf4; /* blue */
-  background: #363a4f;
+  color: @blue;
+  background: @surface0;
   border-radius: 6px;
   border: none;
   margin: 4px;
@@ -221,24 +256,24 @@
 }
 
 .notification-action:hover {
-  background: #494d64;
+  background: @surface1;
 }
 
 /* ─── Progress Bar (e.g. volume notifications) ───────────────*/
 progressbar {
   border-radius: 6px;
-  background: #363a4f;
+  background: @surface0;
   margin-top: 4px;
 }
 
 progressbar trough {
   border-radius: 6px;
-  background: #363a4f;
+  background: @surface0;
   min-height: 6px;
 }
 
 progressbar progress {
   border-radius: 6px;
-  background: #8aadf4; /* blue */
+  background: @blue;
   min-height: 6px;
 }
