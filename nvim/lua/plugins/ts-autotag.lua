@@ -14,16 +14,18 @@ return {
   event = "LazyFile",
 
   opts = {
-    -- Automatically insert the matching closing tag (e.g. </div>)
-    -- as soon as the opening tag is completed.
-    enable_close = true,
+    opts = {
+      -- Automatically insert the matching closing tag (e.g. </div>)
+      -- as soon as the opening tag is completed.
+      enable_close = true,
 
-    -- Automatically rename the paired closing tag when the opening
-    -- tag is edited, keeping both tags in sync at all times.
-    enable_rename = true,
+      -- Automatically rename the paired closing tag when the opening
+      -- tag is edited, keeping both tags in sync at all times.
+      enable_rename = true,
 
-    -- Automatically close the tag when a forward slash is typed
-    -- inside an opening tag (e.g. typing <img/ produces <img/>).
-    enable_close_on_slash = true,
+      -- Automatically close the tag when a forward slash is typed
+      -- inside an opening tag (e.g. typing <img/ produces <img/>).
+      enable_close_on_slash = true,
+    },
   },
 }

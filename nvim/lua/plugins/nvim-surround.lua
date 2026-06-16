@@ -21,7 +21,7 @@ return {
   -- LazyVim ships mini.surround by default. Disabling it prevents
   -- duplicate keymaps and operator conflicts with nvim-surround.
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     enabled = false,
   },
 
@@ -32,24 +32,6 @@ return {
     event = "LazyFile",
 
     opts = {
-      -- ─── Keymaps ───────────────────────────────────────────────
-      -- Using the classic vim-surround (tpope) naming convention.
-      -- These are all buffer-local operators; they do not conflict with
-      -- global leader mappings.
-      keymaps = {
-        insert = "<C-g>s", -- Add surround in insert mode
-        insert_line = "<C-g>S", -- Add surround on its own line (insert)
-        normal = "ys", -- Add surround
-        normal_cur = "yss", -- Surround current line
-        normal_line = "yS", -- Add surround on its own line
-        normal_cur_line = "ySS", -- Surround current line, on its own line
-        visual = "S", -- Add surround in visual mode
-        visual_line = "gS", -- Surround on its own line in visual
-        delete = "ds", -- Delete surround
-        change = "cs", -- Change surround
-        change_line = "cS", -- Change surround, place on own line
-      },
-
       -- ─── Aliases ─────────────────────────────────────────────
       -- Convenient single-character shortcuts for common pairs.
       aliases = {

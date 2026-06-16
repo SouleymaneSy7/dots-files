@@ -40,7 +40,7 @@ return {
     })
 
     tabby.setup(vim.tbl_deep_extend("force", opts, {
-      tabline = require("tabby.tabline").use_preset("tabs_with_wins", {
+      tabline = require("tabby.tabline").use_preset("active_tab_with_wins", {
         -- ─── Icons ─────────────────────────────────────────
         icons = {
           modified_indicator = " ●",
