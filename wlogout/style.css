@@ -109,7 +109,7 @@ button {
   background-size: 25%;
 
   margin: 10px;
-  padding: 40px;
+  padding: 195px 40px 40px;
 
   /* Smooth color transition on hover */
   transition: all 0.2s ease;
@@ -140,36 +140,78 @@ button:focus {
  */
 
 /* Lock — blue: safe, reversible */
+#lock {
+  background-image: image(
+    url("/usr/share/wlogout/icons/lock.png"),
+    url("/usr/local/share/wlogout/icons/lock.png")
+  );
+}
+
 #lock:hover {
   border-color: @blue;
   background-color: alpha(@blue, 0.15);
 }
 
 /* Logout — peach: end session */
+#logout {
+  background-image: image(
+    url("/usr/share/wlogout/icons/logout.png"),
+    url("/usr/local/share/wlogout/icons/logout.png")
+  );
+}
+
 #logout:hover {
   border-color: @peach;
   background-color: alpha(@peach, 0.15);
 }
 
 /* Suspend — teal: sleep */
+#suspend {
+  background-image: image(
+    url("/usr/share/wlogout/icons/suspend.png"),
+    url("/usr/local/share/wlogout/icons/suspend.png")
+  );
+}
+
 #suspend:hover {
   border-color: @teal;
   background-color: alpha(@teal, 0.15);
 }
 
 /* Hibernate — lavender: deep sleep */
+#hibernate {
+  background-image: image(
+    url("/usr/share/wlogout/icons/hibernate.png"),
+    url("/usr/local/share/wlogout/icons/hibernate.png")
+  );
+}
+
 #hibernate:hover {
   border-color: @lavender;
   background-color: alpha(@lavender, 0.15);
 }
 
 /* Reboot — yellow: caution */
+#reboot {
+  background-image: image(
+    url("/usr/share/wlogout/icons/reboot.png"),
+    url("/usr/local/share/wlogout/icons/reboot.png")
+  );
+}
+
 #reboot:hover {
   border-color: @yellow;
   background-color: alpha(@yellow, 0.15);
 }
 
 /* Shutdown — red: destructive, irreversible */
+#shutdown {
+  background-image: image(
+    url("/usr/share/wlogout/icons/shutdown.png"),
+    url("/usr/local/share/wlogout/icons/shutdown.png")
+  );
+}
+
 #shutdown:hover {
   border-color: @red;
   background-color: alpha(@red, 0.15);
